@@ -1,11 +1,13 @@
-import "./App.css";
+import React from "react";
 
-function App() {
+interface Props {}
+
+const App: React.FC<Props> = () => {
   return (
     <div className="App">
       <h1>Hello World</h1>
     </div>
   );
-}
+};
 
 export default App;

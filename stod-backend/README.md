@@ -3,7 +3,8 @@ User Table:
 - Id: uuid string
 - username: string
 - Email: string
-- Password: saled hash string (Handled by django) \* group: one to many relationshop with group
+- Password: saled hash string (Handled by django)
+- group: one to many relationshop with group
 
 Posts:
 

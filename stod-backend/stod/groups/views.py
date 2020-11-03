@@ -29,5 +29,4 @@ def create(request):
     newGroup = Group(name=name, description=description)
     newGroup.save()
 
-    print(Group.objects.all())
     return HttpResponse(status=200)

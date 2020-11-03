@@ -16,8 +16,3 @@ Groups:
 
 - name: string (PRIMARY KEY)
 - description: string
-
-groups-to-users:
-
-- groupName: string (foreign key)
-- userId: string (foreign key)

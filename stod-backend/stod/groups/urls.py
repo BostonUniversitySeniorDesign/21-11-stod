@@ -1,8 +1,8 @@
 from django.urls import path
+from rest_framework import routers
+from .views import GroupViewset
 
-from . import views
+router = routers.DefaultRouter()
+router.register("test", GroupViewset, "group")
 
-urlpatterns = [
-    path('create', views.create, name='create'),
-    path('', views.getGroups, name='getGroups'),
-]
+urlpatterns = router.urls

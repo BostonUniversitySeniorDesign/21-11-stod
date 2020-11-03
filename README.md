@@ -21,3 +21,5 @@ pip freeze > requirements.txt
 ```
 
 After installing a python package
+
+To get ESLint support on vscode install VSCode plugin: ESLint

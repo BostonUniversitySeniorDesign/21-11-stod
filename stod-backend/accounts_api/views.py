@@ -35,6 +35,7 @@ class RegisterAPI(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
+        # Response structure sent on POST request
         return Response(
             {
                 "user": UserSerializer(
@@ -52,6 +53,7 @@ class RegisterAPI(generics.GenericAPIView):
 class LoginAPI(generics.GenericAPIView):
     serializer_class = LoginSerializer
 
+    # Response structure sent on POST request
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -71,6 +73,7 @@ class LoginAPI(generics.GenericAPIView):
 class RequestPasswordResetEmail(generics.GenericAPIView):
     serializer_class = ResetPasswordEmailRequestSerializer
 
+    # Response structure sent on POST request
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
 
@@ -103,6 +106,7 @@ class RequestPasswordResetEmail(generics.GenericAPIView):
 class PasswordTokenCheckAPI(generics.GenericAPIView):
     serializer_class = SetNewPasswordSerializer
 
+    # Response structure sent on GET request
     def get(self, request, uidb64, token):
 
         try:

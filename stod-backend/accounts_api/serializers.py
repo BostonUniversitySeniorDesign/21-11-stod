@@ -19,7 +19,6 @@ from rest_framework.exceptions import (
 
 # User serializer
 
-
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User

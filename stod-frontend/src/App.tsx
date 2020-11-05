@@ -1,26 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
+import store from "./store";
+import Error from "./components/Common/404";
+import { Provider } from "react-redux";
+import { loadUser } from "./actions/authAction";
+import { Login, Register } from "./components";
 
-function App() {
+const App = () => {
+  // We attempt to load a user as soon as they visit the site
+  useEffect(() => {
+    store.dispatch<any>(loadUser());
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <Router>
+        <React.Fragment>
+          <div className="container">
+            {/* Site routes */}
+            <Switch>
+              <Route exact path="/" render={() => <h2>Hi</h2>} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/register" component={Register} />
+              <Route exact path="/404" component={Error} />
+              <Redirect from="*" to="/404" />
+            </Switch>
+          </div>
+        </React.Fragment>
+      </Router>
+    </Provider>
   );
-}
+};
 
 export default App;

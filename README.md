@@ -7,7 +7,9 @@ yarn
 
 To install Python packages:
 
-Create a virtual envioronment within stod-backend
+Create a virtual envioronment within stod-backend (https://docs.python-guide.org/dev/virtualenvs/)
+
+Then:
 
 ```
 source env/bin/activate

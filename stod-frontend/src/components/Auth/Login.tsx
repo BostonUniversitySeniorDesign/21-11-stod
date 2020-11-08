@@ -15,7 +15,7 @@ import Typography from "@material-ui/core/Typography";
 import useStyles from "../../styles";
 // Redux imports
 import { useSelector, useDispatch } from "react-redux";
-import { login } from "../../actions/authAction";
+import { login } from "../../actions/authActions";
 // Typescript imports
 import { IRootState } from "../../actions/types";
 // React router imports

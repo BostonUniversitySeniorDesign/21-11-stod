@@ -1,4 +1,6 @@
+// axios for server requests
 import axios from "axios";
+// action types
 import {
   USER_LOADED,
   USER_LOADING,
@@ -41,7 +43,7 @@ export const loadUser = () => (
   dispatch({ type: USER_LOADING });
   // Make GET request to server.
   axios
-    .get(`http://${DOMAIN}/api/auth/user/`, tokenConfig(getState))
+    .get(`http://${DOMAIN}/accounts/user/`, tokenConfig(getState))
     .then((res) => {
       // If no error, server responds with user object.
       dispatch({ type: USER_LOADED, payload: res.data });
@@ -67,7 +69,7 @@ export const login = (username: string, password: string) => (
 
   //Make POST request to server with login info.
   axios
-    .post(`http://${DOMAIN}/api/auth/login/`, body, config)
+    .post(`http://${DOMAIN}/accounts/login/`, body, config)
     .then((res) => {
       dispatch({ type: LOGIN_SUCCESS, payload: res.data });
     })
@@ -92,7 +94,7 @@ export const registerUser = ({
   console.log(body);
 
   axios
-    .post(`http://${DOMAIN}/api/auth/register/`, body, config)
+    .post(`http://${DOMAIN}/accounts/register/`, body, config)
     .then((res) => {
       dispatch({ type: REGISTER_SUCCESS, payload: res.data });
     })
@@ -107,7 +109,7 @@ export const logout = () => (
   dispatch({ type: USER_LOADING });
   console.log("hello");
   axios
-    .post(`http://${DOMAIN}/api/auth/logout/`, null, tokenConfig(getState))
+    .post(`http://${DOMAIN}/accounts/logout/`, null, tokenConfig(getState))
     .then((res) => {
       dispatch({ type: LOGOUT_SUCCESS });
     })
@@ -126,7 +128,7 @@ export const resetPassword = (email: string) => (dispatch: Dispatch) => {
   const body = JSON.stringify({ email: email });
   dispatch({ type: RESET_PASSWORD_LOADING });
   axios
-    .post(`http://${DOMAIN}/api/auth/request-reset-email/`, body, config)
+    .post(`http://${DOMAIN}/accounts/request-reset-email/`, body, config)
     .then((res) => {
       dispatch({ type: PASSWORD_EMAIL_SENT });
       console.log(res.data);
@@ -148,7 +150,7 @@ export const setNewPassword = (body: {
   };
   dispatch({ type: RESET_PASSWORD_LOADING });
   axios
-    .patch(`http://${DOMAIN}/api/auth/password-reset-complete/`, body, config)
+    .patch(`http://${DOMAIN}/accounts/password-reset-complete/`, body, config)
     .then((res) => {
       dispatch({ type: PASSWORD_RESET_COMPLETE });
       console.log(res.data);

@@ -1,6 +1,6 @@
 # Accounts API
 
-## api/auth/register/
+## accounts/register/
 
 POST request
 
@@ -26,7 +26,7 @@ Response
 }
 ```
 
-## api/auth/login/
+## accounts/login/
 
 POST request
 
@@ -50,9 +50,12 @@ Response
 }
 ```
 
-## api/auth/user/
+## accounts/user/
 
 GET request
+
+Must provide Token header.
+
 Response
 
 ```json
@@ -63,11 +66,11 @@ Response
 }
 ```
 
-## api/auth/logout/
+## accounts/logout/
 
 Logout is a view provided by the knox library.
 
-## api/auth/request-reset-email/
+## accounts/request-reset-email/
 
 POST request
 
@@ -85,12 +88,12 @@ Response
 }
 ```
 
-## api/auth/password-reset/\<uidb64>/\<token>/
+## accounts/password-reset/\<uidb64>/\<token>/
 
 React would grab the uidb64 and token and send a request to
-api/auth/password-reset-complete/
+accounts/password-reset-complete/
 
-## api/auth/password-reset-complete/
+## accounts/password-reset-complete/
 
 POST request
 

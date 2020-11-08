@@ -11,7 +11,7 @@ from .serializers import (
     SetNewPasswordSerializer,
 )
 from django.urls import reverse
-from file_link_server import settings
+from stod import settings
 from django.template.loader import render_to_string
 
 from django.contrib.auth.tokens import PasswordResetTokenGenerator

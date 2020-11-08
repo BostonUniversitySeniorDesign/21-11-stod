@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'groups.apps.GroupsConfig',
     'rest_framework',
+    'knox',
+    'accounts_api'
 ]
 
 MIDDLEWARE = [

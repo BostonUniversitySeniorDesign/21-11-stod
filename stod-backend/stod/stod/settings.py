@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'groups.apps.GroupsConfig',
     'rest_framework',
     'knox',
-    'accounts_api'
+    'accounts_api',
+    'posts.apps.PostConfig'
 ]
 
 MIDDLEWARE = [

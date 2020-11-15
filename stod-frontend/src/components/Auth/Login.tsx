@@ -44,6 +44,8 @@ const Login: React.FC = () => {
    */
   const email = useRef<HTMLInputElement>();
   const password = useRef<HTMLInputElement>();
+  const isError = useSelector((state: IRootState) => state.error.isError);
+  const errorMessage = useSelector((state: IRootState) => state.error.message);
   /**
    * useSelector is a Redux hook used to access a attribute from the global store.
    * Here its accessing the isAuthenticated to check if the user
@@ -81,6 +83,8 @@ const Login: React.FC = () => {
       //handle error here
       return;
     }
+
+    console.log(email.current!.value, password.current!.value);
     dispatch(login(email.current!.value, password.current!.value));
   };
 
@@ -117,27 +121,31 @@ const Login: React.FC = () => {
            */}
           <form className={classes.form} onSubmit={handleLogin} noValidate>
             <TextField
+              error={isError}
               variant="outlined"
               margin="normal"
               required
               fullWidth
               id="email"
-              label="Email Address"
               name="email"
               autoComplete="email"
               inputRef={email}
+              label="Email"
+              helperText={errorMessage}
               autoFocus
             />
             <TextField
+              error={isError}
               variant="outlined"
               margin="normal"
               required
               fullWidth
               name="password"
-              label="Password"
               type="password"
               id="password"
               inputRef={password}
+              label="Password"
+              helperText={errorMessage}
               autoComplete="current-password"
             />
             <FormControlLabel

@@ -72,8 +72,21 @@ export const login = (username: string, password: string) => (
     .post(`http://${DOMAIN}/accounts/login/`, body, config)
     .then((res) => {
       dispatch({ type: LOGIN_SUCCESS, payload: res.data });
+      console.log(res);
     })
-    .catch((err) => {});
+    .catch((err) => {
+      if (err.response.data) {
+        dispatch({
+          type: AUTH_ERROR,
+          payload: {
+            message: err.response.data.login[0],
+            code: err.response.status,
+          },
+        });
+      }else{
+        
+      }
+    });
 };
 
 export const registerUser = ({

@@ -11,5 +11,9 @@
 
 import Login from "./Auth/Login";
 import Register from "./Auth/Register";
+import AuthenticatedRoute from "./Routes/AuthenticatedRoute";
+import Error from "./Common/404";
+import Loader from "./Common/Loader";
+import Home from "./Pages/Home";
 
-export { Login, Register };
+export { Login, Register, AuthenticatedRoute, Error, Loader, Home };

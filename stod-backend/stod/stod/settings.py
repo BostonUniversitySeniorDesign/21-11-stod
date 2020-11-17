@@ -37,11 +37,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "groups.apps.GroupsConfig",
+    "groups",
     "rest_framework",
     "knox",
     "accounts_api",
-    'posts.apps.PostConfig'
+    "posts",
     "corsheaders",
 ]
 

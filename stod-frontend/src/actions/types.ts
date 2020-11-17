@@ -17,6 +17,8 @@ export const REGISTER_FAIL = "REGISTER_FAIL";
 export const PASSWORD_EMAIL_SENT = "PASSWORD_EMAIL_SENT";
 export const PASSWORD_RESET_COMPLETE = "PASSWORD_RESET_COMPLETE";
 export const RESET_PASSWORD_LOADING = "RESET_PASSWORD_LOADING";
+// Error types
+export const NO_ERROR = "NO_ERROR";
 
 // Auth interfaces
 export interface IAuthState {
@@ -49,6 +51,7 @@ export interface IAuthAction {
 // Redux global state interface
 export interface IRootState {
   auth: IAuthState;
+  error: IErrorState;
 }
 
 // Header JSON interface
@@ -64,4 +67,17 @@ export interface CredentialTypes {
   username: string;
   password: string;
   email: string;
+}
+
+// Error interfaces
+export interface IErrorState {
+  message: string | null;
+  code: number | null;
+  isError: boolean;
+}
+
+// Error action types
+export interface IErrorAction {
+  type: typeof AUTH_ERROR | typeof NO_ERROR;
+  payload?: { message: string; code: number };
 }

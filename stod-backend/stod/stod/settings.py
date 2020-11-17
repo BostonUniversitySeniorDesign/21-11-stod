@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "knox",
     "accounts_api",
+    'posts.apps.PostConfig'
     "corsheaders",
 ]
 

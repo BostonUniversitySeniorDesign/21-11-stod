@@ -8,8 +8,8 @@ import {
 import store from "./store";
 import Error from "./components/Common/404";
 import { Provider } from "react-redux";
-import { loadUser } from "./actions/authAction";
-import { Login, Register } from "./components";
+import { loadUser } from "./actions/authActions";
+import { Login, Register, AuthenticatedRoute, Home } from "./components";
 
 const App = () => {
   // We attempt to load a user as soon as they visit the site
@@ -27,6 +27,7 @@ const App = () => {
               <Route exact path="/" render={() => <h2>Hi</h2>} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
+              <AuthenticatedRoute path="/home" component={Home} />
               <Route exact path="/404" component={Error} />
               <Redirect from="*" to="/404" />
             </Switch>

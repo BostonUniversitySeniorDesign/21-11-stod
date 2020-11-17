@@ -17,7 +17,7 @@ import useStyles from "../../styles";
 import { IRootState } from "../../actions/types";
 //Redux imports
 import { useSelector, useDispatch } from "react-redux";
-import { registerUser } from "../../actions/authAction";
+import { registerUser } from "../../actions/authActions";
 // React router imports
 import { Redirect } from "react-router-dom";
 

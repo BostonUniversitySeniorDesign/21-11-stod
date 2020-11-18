@@ -13,6 +13,7 @@ Posts:
 - contents: string
 - poster: string (foreign key.. should be in user database)
 
+
 Groups:
 
 - name: string (PRIMARY KEY)

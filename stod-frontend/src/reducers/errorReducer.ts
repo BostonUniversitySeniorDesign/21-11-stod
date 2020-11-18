@@ -6,9 +6,10 @@ import {
 } from "../actions/types";
 
 const initialState: IErrorState = {
-  message: null,
-  code: null,
   isError: false,
+  type: null,
+  detail: null,
+  fallback_message: null,
 };
 
 function errorReducer(state = initialState, action: IErrorAction): IErrorState {

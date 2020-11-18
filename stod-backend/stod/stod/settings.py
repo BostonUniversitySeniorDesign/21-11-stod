@@ -37,12 +37,17 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "groups.apps.GroupsConfig",
+    "groups",
     "rest_framework",
     "knox",
     "accounts_api",
+    "posts",
     "corsheaders",
 ]
+
+REST_FRAMEWORK = {
+    "EXCEPTION_HANDLER": "hipo_drf_exceptions.handler",
+}
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

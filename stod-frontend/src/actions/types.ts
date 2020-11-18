@@ -71,8 +71,9 @@ export interface CredentialTypes {
 
 // Error interfaces
 export interface IErrorState {
-  message: string | null;
-  code: number | null;
+  type: string | null;
+  detail: any;
+  fallback_message: string | null;
   isError: boolean;
 }
 

@@ -29,6 +29,7 @@ export interface IAuthState {
   password_email_sent: boolean;
   new_password_set: boolean;
   isResetLoading: boolean;
+  errors: IErrorState;
 }
 
 // Auth action types
@@ -52,6 +53,7 @@ export interface IAuthAction {
 export interface IRootState {
   auth: IAuthState;
   error: IErrorState;
+  groups: IGroupsState;
 }
 
 // Header JSON interface
@@ -71,14 +73,33 @@ export interface CredentialTypes {
 
 // Error interfaces
 export interface IErrorState {
-  type: string | null;
-  detail: any;
-  fallback_message: string | null;
-  isError: boolean;
+  status_code: number | null;
+  errors: {
+    [key: string]: Array<string>;
+  };
 }
 
 // Error action types
 export interface IErrorAction {
   type: typeof AUTH_ERROR | typeof NO_ERROR;
   payload?: { message: string; code: number };
+}
+
+export const GROUPS_SUCCESS = "GROUPS_SUCCESS";
+export const GROUPS_ERROR = "GROUPS_ERROR";
+
+export interface SingleGroup {
+  name: string;
+  description: string;
+}
+
+export interface IGroupsState {
+  isLoading: boolean;
+  groups: Array<SingleGroup>;
+  isError: boolean;
+}
+
+export interface IGroupsAction {
+  type: typeof GROUPS_SUCCESS | typeof GROUPS_ERROR
+  payload?: any;
 }

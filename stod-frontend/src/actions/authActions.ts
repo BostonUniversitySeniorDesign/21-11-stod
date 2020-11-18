@@ -1,5 +1,7 @@
 // axios for server requests
 import axios from "axios";
+// @ts-ignore
+import parse from "django-exceptions";
 // action types
 import {
   USER_LOADED,
@@ -75,17 +77,10 @@ export const login = (username: string, password: string) => (
       console.log(res);
     })
     .catch((err) => {
-      if (err.response.data) {
-        dispatch({
-          type: AUTH_ERROR,
-          payload: {
-            message: err.response.data.login[0],
-            code: err.response.status,
-          },
-        });
-      }else{
-        
-      }
+      dispatch({
+        type: AUTH_ERROR,
+        payload: err.response.data,
+      });
     });
 };
 
@@ -111,7 +106,12 @@ export const registerUser = ({
     .then((res) => {
       dispatch({ type: REGISTER_SUCCESS, payload: res.data });
     })
-    .catch((err) => {});
+    .catch((err) => {
+      dispatch({
+        type: AUTH_ERROR,
+        payload: err.response.data,
+      });
+    });
 };
 
 export const logout = () => (

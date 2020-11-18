@@ -11,13 +11,14 @@ import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import Alert from "@material-ui/lab/Alert";
 // Import global style
 import useStyles from "../../styles";
 // Redux imports
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "../../actions/authActions";
 // Typescript imports
-import { IRootState } from "../../actions/types";
+import { IRootState, AUTH_ERROR } from "../../actions/types";
 // React router imports
 import { Redirect } from "react-router-dom";
 
@@ -44,8 +45,7 @@ const Login: React.FC = () => {
    */
   const email = useRef<HTMLInputElement>();
   const password = useRef<HTMLInputElement>();
-  const isError = useSelector((state: IRootState) => state.error.isError);
-  const errorMessage = useSelector((state: IRootState) => state.error.message);
+  const errors = useSelector((state: IRootState) => state.error);
   /**
    * useSelector is a Redux hook used to access a attribute from the global store.
    * Here its accessing the isAuthenticated to check if the user
@@ -79,8 +79,11 @@ const Login: React.FC = () => {
      * login(email: string, password: string) expects string inputs. This may come up when using useRef
      * so add the exclamation when doing so.
      */
-    if (email.current === null || password.current === null) {
-      //handle error here
+    if (email.current?.value === "" || password.current?.value === "") {
+      dispatch({
+        type: AUTH_ERROR,
+        payload: { fallback_message: "No field can be empty" },
+      });
       return;
     }
 
@@ -121,7 +124,6 @@ const Login: React.FC = () => {
            */}
           <form className={classes.form} onSubmit={handleLogin} noValidate>
             <TextField
-              error={isError}
               variant="outlined"
               margin="normal"
               required
@@ -131,11 +133,9 @@ const Login: React.FC = () => {
               autoComplete="email"
               inputRef={email}
               label="Email"
-              helperText={errorMessage}
               autoFocus
             />
             <TextField
-              error={isError}
               variant="outlined"
               margin="normal"
               required
@@ -145,9 +145,13 @@ const Login: React.FC = () => {
               id="password"
               inputRef={password}
               label="Password"
-              helperText={errorMessage}
               autoComplete="current-password"
             />
+            {errors.isError ? (
+              <Alert severity="error">{errors.fallback_message}</Alert>
+            ) : (
+              ""
+            )}
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"

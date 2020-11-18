@@ -45,6 +45,10 @@ INSTALLED_APPS = [
     "corsheaders",
 ]
 
+REST_FRAMEWORK = {
+    "EXCEPTION_HANDLER": "hipo_drf_exceptions.handler",
+}
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",

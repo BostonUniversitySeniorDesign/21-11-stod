@@ -11,10 +11,11 @@ import Paper from "@material-ui/core/Paper";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import Alert from "@material-ui/lab/Alert";
 //Global style import
 import useStyles from "../../styles";
 // TypeScript imports
-import { IRootState } from "../../actions/types";
+import { IRootState, AUTH_ERROR } from "../../actions/types";
 //Redux imports
 import { useSelector, useDispatch } from "react-redux";
 import { registerUser } from "../../actions/authActions";
@@ -45,8 +46,11 @@ const Register = () => {
   const isAuthenticated = useSelector(
     (state: IRootState) => state.auth.isAuthenticated
   );
+  const errors = useSelector((state: IRootState) => state.error);
   // Redux dispatch hook
   const dispatch = useDispatch();
+
+  console.log(errors);
 
   /**
    * handleLogin is fired when a user clicks the register button. It is
@@ -60,23 +64,34 @@ const Register = () => {
     event.preventDefault();
     // If any attributs are null we handle that error with UI
     if (
-      password.current === null ||
-      username.current === null ||
-      confirm_password.current === null ||
-      email.current === null
+      password.current?.value === "" ||
+      username.current?.value === "" ||
+      confirm_password.current?.value === "" ||
+      email.current?.value === ""
     ) {
-      //handle null error here
+      dispatch({
+        type: AUTH_ERROR,
+        payload: {
+          fallback_message: "No field can be empty",
+        },
+      });
       return;
     }
     // If passwords do not match we handle that error with UI
     if (password.current!.value !== confirm_password.current!.value) {
-      // handle password not matching error here
+      dispatch({
+        type: AUTH_ERROR,
+        payload: {
+          fallback_message: "Passwords must match",
+        },
+      });
     } else {
       const newUser = {
         username: username.current!.value,
         password: password.current!.value,
         email: email.current!.value,
       };
+      console.log(newUser);
       dispatch(registerUser(newUser));
     }
   };
@@ -148,6 +163,12 @@ const Register = () => {
               inputRef={confirm_password}
               autoComplete="current-password"
             />
+            {errors.isError ? (
+              <Alert severity="error">{errors.fallback_message}</Alert>
+            ) : (
+              ""
+            )}
+
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"

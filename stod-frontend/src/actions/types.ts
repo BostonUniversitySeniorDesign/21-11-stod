@@ -29,6 +29,7 @@ export interface IAuthState {
   password_email_sent: boolean;
   new_password_set: boolean;
   isResetLoading: boolean;
+  errors: IErrorState;
 }
 
 // Auth action types
@@ -71,10 +72,10 @@ export interface CredentialTypes {
 
 // Error interfaces
 export interface IErrorState {
-  type: string | null;
-  detail: any;
-  fallback_message: string | null;
-  isError: boolean;
+  status_code: number | null;
+  errors: {
+    [key: string]: Array<string>;
+  };
 }
 
 // Error action types

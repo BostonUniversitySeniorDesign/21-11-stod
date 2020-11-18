@@ -172,6 +172,43 @@ export const setNewPassword = (body: {
     .catch((err) => {});
 };
 
+// error actions
+export const loginError = (
+  status: number,
+  errors: {
+    username?: Array<string>;
+    password?: Array<string>;
+    login?: Array<string>;
+  }
+) => (dispatch: Dispatch) => {
+  dispatch({
+    type: AUTH_ERROR,
+    payload: {
+      status_code: status,
+      errors: errors,
+    },
+  });
+};
+
+export const registerError = (
+  status: number,
+  errors: {
+    username?: Array<string>;
+    email?: Array<string>;
+    password?: Array<string>;
+    confirm_password?: Array<string>;
+    non_field_errors?: Array<string>;
+  }
+) => (dispatch: Dispatch) => {
+  dispatch({
+    type: AUTH_ERROR,
+    payload: {
+      status_code: status,
+      errors: errors,
+    },
+  });
+};
+
 export const tokenConfig = (getState: () => IRootState) => {
   const token = getState().auth.token;
 

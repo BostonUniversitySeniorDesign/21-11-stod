@@ -46,7 +46,7 @@ INSTALLED_APPS = [
 ]
 
 REST_FRAMEWORK = {
-    "EXCEPTION_HANDLER": "hipo_drf_exceptions.handler",
+    "EXCEPTION_HANDLER": "drf_pretty_exception_handler.exception_handler",
 }
 
 MIDDLEWARE = [

@@ -15,10 +15,10 @@ import Alert from "@material-ui/lab/Alert";
 //Global style import
 import useStyles from "../../styles";
 // TypeScript imports
-import { IRootState, AUTH_ERROR } from "../../actions/types";
+import { IRootState } from "../../actions/types";
 //Redux imports
 import { useSelector, useDispatch } from "react-redux";
-import { registerUser } from "../../actions/authActions";
+import { registerUser, registerError } from "../../actions/authActions";
 // React router imports
 import { Redirect } from "react-router-dom";
 
@@ -43,14 +43,9 @@ const Register = () => {
   const password = useRef<HTMLInputElement>();
   const confirm_password = useRef<HTMLInputElement>();
   // Redux store attributes
-  const isAuthenticated = useSelector(
-    (state: IRootState) => state.auth.isAuthenticated
-  );
-  const errors = useSelector((state: IRootState) => state.error);
+  const auth = useSelector((state: IRootState) => state.auth);
   // Redux dispatch hook
   const dispatch = useDispatch();
-
-  console.log(errors);
 
   /**
    * handleLogin is fired when a user clicks the register button. It is
@@ -69,22 +64,19 @@ const Register = () => {
       confirm_password.current?.value === "" ||
       email.current?.value === ""
     ) {
-      dispatch({
-        type: AUTH_ERROR,
-        payload: {
-          fallback_message: "No field can be empty",
-        },
-      });
+      dispatch(
+        registerError(400, { non_field_errors: ["No field can be empty"] })
+      );
       return;
     }
     // If passwords do not match we handle that error with UI
     if (password.current!.value !== confirm_password.current!.value) {
-      dispatch({
-        type: AUTH_ERROR,
-        payload: {
-          fallback_message: "Passwords must match",
-        },
-      });
+      dispatch(
+        registerError(400, {
+          password: ["Passwords must match"],
+          confirm_password: ["Passwords must match"],
+        })
+      );
     } else {
       const newUser = {
         username: username.current!.value,
@@ -96,7 +88,7 @@ const Register = () => {
     }
   };
 
-  if (isAuthenticated) {
+  if (auth.isAuthenticated) {
     return <Redirect to="/home" />;
   }
 
@@ -118,6 +110,12 @@ const Register = () => {
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
+              error={auth.errors.errors["username"] ? true : false}
+              helperText={
+                auth.errors.errors["username"]
+                  ? auth.errors.errors["username"][0]
+                  : ""
+              }
               variant="outlined"
               margin="normal"
               required
@@ -129,6 +127,12 @@ const Register = () => {
               autoFocus
             />
             <TextField
+              error={auth.errors.errors["email"] ? true : false}
+              helperText={
+                auth.errors.errors["email"]
+                  ? auth.errors.errors["email"][0]
+                  : ""
+              }
               variant="outlined"
               margin="normal"
               required
@@ -140,6 +144,12 @@ const Register = () => {
               autoComplete="email"
             />
             <TextField
+              error={auth.errors.errors["password"] ? true : false}
+              helperText={
+                auth.errors.errors["password"]
+                  ? auth.errors.errors["password"][0]
+                  : ""
+              }
               variant="outlined"
               margin="normal"
               required
@@ -152,6 +162,12 @@ const Register = () => {
               autoComplete="current-password"
             />
             <TextField
+              error={auth.errors.errors["confirm_password"] ? true : false}
+              helperText={
+                auth.errors.errors["confirm_password"]
+                  ? auth.errors.errors["confirm_password"][0]
+                  : ""
+              }
               variant="outlined"
               margin="normal"
               required
@@ -163,8 +179,10 @@ const Register = () => {
               inputRef={confirm_password}
               autoComplete="current-password"
             />
-            {errors.isError ? (
-              <Alert severity="error">{errors.fallback_message}</Alert>
+            {auth.errors.errors["non_field_errors"] ? (
+              <Alert severity="error">
+                {auth.errors.errors["non_field_errors"][0]}
+              </Alert>
             ) : (
               ""
             )}

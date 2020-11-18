@@ -15,5 +15,6 @@ import AuthenticatedRoute from "./Routes/AuthenticatedRoute";
 import Error from "./Common/404";
 import Loader from "./Common/Loader";
 import Home from "./Pages/Home";
+import { fieldError } from "./Common/fieldError";
 
-export { Login, Register, AuthenticatedRoute, Error, Loader, Home };
+export { Login, Register, AuthenticatedRoute, Error, Loader, Home, fieldError };

@@ -22,6 +22,8 @@ import { IRootState } from "../../actions/types";
 // React router imports
 import { Redirect } from "react-router-dom";
 
+import { fieldError } from "../";
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -50,7 +52,10 @@ const Login: React.FC = () => {
    * Here its accessing the isAuthenticated to check if the user
    * is authenticated.
    */
-  const auth = useSelector((state: IRootState) => state.auth);
+  const isAuthenticated = useSelector(
+    (state: IRootState) => state.auth.isAuthenticated
+  );
+  const errors = useSelector((state: IRootState) => state.auth.errors);
   /**
    * useDispatch is a Redux hook used to dispatch an action.
    */
@@ -90,7 +95,7 @@ const Login: React.FC = () => {
    * was found in localStorage. Redirect them to the home page.
    * for token logic check reducers/authReducer.ts.
    */
-  if (auth.isAuthenticated) {
+  if (isAuthenticated) {
     return <Redirect to="/home" />;
   }
 
@@ -118,12 +123,8 @@ const Login: React.FC = () => {
            */}
           <form className={classes.form} onSubmit={handleLogin} noValidate>
             <TextField
-              error={auth.errors.errors["username"] ? true : false}
-              helperText={
-                auth.errors.errors["username"]
-                  ? auth.errors.errors["username"][0]
-                  : ""
-              }
+              error={fieldError("username", errors).error}
+              helperText={fieldError("username", errors).helperText}
               variant="outlined"
               margin="normal"
               required
@@ -133,12 +134,8 @@ const Login: React.FC = () => {
               autoFocus
             />
             <TextField
-              error={auth.errors.errors["password"] ? true : false}
-              helperText={
-                auth.errors.errors["password"]
-                  ? auth.errors.errors["password"][0]
-                  : ""
-              }
+              error={fieldError("password", errors).error}
+              helperText={fieldError("password", errors).helperText}
               variant="outlined"
               margin="normal"
               required
@@ -150,8 +147,8 @@ const Login: React.FC = () => {
               label="Password"
               autoComplete="current-password"
             />
-            {auth.errors.errors["login"] ? (
-              <Alert severity="error">{auth.errors.errors["login"][0]}</Alert>
+            {errors.errors["login"] ? (
+              <Alert severity="error">{errors.errors["login"][0]}</Alert>
             ) : (
               ""
             )}

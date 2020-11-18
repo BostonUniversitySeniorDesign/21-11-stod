@@ -16,5 +16,15 @@ import Error from "./Common/404";
 import Loader from "./Common/Loader";
 import Home from "./Pages/Home";
 import Groups from "./Groups/Groups";
+import { fieldError } from "./Common/fieldError";
 
-export { Login, Register, AuthenticatedRoute, Error, Loader, Home, Groups };
+export {
+  Login,
+  Register,
+  AuthenticatedRoute,
+  Error,
+  Loader,
+  Home,
+  Groups,
+  fieldError,
+};

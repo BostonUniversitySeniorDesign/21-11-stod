@@ -30,6 +30,7 @@ const initialState: IAuthState = {
   user: null,
   password_email_sent: false,
   new_password_set: false,
+  errors: { status_code: null, errors: { key: [] } },
 };
 
 function authReducer(state = initialState, action: IAuthAction): IAuthState {
@@ -57,6 +58,10 @@ function authReducer(state = initialState, action: IAuthAction): IAuthState {
         isLoading: false,
       };
     case AUTH_ERROR:
+      return {
+        ...state,
+        errors: action.payload,
+      };
     case LOGIN_FAIL:
     case LOGOUT_SUCCESS:
     case REGISTER_FAIL:

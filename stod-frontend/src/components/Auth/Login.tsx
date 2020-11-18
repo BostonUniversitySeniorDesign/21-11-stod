@@ -16,11 +16,13 @@ import Alert from "@material-ui/lab/Alert";
 import useStyles from "../../styles";
 // Redux imports
 import { useSelector, useDispatch } from "react-redux";
-import { login } from "../../actions/authActions";
+import { login, loginError } from "../../actions/authActions";
 // Typescript imports
-import { IRootState, AUTH_ERROR } from "../../actions/types";
+import { IRootState } from "../../actions/types";
 // React router imports
 import { Redirect } from "react-router-dom";
+
+import { fieldError } from "../";
 
 function Copyright() {
   return (
@@ -40,12 +42,11 @@ const Login: React.FC = () => {
   const classes = useStyles();
   /**
    * useRef is a React hook used to reference a field input. in this case
-   * we are referencing the email and password TextFields by creating two
+   * we are referencing the username and password TextFields by creating two
    * references to it.
    */
-  const email = useRef<HTMLInputElement>();
+  const username = useRef<HTMLInputElement>();
   const password = useRef<HTMLInputElement>();
-  const errors = useSelector((state: IRootState) => state.error);
   /**
    * useSelector is a Redux hook used to access a attribute from the global store.
    * Here its accessing the isAuthenticated to check if the user
@@ -54,6 +55,7 @@ const Login: React.FC = () => {
   const isAuthenticated = useSelector(
     (state: IRootState) => state.auth.isAuthenticated
   );
+  const errors = useSelector((state: IRootState) => state.auth.errors);
   /**
    * useDispatch is a Redux hook used to dispatch an action.
    */
@@ -76,19 +78,16 @@ const Login: React.FC = () => {
      * be null or undefined here, so don't complain about the possibility
      * of it being null or undefined. I used it since under the hood useRef uses document.getElementBy
      * which could passibly be undefined, so typescript complains that it could be undefined becuase
-     * login(email: string, password: string) expects string inputs. This may come up when using useRef
+     * login(username: string, password: string) expects string inputs. This may come up when using useRef
      * so add the exclamation when doing so.
      */
-    if (email.current?.value === "" || password.current?.value === "") {
-      dispatch({
-        type: AUTH_ERROR,
-        payload: { fallback_message: "No field can be empty" },
-      });
+    if (username.current?.value === "" || password.current?.value === "") {
+      dispatch(loginError(400, { login: ["No field can be empty"] }));
       return;
     }
 
-    console.log(email.current!.value, password.current!.value);
-    dispatch(login(email.current!.value, password.current!.value));
+    console.log(username.current!.value, password.current!.value);
+    dispatch(login(username.current!.value, password.current!.value));
   };
 
   /*
@@ -120,22 +119,23 @@ const Login: React.FC = () => {
             Sign in
           </Typography>
           {/**
-           * Main form where email and password are input
+           * Main form where username and password are input
            */}
           <form className={classes.form} onSubmit={handleLogin} noValidate>
             <TextField
+              error={fieldError("username", errors).error}
+              helperText={fieldError("username", errors).helperText}
               variant="outlined"
               margin="normal"
               required
               fullWidth
-              id="email"
-              name="email"
-              autoComplete="email"
-              inputRef={email}
-              label="Email"
+              inputRef={username}
+              label="Username"
               autoFocus
             />
             <TextField
+              error={fieldError("password", errors).error}
+              helperText={fieldError("password", errors).helperText}
               variant="outlined"
               margin="normal"
               required
@@ -147,8 +147,8 @@ const Login: React.FC = () => {
               label="Password"
               autoComplete="current-password"
             />
-            {errors.isError ? (
-              <Alert severity="error">{errors.fallback_message}</Alert>
+            {errors.errors["login"] ? (
+              <Alert severity="error">{errors.errors["login"][0]}</Alert>
             ) : (
               ""
             )}
@@ -172,7 +172,7 @@ const Login: React.FC = () => {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/register" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

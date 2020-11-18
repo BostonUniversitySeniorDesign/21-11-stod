@@ -15,13 +15,13 @@ import Alert from "@material-ui/lab/Alert";
 //Global style import
 import useStyles from "../../styles";
 // TypeScript imports
-import { IRootState, AUTH_ERROR } from "../../actions/types";
+import { IRootState } from "../../actions/types";
 //Redux imports
 import { useSelector, useDispatch } from "react-redux";
-import { registerUser } from "../../actions/authActions";
+import { registerUser, registerError } from "../../actions/authActions";
 // React router imports
 import { Redirect } from "react-router-dom";
-
+import { fieldError } from "../";
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -46,11 +46,9 @@ const Register = () => {
   const isAuthenticated = useSelector(
     (state: IRootState) => state.auth.isAuthenticated
   );
-  const errors = useSelector((state: IRootState) => state.error);
+  const errors = useSelector((state: IRootState) => state.auth.errors);
   // Redux dispatch hook
   const dispatch = useDispatch();
-
-  console.log(errors);
 
   /**
    * handleLogin is fired when a user clicks the register button. It is
@@ -69,22 +67,19 @@ const Register = () => {
       confirm_password.current?.value === "" ||
       email.current?.value === ""
     ) {
-      dispatch({
-        type: AUTH_ERROR,
-        payload: {
-          fallback_message: "No field can be empty",
-        },
-      });
+      dispatch(
+        registerError(400, { non_field_errors: ["No field can be empty"] })
+      );
       return;
     }
     // If passwords do not match we handle that error with UI
     if (password.current!.value !== confirm_password.current!.value) {
-      dispatch({
-        type: AUTH_ERROR,
-        payload: {
-          fallback_message: "Passwords must match",
-        },
-      });
+      dispatch(
+        registerError(400, {
+          password: ["Passwords must match"],
+          confirm_password: ["Passwords must match"],
+        })
+      );
     } else {
       const newUser = {
         username: username.current!.value,
@@ -118,6 +113,8 @@ const Register = () => {
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
+              error={fieldError("username", errors).error}
+              helperText={fieldError("username", errors).helperText}
               variant="outlined"
               margin="normal"
               required
@@ -129,6 +126,8 @@ const Register = () => {
               autoFocus
             />
             <TextField
+              error={fieldError("email", errors).error}
+              helperText={fieldError("email", errors).helperText}
               variant="outlined"
               margin="normal"
               required
@@ -140,6 +139,8 @@ const Register = () => {
               autoComplete="email"
             />
             <TextField
+              error={fieldError("password", errors).error}
+              helperText={fieldError("password", errors).helperText}
               variant="outlined"
               margin="normal"
               required
@@ -152,6 +153,8 @@ const Register = () => {
               autoComplete="current-password"
             />
             <TextField
+              error={fieldError("confirm_password", errors).error}
+              helperText={fieldError("confirm_password", errors).helperText}
               variant="outlined"
               margin="normal"
               required
@@ -163,8 +166,10 @@ const Register = () => {
               inputRef={confirm_password}
               autoComplete="current-password"
             />
-            {errors.isError ? (
-              <Alert severity="error">{errors.fallback_message}</Alert>
+            {errors.errors["non_field_errors"] ? (
+              <Alert severity="error">
+                {errors.errors["non_field_errors"][0]}
+              </Alert>
             ) : (
               ""
             )}

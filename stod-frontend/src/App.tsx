@@ -9,7 +9,13 @@ import store from "./store";
 import Error from "./components/Common/404";
 import { Provider } from "react-redux";
 import { loadUser } from "./actions/authActions";
-import { Login, Register, AuthenticatedRoute, Home, Groups } from "./components";
+import {
+  Login,
+  Register,
+  AuthenticatedRoute,
+  Home,
+  Groups,
+} from "./components";
 
 const App = () => {
   // We attempt to load a user as soon as they visit the site

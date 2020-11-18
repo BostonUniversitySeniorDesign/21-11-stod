@@ -52,6 +52,7 @@ export interface IAuthAction {
 export interface IRootState {
   auth: IAuthState;
   error: IErrorState;
+  groups: IGroupsState;
 }
 
 // Header JSON interface
@@ -80,4 +81,23 @@ export interface IErrorState {
 export interface IErrorAction {
   type: typeof AUTH_ERROR | typeof NO_ERROR;
   payload?: { message: string; code: number };
+}
+
+export const GROUPS_SUCCESS = "GROUPS_SUCCESS";
+export const GROUPS_ERROR = "GROUPS_ERROR";
+
+export interface SingleGroup {
+  name: string;
+  description: string;
+}
+
+export interface IGroupsState {
+  isLoading: boolean;
+  groups: Array<SingleGroup>;
+  isError: boolean;
+}
+
+export interface IGroupsAction {
+  type: typeof GROUPS_SUCCESS | typeof GROUPS_ERROR
+  payload?: any;
 }

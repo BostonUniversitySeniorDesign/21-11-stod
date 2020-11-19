@@ -10,7 +10,8 @@ import {
 
 const initialState: PostState = {
     posts: [],
-    isError: false
+    isError: false,
+    isLoading: true
 }
 
 function postReducer(state = initialState, action: PostAction): PostState {
@@ -18,8 +19,10 @@ function postReducer(state = initialState, action: PostAction): PostState {
         case LOAD_POSTS:
             return {
                 ...state,
-                posts: action.payload
+                posts: action.payload,
+                isLoading: false
             }
+        // simple case for now to see if error was being produced
         case LOAD_POST_ERROR:
         return {
             ...state,

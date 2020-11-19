@@ -56,6 +56,7 @@ export interface IRootState {
   auth: IAuthState;
   error: IErrorState;
   groups: IGroupsState;
+  posts: PostState;
 }
 
 // Header JSON interface
@@ -108,6 +109,7 @@ export interface IGroupsAction {
 
 export const LOAD_POSTS = 'LOAD_POSTS';
 export const LOAD_POST = 'LOAD_POST';
+export const POSTS_LOADING = 'POSTS_LOADING'
 export const ADD_POST = 'ADD_POST';
 export const DELETE_POST = 'DELETE_POST';
 export const EDIT_POST = 'EDIT_POST';
@@ -122,6 +124,7 @@ export interface IPost {
 }
 
 export interface PostState {
+  isLoading: boolean;
   posts: IPost[];
   isError: boolean;
 }

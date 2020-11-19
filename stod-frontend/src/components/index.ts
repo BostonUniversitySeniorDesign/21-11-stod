@@ -16,6 +16,7 @@ import Error from "./Common/404";
 import Loader from "./Common/Loader";
 import Home from "./Pages/Home";
 import Groups from "./Groups/Groups";
+import Posts from "./Posts/Posts"
 import { fieldError, validateEmail } from "./Common/helper_funcs";
 
 export {
@@ -27,5 +28,6 @@ export {
   Home,
   Groups,
   fieldError,
+  Posts,
   validateEmail,
 };

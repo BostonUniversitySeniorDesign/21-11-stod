@@ -14,16 +14,15 @@ import {
   export const loadAllPosts = () => (
     dispatch: Dispatch,
   ) => {
-    // Dispatch user loading which will set isLoading to true.
-    dispatch({ type: LOAD_POSTS });
     // Make GET request to server.
-    axios
-      .get(`http://${DOMAIN}/accounts/posts/?format=json`)
+    return axios
+      .get(`http://${DOMAIN}/posts/?format=json`)
       .then((res) => {
         // If no error, server responds with user object.
-        dispatch({ type: LOAD_POSTS, payload: res.data as IPost[]});
+        dispatch({ type: LOAD_POSTS, payload: res.data as Array<IPost>});
       })
       .catch((err) => {
+        console.log(err);
         dispatch({type: LOAD_POST_ERROR});
         //handle any errors here
       });

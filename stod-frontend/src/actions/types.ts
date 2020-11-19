@@ -123,9 +123,10 @@ export interface IPost {
 
 export interface PostState {
   posts: IPost[];
+  isError: boolean;
 }
 
 export interface PostAction {
-  type: string;
+  type: typeof LOAD_POSTS | typeof LOAD_POST_ERROR;
   payload?: any;
 }

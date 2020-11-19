@@ -10,6 +10,7 @@ import {
 
 const initialState: PostState = {
     posts: [],
+    isError: false
 }
 
 function postReducer(state = initialState, action: PostAction): PostState {
@@ -19,6 +20,11 @@ function postReducer(state = initialState, action: PostAction): PostState {
                 ...state,
                 posts: action.payload
             }
+        case LOAD_POST_ERROR:
+        return {
+            ...state,
+            isError: true
+        }
         default:
             return state;
     }

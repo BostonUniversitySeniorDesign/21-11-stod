@@ -8,11 +8,6 @@ import { IRootState } from "../../actions/types";
 const Posts: React.FC = () => {
     const dispatch = useDispatch();
 
-    let currentState = useSelector(
-        (state: IRootState) => state.groups
-    );
-
-
     useEffect(()=>{
         dispatch(loadAllPosts());
       }, [])

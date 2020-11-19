@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from groups.models import Group
 # Create your models here.
+
 class Post (models.Model):
     title = models.CharField(max_length=100)
     group = models.ForeignKey(Group, on_delete=models.CASCADE);
@@ -14,9 +15,9 @@ class Post (models.Model):
         return self.title
 
 class Comment(models.Model):
+    post = models.ForeignKey(Post,on_delete=models.CASCADE,related_name='comments')
     name = models.CharField(max_length=140)
-    email = models.EmailField()
-    body = models.TextField()
+    comment = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
 
     class Meta:

@@ -6,3 +6,5 @@ from .models import Post
 class PostViewset(viewsets.ModelViewSet):
     serializer_class = PostSerializer
     queryset = Post.objects.all()
+
+permission_classes = None

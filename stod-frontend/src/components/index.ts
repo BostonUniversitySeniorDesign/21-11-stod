@@ -17,6 +17,7 @@ import Loader from "./Common/Loader";
 import Home from "./Pages/Home";
 import Groups from "./Groups/Groups";
 import { fieldError } from "./Common/fieldError";
+import Posts from "./Posts/Posts"
 
 export {
   Login,
@@ -27,4 +28,5 @@ export {
   Home,
   Groups,
   fieldError,
+  Posts
 };

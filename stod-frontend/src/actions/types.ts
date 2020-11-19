@@ -1,3 +1,5 @@
+import { StringLiteral } from "typescript";
+
 // Server domain
 export const DOMAIN = "127.0.0.1:8000";
 /**
@@ -101,5 +103,29 @@ export interface IGroupsState {
 
 export interface IGroupsAction {
   type: typeof GROUPS_SUCCESS | typeof GROUPS_ERROR
+  payload?: any;
+}
+
+export const LOAD_POSTS = 'LOAD_POSTS';
+export const LOAD_POST = 'LOAD_POST';
+export const ADD_POST = 'ADD_POST';
+export const DELETE_POST = 'DELETE_POST';
+export const EDIT_POST = 'EDIT_POST';
+export const LOAD_POST_ERROR = 'LOAD_POST_ERROR';
+
+export interface IPost {
+  id: number;
+  title: string;
+  group: string;
+  contents: string;
+  poster: string;
+}
+
+export interface PostState {
+  posts: IPost[];
+}
+
+export interface PostAction {
+  type: string;
   payload?: any;
 }

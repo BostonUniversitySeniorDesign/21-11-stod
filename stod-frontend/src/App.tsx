@@ -9,7 +9,7 @@ import store from "./store";
 import Error from "./components/Common/404";
 import { Provider } from "react-redux";
 import { loadUser } from "./actions/authActions";
-import { Login, Register, AuthenticatedRoute, Home, Groups } from "./components";
+import { Login, Register, AuthenticatedRoute, Home, Groups, Posts} from "./components";
 
 const App = () => {
   // We attempt to load a user as soon as they visit the site
@@ -28,6 +28,7 @@ const App = () => {
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/groups" component={Groups} />
+              <Route exact path="/posts" component={Posts} />
               <AuthenticatedRoute path="/home" component={Home} />
               <Route exact path="/404" component={Error} />
               <Redirect from="*" to="/404" />

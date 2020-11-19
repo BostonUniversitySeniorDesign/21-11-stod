@@ -42,6 +42,7 @@ const Home = () => {
           name="mode"
           inputProps={{ "aria-label": "primary checkbox" }}
         />
+        <h2>This is a home page and can only be viewd by a logged in user</h2>
       </div>
     </ThemeProvider>
   );

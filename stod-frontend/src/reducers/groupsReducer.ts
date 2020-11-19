@@ -3,6 +3,10 @@ import {
     IGroupsState,
     IGroupsAction,
     GROUPS_ERROR,
+    IGroupsCreateState,
+    IGroupsCreateAction,
+    GROUP_CREATE_SUCCESS,
+    GROUP_CREATE_ERROR,
 } from "../actions/types";
 
 const initialState: IGroupsState = {
@@ -11,7 +15,7 @@ const initialState: IGroupsState = {
     isError: false,
 }
 
-function groupsReducer(state = initialState, action: IGroupsAction): IGroupsState {
+export function groupsReducer(state = initialState, action: IGroupsAction): IGroupsState {
     switch (action.type) {
         case GROUPS_SUCCESS:
             return {
@@ -32,4 +36,27 @@ function groupsReducer(state = initialState, action: IGroupsAction): IGroupsStat
     }
 }
 
-export default groupsReducer;
+const initialGroupCreateState: IGroupsCreateState = {
+    isLoading: true,
+    isSuccess: false,
+    isError: false,
+}
+
+export function groupCreateReducer(state = initialGroupCreateState, action: IGroupsCreateAction): IGroupsCreateState {
+    switch (action.type) {
+        case GROUP_CREATE_ERROR:
+            return {
+                ...state,
+                isLoading: false,
+                isSuccess: false,
+            }
+        case GROUP_CREATE_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                isSuccess: true
+            }
+        default:
+            return state;
+    }
+}

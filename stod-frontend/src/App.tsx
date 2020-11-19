@@ -30,7 +30,23 @@ const App = () => {
           <div className="container">
             {/* Site routes */}
             <Switch>
-              <Route exact path="/" render={() => <h2>Hi</h2>} />
+              <Route
+                exact
+                path="/"
+                render={() => (
+                  <div>
+                    <img
+                      src="/stod-logo-secondary.png"
+                      alt="stod logo secondary"
+                      height="250"
+                      width="250"
+                    />
+                    <h1 style={{ marginLeft: "100px" }}>
+                      This is a public page and can be viewd by anyone
+                    </h1>
+                  </div>
+                )}
+              />
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/groups" component={Groups} />

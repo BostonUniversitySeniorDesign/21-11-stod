@@ -74,7 +74,6 @@ export const login = (username: string, password: string) => (
     .post(`http://${DOMAIN}/accounts/login/`, body, config)
     .then((res) => {
       dispatch({ type: LOGIN_SUCCESS, payload: res.data });
-      console.log(res);
     })
     .catch((err) => {
       dispatch({

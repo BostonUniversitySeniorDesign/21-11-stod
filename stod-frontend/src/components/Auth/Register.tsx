@@ -21,7 +21,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { registerUser, registerError } from "../../actions/authActions";
 // React router imports
 import { Redirect } from "react-router-dom";
-import { fieldError } from "../";
+import { fieldError, validateEmail } from "../";
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -70,6 +70,11 @@ const Register = () => {
       dispatch(
         registerError(400, { non_field_errors: ["No field can be empty"] })
       );
+      return;
+    }
+
+    if (!validateEmail(email.current?.value)) {
+      dispatch(registerError(400, { email: ["Must be a valid email"] }));
       return;
     }
     // If passwords do not match we handle that error with UI

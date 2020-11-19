@@ -1,8 +1,10 @@
 from rest_framework import routers
-from .views import PostViewset
+from .views import PostViewset, CommentViewset
 from django.urls import include, path
+from . import views
+from django.conf.urls import url
 
 router = routers.DefaultRouter()
-router.register("", PostViewset, "posts")
-
+router.register("posts", PostViewset, "posts")
+router.register("comments", CommentViewset, "comments")
 urlpatterns = router.urls

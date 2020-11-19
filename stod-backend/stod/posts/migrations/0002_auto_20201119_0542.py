@@ -10,6 +10,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+<<<<<<< HEAD
         migrations.CreateModel(
             name='Comment',
             fields=[
@@ -27,10 +28,20 @@ class Migration(migrations.Migration):
             model_name='post',
             name='group',
             field=models.CharField(max_length=100),
+=======
+        migrations.AlterField(
+            model_name='post',
+            name='group',
+            field=models.CharField(max_length=50),
+>>>>>>> refs/remotes/origin/main
         ),
         migrations.AlterField(
             model_name='post',
             name='poster',
+<<<<<<< HEAD
             field=models.CharField(max_length=100),
+=======
+            field=models.CharField(max_length=25),
+>>>>>>> refs/remotes/origin/main
         ),
     ]

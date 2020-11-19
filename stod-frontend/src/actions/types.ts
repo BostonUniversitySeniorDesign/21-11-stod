@@ -1,3 +1,5 @@
+import { StringLiteral } from "typescript";
+
 // Server domain
 export const DOMAIN = "127.0.0.1:8000";
 /**
@@ -55,6 +57,7 @@ export interface IRootState {
   error: IErrorState;
   groups: IGroupsState;
   groupCreate: IGroupsCreateState;
+  posts: PostState;
 }
 
 // Header JSON interface
@@ -115,5 +118,32 @@ export interface IGroupsCreateState {
 
 export interface IGroupsCreateAction {
   type: typeof GROUP_CREATE_SUCCESS | typeof GROUP_CREATE_ERROR;
+  payload?: any;
+}
+
+export const LOAD_POSTS = "LOAD_POSTS";
+export const LOAD_POST = "LOAD_POST";
+export const POSTS_LOADING = "POSTS_LOADING";
+export const ADD_POST = "ADD_POST";
+export const DELETE_POST = "DELETE_POST";
+export const EDIT_POST = "EDIT_POST";
+export const LOAD_POST_ERROR = "LOAD_POST_ERROR";
+
+export interface IPost {
+  id: number;
+  title: string;
+  group: string;
+  contents: string;
+  poster: string;
+}
+
+export interface PostState {
+  isLoading: boolean;
+  posts: IPost[];
+  isError: boolean;
+}
+
+export interface PostAction {
+  type: typeof LOAD_POSTS | typeof LOAD_POST_ERROR;
   payload?: any;
 }

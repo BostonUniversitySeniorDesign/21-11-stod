@@ -10,38 +10,14 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-<<<<<<< HEAD
-        migrations.CreateModel(
-            name='Comment',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=140)),
-                ('email', models.EmailField(max_length=254)),
-                ('body', models.TextField()),
-                ('created_on', models.DateTimeField(auto_now_add=True)),
-            ],
-            options={
-                'ordering': ['created_on'],
-            },
-        ),
-        migrations.AlterField(
-            model_name='post',
-            name='group',
-            field=models.CharField(max_length=100),
-=======
         migrations.AlterField(
             model_name='post',
             name='group',
             field=models.CharField(max_length=50),
->>>>>>> refs/remotes/origin/main
         ),
         migrations.AlterField(
             model_name='post',
             name='poster',
-<<<<<<< HEAD
-            field=models.CharField(max_length=100),
-=======
             field=models.CharField(max_length=25),
->>>>>>> refs/remotes/origin/main
         ),
     ]

@@ -15,6 +15,9 @@ const theme = createMuiTheme({
   typography: {
     h6: { fontFamily: "'Comfortaa', cursive" },
     subtitle1: { fontFamily: "'Comfortaa', cursive" },
+    button: {
+      textTransform: "none",
+    },
   },
 });
 

@@ -5,6 +5,6 @@ from . import views
 from django.conf.urls import url
 
 router = routers.DefaultRouter()
-router.register("posts", PostViewset, "posts")
-router.register("comments", CommentViewset, "comments")
+router.register("posts", PostViewset, "post")
+router.register("comments", CommentViewset, "comment")
 urlpatterns = router.urls

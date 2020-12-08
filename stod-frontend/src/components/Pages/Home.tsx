@@ -26,9 +26,8 @@ import {
 } from "@material-ui/core/styles";
 import Navbar from "../Common/Navbar";
 // icons
-import DashboardIcon from "@material-ui/icons/Dashboard";
-import PaymentIcon from "@material-ui/icons/Payment";
-
+import PersonIcon from "@material-ui/icons/Person";
+import GroupIcon from "@material-ui/icons/Group";
 const drawerWidth = 180;
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -72,9 +71,9 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "100%",
       justifyContent: "flex-start",
       textAlign: "left",
-      padding: "0 10px",
-      paddingTop: "20px",
-      paddingBottom: "20px",
+      padding: "0 20px",
+      paddingTop: "0px",
+      paddingBottom: "0px",
       borderRadius: "0px 50px 50px 0px",
       "&:hover": {
         boxShadow: "none",
@@ -87,7 +86,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     typo: {
       color: theme.palette.primary.main,
-      fontWeight: theme.typography.fontWeightLight,
+      fontWeight: theme.typography.fontWeightMedium,
       marginLeft: "10px",
     },
     typo_head: {
@@ -107,9 +106,9 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "100%",
       justifyContent: "flex-start",
       textAlign: "left",
-      padding: "0 10px",
-      paddingTop: "20px",
-      paddingBottom: "20px",
+      padding: "0px 20px",
+      paddingTop: "0px",
+      paddingBottom: "0px",
       "&:hover": {
         boxShadow: "none",
       },
@@ -124,11 +123,6 @@ const Home = () => {
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
-  const icons = [
-    <DashboardIcon className={classes.typo} />,
-    <PaymentIcon className={classes.typo} />,
-  ];
-
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -138,10 +132,10 @@ const Home = () => {
       <div className={classes.toolbar} />
       <Divider />
       <Typography variant="h6" className={classes.typo_head}>
-        Main
+        Spaces
       </Typography>
-      <List>
-        {["Dashboard", "Billing"].map((text, index) => (
+      <List style={{ maxHeight: 200, overflow: "auto" }}>
+        {["Alc Anon", "Depression"].map((text, index) => (
           <ListItem
             key={text}
             className={classes.item}
@@ -151,7 +145,7 @@ const Home = () => {
               className={selected == text ? classes.active : classes.button}
               key={text}
               onClick={() => setSelected(text)}
-              fullWidth
+              startIcon={<GroupIcon />}
             >
               <Typography variant="subtitle1" className={classes.typo}>
                 {text}
@@ -160,12 +154,22 @@ const Home = () => {
           </ListItem>
         ))}
       </List>
+
       <Divider />
       <Typography variant="h6" className={classes.typo_head}>
-        Account
+        Connections
       </Typography>
       <List style={{ margin: 0, padding: 0 }}>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
+        {[
+          "Anon1",
+          "Anon2",
+          "Anon3",
+          "Anon4",
+          "Anon5",
+          "Anon6",
+          "Anon7",
+          "Anon8",
+        ].map((text, index) => (
           <ListItem
             key={text}
             className={classes.item}
@@ -175,6 +179,8 @@ const Home = () => {
               className={selected == text ? classes.active : classes.button}
               key={text}
               onClick={() => setSelected(text)}
+              startIcon={<PersonIcon />}
+              fullWidth
             >
               <Typography variant="subtitle1" className={classes.typo}>
                 {text}

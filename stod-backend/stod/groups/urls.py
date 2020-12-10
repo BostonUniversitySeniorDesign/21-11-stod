@@ -1,8 +1,12 @@
-from django.urls import path
+from django.urls import path, include
 from rest_framework import routers
-from .views import GroupViewset
+from .views import GroupViewset, UserGroupsAPI
 
 router = routers.DefaultRouter()
-router.register("", GroupViewset, "group")
+router.register('', GroupViewset, "group")
 
-urlpatterns = router.urls
+urlpatterns = [
+    path('subscribed/', UserGroupsAPI.as_view()),
+]
+
+urlpatterns += router.urls

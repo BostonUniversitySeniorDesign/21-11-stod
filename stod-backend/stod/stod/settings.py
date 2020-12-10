@@ -49,6 +49,9 @@ REST_FRAMEWORK = {
       'DEFAULT_AUTHENTICATION_CLASSES': (
        'rest_framework.authentication.TokenAuthentication',
    ),
+#    'DEFAULT_PERMISSION_CLASSES': (
+#         'rest_framework.permissions.IsAdminUser',
+#    ),
     "EXCEPTION_HANDLER": "drf_pretty_exception_handler.exception_handler",
 }
 

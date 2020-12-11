@@ -54,6 +54,7 @@ class UserGroupsAPI(generics.GenericAPIView):
 
         rows = self.queryset.filter(user=user)
         row = rows[0] if rows else UserGroups(user=userObj)
+        row.save()
         row.groups.add(groupObj)
         row.save()
 
@@ -89,6 +90,9 @@ class UserGroupsAPI(generics.GenericAPIView):
             userObj = userObj.first()
 
         result = self.queryset.filter(user=userObj)
+        if len(result) == 0:
+            return Response([])
+
         groups = result.first().groups.all()
         groupNames = list(
             map(lambda g: {'name': g.name, 'description': g.description}, groups))

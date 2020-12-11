@@ -19,7 +19,7 @@ const Groups: React.FC<IGroupsProps> = (props: IGroupsProps) => {
     );
 
     const username = useSelector(
-        (state: IRootState) => "quinn"
+        (state: IRootState) => state.auth.user?.username
     );
 
     const groupCreateState = useSelector(
@@ -64,17 +64,23 @@ const Groups: React.FC<IGroupsProps> = (props: IGroupsProps) => {
     }
 
     useEffect(() => {
-        dispatch(fetchGroups(props.subscribedOnly));
-    }, []);
+        if (username !== undefined) {
+            dispatch(fetchGroups(props.subscribedOnly, username));
+        }
+    }, [username]);
 
     return (
         <React.Fragment>
             {renderBody()}
-            <form className={classes.form} onSubmit={handleCreate} noValidate>
-                <TextField id="name" name="name" inputRef={name} label="Name"/>
-                <TextField id="description" name="description" inputRef={description} label="Description"/>
-                <Button type="submit" style={{border: "1px solid black"}}>Submit</Button>
-            </form>
+            {
+                !props.subscribedOnly ? (
+                <form className={classes.form} onSubmit={handleCreate} noValidate>
+                    <TextField id="name" name="name" inputRef={name} label="Name"/>
+                    <TextField id="description" name="description" inputRef={description} label="Description"/>
+                    <Button type="submit" style={{border: "1px solid black"}}>Submit</Button>
+                </form>
+                ) : null
+            }
         </React.Fragment>
     )
 }

@@ -3,10 +3,11 @@ import axios from "axios";
 import { SingleGroup, DOMAIN, GROUPS_SUCCESS, GROUPS_ERROR, GROUP_CREATE_SUCCESS, GROUP_CREATE_ERROR } from "./types";
 import { Dispatch } from "redux";
 
-export const fetchGroups = (subscribedOnly: boolean) => (
+export const fetchGroups = (subscribedOnly: boolean, user: string) => (
     dispatch: Dispatch
 ) => {
-    const url = subscribedOnly ? `http://${DOMAIN}/groups/subscribed/?format=json&user=quinn` : `http://${DOMAIN}/groups/?format=json`;
+
+    const url = subscribedOnly ? `http://${DOMAIN}/groups/subscribed/?format=json&user=${user}` : `http://${DOMAIN}/groups/?format=json`;
     return axios
         .get(url)
         .then((res) => {

@@ -38,3 +38,16 @@ export const createGroup = (name: string, description: string) => (
             dispatch({type: GROUP_CREATE_ERROR, payload: {}});
         })
 }
+
+export const subscribeToGroup = (user: string, group: string) => (dispatch: Dispatch) => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+        },
+    };
+
+    const body = JSON.stringify({user, group});
+
+    axios
+        .post(`http://${DOMAIN}/groups/subscribed/`, body, config);
+}

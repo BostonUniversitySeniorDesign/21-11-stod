@@ -55,7 +55,7 @@ const Groups: React.FC<IGroupsProps> = (props: IGroupsProps) => {
             <ul style={{listStyleType: "none"}}> 
                 {
                     currentState.groups.map((group: SingleGroup) => {
-                        return <Group name={group.name} description={group.description}></Group>
+                        return <Group name={group.name} description={group.description} displayJoinButton={!props.subscribedOnly}></Group>
                     })
                 }
             </ul>

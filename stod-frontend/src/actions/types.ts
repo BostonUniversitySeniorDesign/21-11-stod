@@ -97,6 +97,7 @@ export const GROUP_CREATE_ERROR = "GROUP_CREATE_ERROR";
 export interface SingleGroup {
   name: string;
   description: string;
+  displayJoinButton: boolean;
 }
 
 export interface IGroupsState {

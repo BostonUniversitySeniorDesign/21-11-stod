@@ -2,12 +2,12 @@ import React, { useEffect, useRef } from "react";
 import useStyles from "../../styles";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchGroups, createGroup } from "../../actions/groupsActions";
-import { IRootState, SingleGroup } from "../../actions/types";
+import { IRootState, SingleGroup, IGroupsProps } from "../../actions/types";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Group from "./Group";
 
-const Groups: React.FC = () => {
+const Groups: React.FC<IGroupsProps> = (props: IGroupsProps) => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
@@ -16,6 +16,10 @@ const Groups: React.FC = () => {
 
     const isAuthenticated = useSelector(
         (state: IRootState) => state.auth.isAuthenticated
+    );
+
+    const username = useSelector(
+        (state: IRootState) => "quinn"
     );
 
     const groupCreateState = useSelector(
@@ -60,7 +64,7 @@ const Groups: React.FC = () => {
     }
 
     useEffect(() => {
-        dispatch(fetchGroups());
+        dispatch(fetchGroups(props.subscribedOnly));
     }, []);
 
     return (

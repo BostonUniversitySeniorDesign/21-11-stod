@@ -105,6 +105,10 @@ export interface IGroupsState {
   isError: boolean;
 }
 
+export interface IGroupsProps {
+  subscribedOnly: boolean;
+}
+
 export interface IGroupsAction {
   type: typeof GROUPS_SUCCESS | typeof GROUPS_ERROR;
   payload?: any;

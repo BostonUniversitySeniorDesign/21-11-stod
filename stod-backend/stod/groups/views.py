@@ -64,7 +64,7 @@ class UserGroupsAPI(generics.GenericAPIView):
 
     def get(self, request):
         """
-        Get the names of the groups a given user is in.
+        Get the groups a given user is in.
         """
         serializer = self.serializer_class(data=request.data)
         try:
@@ -90,11 +90,7 @@ class UserGroupsAPI(generics.GenericAPIView):
 
         result = self.queryset.filter(user=userObj)
         groups = result.first().groups.all()
-        groupNames = list(map(lambda g: g.name, groups))
+        groupNames = list(
+            map(lambda g: {'name': g.name, 'description': g.description}, groups))
 
-        return Response(
-            {
-                "success": True,
-                "result": groupNames
-            }
-        )
+        return Response(groupNames)

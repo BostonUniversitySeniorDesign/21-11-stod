@@ -49,13 +49,13 @@ function authReducer(state = initialState, action: IAuthAction): IAuthState {
         user: action.payload,
       };
     case LOGIN_SUCCESS:
-      return {
-        ...state,
-        ...action.payload,
-        isAuthenticated: true,
-        isLoading: false,
-        errors: { status_code: null, errors: { key: [] } },
-      };
+    // return {
+    //   ...state,
+    //   ...action.payload,
+    //   isAuthenticated: true,
+    //   isLoading: false,
+    //   errors: { status_code: null, errors: { key: [] } },
+    // };
     case REGISTER_SUCCESS:
       localStorage.setItem("token", action.payload.token);
       return {

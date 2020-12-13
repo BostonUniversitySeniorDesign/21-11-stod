@@ -2,12 +2,12 @@ import React, { useEffect, useRef } from "react";
 import useStyles from "../../styles";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchGroups, createGroup } from "../../actions/groupsActions";
-import { IRootState, SingleGroup } from "../../actions/types";
+import { IRootState, SingleGroup, IGroupsProps } from "../../actions/types";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Group from "./Group";
 
-const Groups: React.FC = () => {
+const Groups: React.FC<IGroupsProps> = (props: IGroupsProps) => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
@@ -16,6 +16,10 @@ const Groups: React.FC = () => {
 
     const isAuthenticated = useSelector(
         (state: IRootState) => state.auth.isAuthenticated
+    );
+
+    const username = useSelector(
+        (state: IRootState) => state.auth.user?.username
     );
 
     const groupCreateState = useSelector(
@@ -51,7 +55,7 @@ const Groups: React.FC = () => {
             <ul style={{listStyleType: "none"}}> 
                 {
                     currentState.groups.map((group: SingleGroup) => {
-                        return <Group name={group.name} description={group.description}></Group>
+                        return <Group name={group.name} description={group.description} displayJoinButton={!props.subscribedOnly}></Group>
                     })
                 }
             </ul>
@@ -60,17 +64,23 @@ const Groups: React.FC = () => {
     }
 
     useEffect(() => {
-        dispatch(fetchGroups());
-    }, []);
+        if (username !== undefined) {
+            dispatch(fetchGroups(props.subscribedOnly, username));
+        }
+    }, [username]);
 
     return (
         <React.Fragment>
             {renderBody()}
-            <form className={classes.form} onSubmit={handleCreate} noValidate>
-                <TextField id="name" name="name" inputRef={name} label="Name"/>
-                <TextField id="description" name="description" inputRef={description} label="Description"/>
-                <Button type="submit" style={{border: "1px solid black"}}>Submit</Button>
-            </form>
+            {
+                !props.subscribedOnly ? (
+                <form className={classes.form} onSubmit={handleCreate} noValidate>
+                    <TextField id="name" name="name" inputRef={name} label="Name"/>
+                    <TextField id="description" name="description" inputRef={description} label="Description"/>
+                    <Button type="submit" style={{border: "1px solid black"}}>Submit</Button>
+                </form>
+                ) : null
+            }
         </React.Fragment>
     )
 }

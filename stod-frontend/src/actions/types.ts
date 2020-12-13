@@ -97,12 +97,17 @@ export const GROUP_CREATE_ERROR = "GROUP_CREATE_ERROR";
 export interface SingleGroup {
   name: string;
   description: string;
+  displayJoinButton: boolean;
 }
 
 export interface IGroupsState {
   isLoading: boolean;
   groups: Array<SingleGroup>;
   isError: boolean;
+}
+
+export interface IGroupsProps {
+  subscribedOnly: boolean;
 }
 
 export interface IGroupsAction {

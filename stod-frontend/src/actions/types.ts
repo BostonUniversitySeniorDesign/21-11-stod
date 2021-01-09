@@ -58,6 +58,7 @@ export interface IRootState {
   groups: IGroupsState;
   groupCreate: IGroupsCreateState;
   posts: PostState;
+  comments: CommentState;
 }
 
 // Header JSON interface
@@ -151,5 +152,32 @@ export interface PostState {
 
 export interface PostAction {
   type: typeof LOAD_POSTS | typeof POST_ERROR | typeof EDIT_POST | typeof DELETE_POST;
+  payload?: any;
+}
+
+export const LOAD_COMMENTS = "LOAD_POSTS";
+export const COMMENTS_LOADING = "POSTS_LOADING";
+export const ADD_COMMENT = "ADD_POST";
+export const DELETE_COMMENT = "DELETE_POST";
+export const EDIT_COMMENT = "EDIT_POST";
+export const LOAD_COMMENT_ERROR = "LOAD_POST_ERROR";
+
+export interface IComment {
+  id: number;
+  name: string;
+  comment: string;
+  created_on: string;
+  post: string;
+  parent: string;
+}
+
+export interface CommentState {
+  isLoading: boolean;
+  comments: IComment[];
+  isError: boolean;
+}
+
+export interface CommentAction {
+  type: typeof LOAD_COMMENTS | typeof LOAD_COMMENT_ERROR;
   payload?: any;
 }

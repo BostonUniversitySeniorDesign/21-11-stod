@@ -16,7 +16,9 @@ import {
   Home,
   Groups,
   PostWrapper,
+  Comments
 } from "./components";
+
 
 const App = () => {
   // We attempt to load a user as soon as they visit the site
@@ -53,6 +55,7 @@ const App = () => {
               <Route exact path="/groups" component={() => <Groups subscribedOnly={false} />} />
               <Route exact path="/groups/subscribed" component={() => <Groups subscribedOnly={true} />} />
               <Route exact path="/posts" component={PostWrapper} />
+              <Route exact path="/comments" component={Comments} />
               <AuthenticatedRoute path="/home" component={Home} />
               <Route exact path="/404" component={Error} />
               <Redirect from="*" to="/404" />

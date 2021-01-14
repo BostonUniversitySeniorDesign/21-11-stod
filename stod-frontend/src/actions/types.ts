@@ -155,12 +155,14 @@ export interface PostAction {
   payload?: any;
 }
 
-export const LOAD_COMMENTS = "LOAD_POSTS";
-export const COMMENTS_LOADING = "POSTS_LOADING";
-export const ADD_COMMENT = "ADD_POST";
-export const DELETE_COMMENT = "DELETE_POST";
-export const EDIT_COMMENT = "EDIT_POST";
-export const LOAD_COMMENT_ERROR = "LOAD_POST_ERROR";
+export const LOAD_COMMENTS = "LOAD_COMMENTS";
+export const COMMENTS_LOADING = "COMMENTS_LOADING";
+export const ADD_COMMENT = "ADD_COMMENT";
+export const COMMENT_SUCCESS = "COMMENT_SUCCESS";
+export const DELETE_COMMENT = "DELETE_COMMENT";
+export const EDIT_COMMENT = "EDIT_COMMENT";
+export const LOAD_COMMENT_ERROR = "LOAD_COMMENT_ERROR";
+export const COMMENT_CREATE_ERROR = "COMMENT_CREATE_ERROR";
 
 export interface IComment {
   id: number;

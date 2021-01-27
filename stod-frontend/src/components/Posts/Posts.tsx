@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { isTemplateExpression } from "typescript";
 import { loadAllPosts } from "../../actions/postActions";
 import { IPost, IRootState } from "../../actions/types";
+import PostMenu from "./PostMenu";
+
 
 const Posts: React.FC = () => {
     const dispatch = useDispatch();
@@ -35,11 +37,12 @@ const Posts: React.FC = () => {
 
                         <CardContent>
                         <Typography variant="body2" color="textSecondary" >
-                        Reply
+                       
                   </Typography>
-                  <Typography variant="body2" color="textSecondary" style={{textAlign: "right"}}>
+                  <PostMenu poster={post.poster}/>
+                  {/* <Typography variant="body2" color="textSecondary" style={{textAlign: "right"}}>
                         User: {post.poster}
-                  </Typography>
+                  </Typography> */}
                         </CardContent>
                         
                     </Card>

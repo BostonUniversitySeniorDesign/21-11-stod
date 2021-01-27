@@ -7,7 +7,7 @@ import {
     PostAction,
 } from "../actions/types";
 
-
+//type checking initialState with PostState
 const initialState: PostState = {
     posts: [],
     isError: false,

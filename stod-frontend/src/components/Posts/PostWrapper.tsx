@@ -39,7 +39,7 @@ const Posts: React.FC = () => {
                         <Typography variant="body2" color="textSecondary" >
                        
                   </Typography>
-                  <PostMenu poster={post.poster}/>
+                  <PostMenu post={post}/>
                   {/* <Typography variant="body2" color="textSecondary" style={{textAlign: "right"}}>
                         User: {post.poster}
                   </Typography> */}

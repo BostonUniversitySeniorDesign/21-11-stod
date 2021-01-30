@@ -25,6 +25,13 @@ import { IconButton } from "@material-ui/core";
 import MoreVertSharpIcon from '@material-ui/icons/MoreVertSharp';
 import { renderIntoDocument } from "react-dom/test-utils";
 import { MenuOpenTwoTone } from "@material-ui/icons";
+
+
+//!
+import {usePostContext} from "./PostContext"
+
+
+
 import EditPost from "./EditPost"
 
 const PostMenu: React.FC<{ post: IPost }> = ({ post }) => {
@@ -49,6 +56,8 @@ const PostMenu: React.FC<{ post: IPost }> = ({ post }) => {
   //     dispatch(loadAllPosts());
   //   }, [])
   const user = useSelector((state: IRootState) => state.auth.user?.username);
+  //lets you use the data that the context has
+  const {selectedPost, setSelectedPost} = usePostContext();
 
   //   const useStyles = makeStyles((theme) => ({
   //     button: {
@@ -67,9 +76,11 @@ const PostMenu: React.FC<{ post: IPost }> = ({ post }) => {
 
   const handleMenuItemClick = (event: React.MouseEvent<HTMLElement>, option: string) => {
     setOptionSelection(option);
+    setSelectedPost(post);
     setAnchorEl(null);
   };
   const [optionSelection, setOptionSelection] = React.useState<null | string>(null);
+
 
   const options = [
     'Share',

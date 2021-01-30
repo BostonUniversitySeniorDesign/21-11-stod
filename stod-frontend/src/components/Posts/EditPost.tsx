@@ -14,6 +14,8 @@ import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 import { Card, CardContent, CardHeader } from "@material-ui/core";
+import {usePostContext} from "./PostContext"
+
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -51,6 +53,9 @@ const CustomizedDialogs: React.FC<Props> = ({ resetOptionState }) => {
     resetOptionState();
     setOpen(false);
   };
+
+  const {selectedPost} = usePostContext();
+
   return (
     <div>
       {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
@@ -65,7 +70,7 @@ const CustomizedDialogs: React.FC<Props> = ({ resetOptionState }) => {
           <CardHeader />
           <CardContent>
             <Typography variant="body2" color="textPrimary">
-              Hello
+              {selectedPost?.contents}
             </Typography>
           </CardContent>
           Goodbye

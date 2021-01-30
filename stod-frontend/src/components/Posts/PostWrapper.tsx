@@ -8,7 +8,8 @@ import { isTemplateExpression } from "typescript";
 import { loadAllPosts } from "../../actions/postActions";
 import { IPost, IRootState } from "../../actions/types";
 import PostMenu from "./PostMenu";
-
+import Post from "./Post"
+import PostContextProvider from "./PostContext"
 
 const Posts: React.FC = () => {
     const dispatch = useDispatch();
@@ -21,35 +22,18 @@ const Posts: React.FC = () => {
       }, [])
     if (!currentState.isLoading){
         return(
-            <div>
+            <PostContextProvider>
                 {
                     currentState.posts.map((post: IPost) => {
                     return (
-                    <Card style={{maxWidth: 600, margin: '30px'}} >
-                        <CardHeader
-                        title= {post.title}
-                        />
-                        <CardContent>
-                        <Typography variant="body2" color="textPrimary" >
-                        {post.contents}
-                  </Typography>
-                        </CardContent>
-
-                        <CardContent>
-                        <Typography variant="body2" color="textSecondary" >
-                       
-                  </Typography>
-                  <PostMenu post={post}/>
-                  {/* <Typography variant="body2" color="textSecondary" style={{textAlign: "right"}}>
-                        User: {post.poster}
-                  </Typography> */}
-                        </CardContent>
-                        
-                    </Card>
+                        <div>
+                    <Post post={post}/>
+                  
+                  </div>
                     )
                     })
                 }
-            </div>
+            </PostContextProvider>
         );
     }
     else{

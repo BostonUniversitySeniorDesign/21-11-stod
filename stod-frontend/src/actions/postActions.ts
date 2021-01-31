@@ -6,7 +6,7 @@ import { Dispatch } from "redux";
 
 import {
     LOAD_POSTS,
-    LOAD_POST_ERROR,
+    LOAD_POSTS_ERROR,
     DOMAIN,
     IPost,
   } from "./types";
@@ -23,7 +23,7 @@ import {
       })
       .catch((err) => {
         console.log(err);
-        dispatch({type: LOAD_POST_ERROR});
+        dispatch({type: LOAD_POSTS_ERROR});
         //handle any errors here
       });
   };

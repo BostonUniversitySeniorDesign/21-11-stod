@@ -1,6 +1,6 @@
 import {
     LOAD_POSTS,
-    LOAD_POST_ERROR,
+    LOAD_POSTS_ERROR,
     PostState,
     IPost,
     DOMAIN,
@@ -23,7 +23,7 @@ function postReducer(state = initialState, action: PostAction): PostState {
                 isLoading: false
             }
         // simple case for now to see if error was being produced
-        case LOAD_POST_ERROR:
+        case LOAD_POSTS_ERROR:
         return {
             ...state,
             isError: true

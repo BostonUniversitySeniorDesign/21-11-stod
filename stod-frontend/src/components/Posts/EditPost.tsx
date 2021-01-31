@@ -1,6 +1,7 @@
 import React from "react";
 import {
   createStyles,
+  makeStyles,
   Theme,
   withStyles,
   WithStyles,
@@ -13,9 +14,8 @@ import MuiDialogActions from "@material-ui/core/DialogActions";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
-import { Card, CardContent, CardHeader, DialogTitle } from "@material-ui/core";
-import {usePostContext} from "./PostContext"
-import Post from "./Post"
+import { usePostContext } from "./PostContext";
+import { TextField } from "@material-ui/core";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -37,7 +37,6 @@ export interface DialogTitleProps extends WithStyles<typeof styles> {
   onClose: () => void;
 }
 
-
 interface Props {
   //  foo: (x: string) => void; //foo function, takes in x, returns void
   resetOptionState: () => void;
@@ -46,9 +45,9 @@ interface Props {
 const CustomizedDialogs: React.FC<Props> = ({ resetOptionState }) => {
   const [open, setOpen] = React.useState(true);
 
-  const [scroll, setScroll] = React.useState<DialogProps['scroll']>('paper');
+  const [scroll, setScroll] = React.useState<DialogProps["scroll"]>("paper");
 
-  const handleClickOpen = (scrollType: DialogProps['scroll']) => () => {
+  const handleClickOpen = (scrollType: DialogProps["scroll"]) => () => {
     setScroll(scrollType);
     setOpen(true);
   };
@@ -62,16 +61,17 @@ const CustomizedDialogs: React.FC<Props> = ({ resetOptionState }) => {
       <MuiDialogTitle disableTypography className={classes.root} {...other}>
         <Typography variant="h6">{children}</Typography>
         {onClose ? (
-          <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
+          <IconButton
+            aria-label="close"
+            className={classes.closeButton}
+            onClick={onClose}
+          >
             <CloseIcon />
           </IconButton>
         ) : null}
       </MuiDialogTitle>
     );
   });
-
-
-
 
   const descriptionElementRef = React.useRef<HTMLElement>(null);
   React.useEffect(() => {
@@ -83,13 +83,12 @@ const CustomizedDialogs: React.FC<Props> = ({ resetOptionState }) => {
     }
   }, [open]);
 
-
   const DialogContent = withStyles((theme: Theme) => ({
     root: {
       padding: theme.spacing(2),
     },
   }))(MuiDialogContent);
-  
+
   const DialogActions = withStyles((theme: Theme) => ({
     root: {
       margin: 0,
@@ -97,7 +96,24 @@ const CustomizedDialogs: React.FC<Props> = ({ resetOptionState }) => {
     },
   }))(MuiDialogActions);
 
-  const {selectedPost} = usePostContext();
+  const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+      root: {
+        "& .MuiTextField-root": {
+          margin: theme.spacing(1),
+          width: 500,
+        },
+      },
+    })
+  );
+
+  const classes = useStyles();
+  const [value, setValue] = React.useState("Controlled");
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(event.target.value);
+  };
+  const { selectedPost } = usePostContext();
 
   return (
     <div>
@@ -113,14 +129,20 @@ const CustomizedDialogs: React.FC<Props> = ({ resetOptionState }) => {
         scroll={scroll}
         open={open}
       >
-          
-       {/* <Post post={selectedPost!} showPostMenu={false}></Post> */}
+        {/* <Post post={selectedPost!} showPostMenu={false}></Post> */}
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
           {selectedPost?.title}
         </DialogTitle>
-        
+
         <DialogContent dividers>
-        <form><textarea>{selectedPost?.contents}</textarea></form>
+          <form className={classes.root} noValidate autoComplete="off">
+            <TextField
+              id="standard-multiline-static"
+              multiline
+              rows={16}
+              defaultValue={selectedPost?.contents}
+            />
+          </form>
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose} color="primary">

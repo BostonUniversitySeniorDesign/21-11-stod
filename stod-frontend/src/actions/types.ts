@@ -127,12 +127,14 @@ export interface IGroupsCreateAction {
 }
 
 export const LOAD_POSTS = "LOAD_POSTS";
-export const LOAD_POST = "LOAD_POST";
+export const LOAD_POSTS_ERROR = "LOAD_POST_ERROR";
 export const POSTS_LOADING = "POSTS_LOADING";
 export const ADD_POST = "ADD_POST";
 export const DELETE_POST = "DELETE_POST";
 export const EDIT_POST = "EDIT_POST";
-export const LOAD_POST_ERROR = "LOAD_POST_ERROR";
+export const EDIT_POST_ERROR = "EDIT_POST_ERROR";
+export const EDIT_POST_SUCCESS = "EDIT_POST_SUCCESS";
+
 
 export interface IPost {
   id: number;
@@ -149,6 +151,6 @@ export interface PostState {
 }
 
 export interface PostAction {
-  type: typeof LOAD_POSTS | typeof LOAD_POST_ERROR;
+  type: typeof LOAD_POSTS | typeof LOAD_POSTS_ERROR;
   payload?: any;
 }

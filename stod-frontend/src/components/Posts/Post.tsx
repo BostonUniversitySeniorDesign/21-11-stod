@@ -16,7 +16,10 @@ import { IPost, IRootState } from "../../actions/types";
 import PostMenu from "./PostMenu";
 import PostContextProvider from "./PostContext";
 
-const Post: React.FC<{ post: IPost }> = ({ post }) => {
+const Post: React.FC<{ post: IPost; showPostMenu: boolean }> = ({
+  post,
+  showPostMenu,
+}) => {
   return (
     <Card style={{ maxWidth: 600, margin: "30px" }}>
       <CardHeader title={post.title} />
@@ -25,10 +28,9 @@ const Post: React.FC<{ post: IPost }> = ({ post }) => {
           {post.contents}
         </Typography>
       </CardContent>
-
+      {showPostMenu ? <PostMenu post={post} /> : null}
       <CardContent>
         <Typography variant="body2" color="textSecondary"></Typography>
-        <PostMenu post={post}/>
         {/* <Typography variant="body2" color="textSecondary" style={{textAlign: "right"}}>
                         User: {post.poster}
                   </Typography> */}

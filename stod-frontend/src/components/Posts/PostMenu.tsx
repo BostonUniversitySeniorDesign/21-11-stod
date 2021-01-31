@@ -22,20 +22,17 @@ import { FaEllipsisV } from "react-icons/fa";
 import Select from "@material-ui/core/Select";
 import { makeStyles } from "@material-ui/core/styles";
 import { IconButton } from "@material-ui/core";
-import MoreVertSharpIcon from '@material-ui/icons/MoreVertSharp';
+import MoreVertSharpIcon from "@material-ui/icons/MoreVertSharp";
 import { renderIntoDocument } from "react-dom/test-utils";
 import { MenuOpenTwoTone } from "@material-ui/icons";
 
-
 //!
-import {usePostContext} from "./PostContext"
+import { usePostContext } from "./PostContext";
 
-
-
-import EditPost from "./EditPost"
+import EditPost from "./EditPost";
 
 const PostMenu: React.FC<{ post: IPost }> = ({ post }) => {
-//   const dropdownRef = useRef(null);
+  //   const dropdownRef = useRef(null);
   //declares a state variable isActive and sets it to false
   //State is created only the first time thee component renders
   //useState() returns current state and a function to update it
@@ -57,7 +54,7 @@ const PostMenu: React.FC<{ post: IPost }> = ({ post }) => {
   //   }, [])
   const user = useSelector((state: IRootState) => state.auth.user?.username);
   //lets you use the data that the context has
-  const {selectedPost, setSelectedPost} = usePostContext();
+  const { selectedPost, setSelectedPost } = usePostContext();
 
   //   const useStyles = makeStyles((theme) => ({
   //     button: {
@@ -72,26 +69,25 @@ const PostMenu: React.FC<{ post: IPost }> = ({ post }) => {
 
   // const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-//   const [selectedIndex, setSelectedIndex] = React.useState(1);
+  //   const [selectedIndex, setSelectedIndex] = React.useState(1);
 
-  const handleMenuItemClick = (event: React.MouseEvent<HTMLElement>, option: string) => {
+  const handleMenuItemClick = (
+    event: React.MouseEvent<HTMLElement>,
+    option: string
+  ) => {
     setOptionSelection(option);
     setSelectedPost(post);
     setAnchorEl(null);
   };
-  const [optionSelection, setOptionSelection] = React.useState<null | string>(null);
+  const [optionSelection, setOptionSelection] = React.useState<null | string>(
+    null
+  );
 
-
-  const options = [
-    'Share',
-    'Edit',
-    'Delete',
-  ];
+  const options = ["Share", "Edit", "Delete"];
 
   const resetOptionState = () => {
-      setOptionSelection(null);
-  }
-
+    setOptionSelection(null);
+  };
 
   return (
     <>
@@ -100,12 +96,16 @@ const PostMenu: React.FC<{ post: IPost }> = ({ post }) => {
         color="textSecondary"
         style={{ textAlign: "right" }}
       > */}
-        {/* User: {poster}
+      {/* User: {poster}
       </Typography>
       {poster === user ? <>Poster"</> : <>Non-Poster</>} */}
       {/* <div className="menu-container"> */}
-      <IconButton onClick={(event: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget)}>
-          <MoreVertSharpIcon></MoreVertSharpIcon>
+      <IconButton
+        onClick={(event: React.MouseEvent<HTMLButtonElement>) =>
+          setAnchorEl(event.currentTarget)
+        }
+      >
+        <MoreVertSharpIcon></MoreVertSharpIcon>
       </IconButton>
       <Menu
         id="simple-menu"
@@ -114,7 +114,7 @@ const PostMenu: React.FC<{ post: IPost }> = ({ post }) => {
         open={Boolean(anchorEl)}
         onClose={() => setAnchorEl(null)}
       >
-         {options.map((option, index) => (
+        {options.map((option, index) => (
           <MenuItem
             key={option}
             // disabled={index === 0}
@@ -125,12 +125,10 @@ const PostMenu: React.FC<{ post: IPost }> = ({ post }) => {
           </MenuItem>
         ))}
       </Menu>
-      {
-        optionSelection === 'Edit' ? (
-            <EditPost resetOptionState={resetOptionState} ></EditPost>
-        ) : (null)
-        }
-        </>
+      {optionSelection === "Edit" ? (
+        <EditPost resetOptionState={resetOptionState}></EditPost>
+      ) : null}
+    </>
   );
 };
 

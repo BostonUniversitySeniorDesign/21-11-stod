@@ -4,8 +4,8 @@ import { IPost } from "../../actions/types";
 
 //defining the context types
 interface Context{
-    selectedPost: IPost | null;
-    setSelectedPost: (post: IPost | null) => void;
+    selectedPost?: IPost;
+    setSelectedPost: (post: IPost) => void;
 }
 
 const PostContext = React.createContext({} as Context);
@@ -24,7 +24,7 @@ export const usePostContext = () =>{
 
 //   const PostContextProvider: React.FC = ({ children }) => {
 const PostContextProvider: React.FC<Props> = ({children}) => {
-    const [selectedPost, setSelectedPost] = React.useState<IPost | null>(null);
+    const [selectedPost, setSelectedPost] = React.useState<IPost>();
 
     // const setSelection = (post: IPost | null) => {
     //     setSelectedPost(post);

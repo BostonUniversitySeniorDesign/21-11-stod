@@ -5,25 +5,54 @@ import { Dispatch } from "redux";
 //import { ConfigTypes, CredentialTypes } from "./types";
 
 import {
-    LOAD_POSTS,
-    LOAD_POSTS_ERROR,
-    DOMAIN,
-    IPost,
-  } from "./types";
+  LOAD_POSTS,
+  POST_ERROR,
+  EDIT_POST,
+  DOMAIN,
+  IPost,
+} from "./types";
 
-  export const loadAllPosts = () => (
-    dispatch: Dispatch,
-  ) => {
-    // Make GET request to server.
-    return axios
-      .get(`http://${DOMAIN}/posts/posts/?format=json`)
-      .then((res) => {
-        // If no error, server responds with user object.
-        dispatch({ type: LOAD_POSTS, payload: res.data as Array<IPost>});
-      })
-      .catch((err) => {
-        console.log(err);
-        dispatch({type: LOAD_POSTS_ERROR});
-        //handle any errors here
-      });
+export const loadAllPosts = () => (dispatch: Dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
   };
+  // Make GET request to server.
+  return axios
+    .get(`http://${DOMAIN}/posts/posts/`, config)
+    .then((res) => {
+      // If no error, server responds with user object.
+      dispatch({ type: LOAD_POSTS, payload: res.data as Array<IPost> });
+    })
+    .catch((err) => {
+      console.log(err);
+      dispatch({ type: POST_ERROR });
+      //handle any errors here
+    });
+};
+
+//make a PUT request to edit a post
+//takes in id of post and edited contents
+export const editPost = (id: number, contents: string) => (
+  dispatch: Dispatch
+) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const body = JSON.stringify({ contents });
+  console.log(body);
+  const url = `http://${DOMAIN}/posts/posts/` + id + '/'
+  axios
+    .patch(url, body, config)
+    .then((res) => {
+      console.log(url + body + config);
+      dispatch({ type: EDIT_POST, payload: res.data });
+    })
+    .catch((err) => {
+      dispatch({ type: POST_ERROR, payload: {} });
+    });
+};

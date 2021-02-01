@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   createStyles,
   makeStyles,
@@ -16,6 +16,9 @@ import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 import { usePostContext } from "./PostContext";
 import { TextField } from "@material-ui/core";
+import { editPost } from "../../actions/postActions";
+import { useDispatch, useSelector } from "react-redux";
+import { IRootState, IPost } from "../../actions/types";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -55,6 +58,18 @@ const CustomizedDialogs: React.FC<Props> = ({ resetOptionState }) => {
     resetOptionState();
     setOpen(false);
   };
+
+  //!--------------------------------
+  let currentState = useSelector((state: IRootState) => state.posts);
+  const dispatch = useDispatch();
+
+  const handleSave = () => {
+    // console.log(value.current!.value);
+    dispatch(editPost(selectedPost!.id,  value.current!.value));
+    handleClose();
+  };
+  //!--------------------------------
+
   const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
     const { children, classes, onClose, ...other } = props;
     return (
@@ -106,14 +121,15 @@ const CustomizedDialogs: React.FC<Props> = ({ resetOptionState }) => {
       },
     })
   );
+  const { selectedPost } = usePostContext();
 
   const classes = useStyles();
-  const [value, setValue] = React.useState("Controlled");
+  // const [value, setValue] = React.useState(selectedPost?.contents);
+  const value = React.useRef<HTMLInputElement>(null);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-  };
-  const { selectedPost } = usePostContext();
+  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setValue(event.target.value);
+  // };
 
   return (
     <div>
@@ -133,22 +149,22 @@ const CustomizedDialogs: React.FC<Props> = ({ resetOptionState }) => {
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
           {selectedPost?.title}
         </DialogTitle>
-
         <DialogContent dividers>
-          <form className={classes.root} noValidate autoComplete="off">
-            <TextField
-              id="standard-multiline-static"
-              multiline
-              rows={16}
-              defaultValue={selectedPost?.contents}
-            />
-          </form>
+          <TextField
+            id="outlined-multiline-flexible"
+            multiline
+            rows={16}
+            inputRef={value}
+            defaultValue={selectedPost?.contents}
+            // value={value}
+            // onChange={(e) => setValue(e.target.value)}
+          />
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleClose} color="primary">
+          <Button onClick={handleSave} color="primary">
             Save changes
           </Button>
-          <Button autoFocus onClick={handleClose} color="primary">
+          <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
         </DialogActions>

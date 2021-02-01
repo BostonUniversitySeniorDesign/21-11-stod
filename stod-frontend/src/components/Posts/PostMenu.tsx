@@ -108,7 +108,9 @@ const PostMenu: React.FC<{ post: IPost }> = ({ post }) => {
         ))}
       </Menu>
       {optionSelection === "Edit" ? (
-        <EditPost resetOptionState={resetOptionState}></EditPost>
+        <div key="Yayayaya">
+        <EditPost key={post.id} resetOptionState={resetOptionState}></EditPost>
+        </div>
       ) : null}
     </>
   );

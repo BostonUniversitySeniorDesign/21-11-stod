@@ -19,7 +19,7 @@ const Posts: React.FC = () => {
         {currentState.posts.map((post: IPost) => {
           return (
             <div>
-              <Post post={post} showPostMenu={true} />
+              <Post post={post} showPostMenu={true} key={post.id}/>
             </div>
           );
         })}

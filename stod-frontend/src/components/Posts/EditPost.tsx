@@ -59,7 +59,6 @@ const CustomizedDialogs: React.FC<Props> = ({ resetOptionState }) => {
     setOpen(false);
   };
 
-  //!--------------------------------
   let currentState = useSelector((state: IRootState) => state.posts);
   const dispatch = useDispatch();
 
@@ -68,7 +67,6 @@ const CustomizedDialogs: React.FC<Props> = ({ resetOptionState }) => {
     dispatch(editPost(selectedPost!.id,  value.current!.value));
     handleClose();
   };
-  //!--------------------------------
 
   const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
     const { children, classes, onClose, ...other } = props;
@@ -144,6 +142,7 @@ const CustomizedDialogs: React.FC<Props> = ({ resetOptionState }) => {
         aria-labelledby="customized-dialog-title"
         scroll={scroll}
         open={open}
+        className={classes.root}
       >
         {/* <Post post={selectedPost!} showPostMenu={false}></Post> */}
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>

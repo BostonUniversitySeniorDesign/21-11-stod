@@ -10,6 +10,7 @@ import {
   EDIT_POST,
   DOMAIN,
   IPost,
+  DELETE_POST,
 } from "./types";
 
 export const loadAllPosts = () => (dispatch: Dispatch) => {
@@ -44,13 +45,29 @@ export const editPost = (id: number, contents: string) => (
   };
 
   const body = JSON.stringify({ contents });
-  console.log(body);
-  const url = `http://${DOMAIN}/posts/posts/` + id + '/'
+  const url = `http://${DOMAIN}/posts/posts/` + id + "/";
   axios
     .patch(url, body, config)
     .then((res) => {
-      console.log(url + body + config);
       dispatch({ type: EDIT_POST, payload: res.data });
+    })
+    .catch((err) => {
+      dispatch({ type: POST_ERROR, payload: {} });
+    });
+};
+
+export const deletePost = (id: number) => (dispatch: Dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const url = `http://${DOMAIN}/posts/posts/` + id + "/";
+  axios
+    .delete(url, config)
+    .then((res) => {
+      dispatch({ type: DELETE_POST, payload: id });
     })
     .catch((err) => {
       dispatch({ type: POST_ERROR, payload: {} });

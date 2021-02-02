@@ -71,6 +71,16 @@ const PostMenu: React.FC<{ post: IPost }> = ({ post }) => {
     setOptionSelection(null);
   };
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  
   return (
     <>
       {/* <Typography
@@ -108,7 +118,12 @@ const PostMenu: React.FC<{ post: IPost }> = ({ post }) => {
       </Menu>
       {optionSelection === "Edit" ? (
         <div>
-        <EditPost resetOptionState={resetOptionState}></EditPost>
+        <EditPost optionSelection={optionSelection} resetOptionState={resetOptionState}></EditPost>
+        </div>
+      ) : null}
+      {optionSelection === "Delete" ? (
+        <div>
+        <EditPost optionSelection={optionSelection} resetOptionState={resetOptionState}></EditPost>
         </div>
       ) : null}
     </>

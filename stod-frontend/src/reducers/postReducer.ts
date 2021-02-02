@@ -2,6 +2,7 @@ import {
   LOAD_POSTS,
   POST_ERROR,
   PostState,
+  DELETE_POST,
   IPost,
   DOMAIN,
   PostAction,
@@ -16,6 +17,8 @@ const initialState: PostState = {
 };
 
 function postReducer(state = initialState, action: PostAction): PostState {
+  let index;
+  let newArray;
   switch (action.type) {
     case LOAD_POSTS:
       return {
@@ -30,15 +33,24 @@ function postReducer(state = initialState, action: PostAction): PostState {
         isError: true,
       };
     case EDIT_POST:
-      const index = state.posts.findIndex(post => post.id === action.payload); //finding index of the item
-      const newArray = [...state.posts];
-      console.log(index);
+      index = state.posts.findIndex((post) => post.id === action.payload); //finding index of the item
+      newArray = [...state.posts];
       newArray[index].contents = action.payload.contents;
       return {
         ...state,
         posts: newArray,
         // posts[posts.findIndex(x=> x.id == 2)].id = 2,
-        isLoading: false
+        isLoading: false,
+      };
+    case DELETE_POST:
+      index = state.posts.findIndex((post) => post.id === action.payload); //finding index of the item
+      newArray = [...state.posts];
+      newArray.splice(index, 1);
+      return {
+        ...state,
+        posts: newArray,
+        // posts[posts.findIndex(x=> x.id == 2)].id = 2,
+        isLoading: false,
       };
     default:
       return state;

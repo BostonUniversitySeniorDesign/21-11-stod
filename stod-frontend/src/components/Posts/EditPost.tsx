@@ -15,10 +15,11 @@ import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 import { usePostContext } from "./PostContext";
-import { TextField } from "@material-ui/core";
-import { editPost } from "../../actions/postActions";
+import { DialogContentText, TextField } from "@material-ui/core";
+import { editPost, deletePost } from "../../actions/postActions";
 import { useDispatch, useSelector } from "react-redux";
 import { IRootState, IPost } from "../../actions/types";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -43,9 +44,13 @@ export interface DialogTitleProps extends WithStyles<typeof styles> {
 interface Props {
   //  foo: (x: string) => void; //foo function, takes in x, returns void
   resetOptionState: () => void;
+  optionSelection: string;
 }
 
-const CustomizedDialogs: React.FC<Props> = ({ resetOptionState }) => {
+const CustomizedDialogs: React.FC<Props> = ({
+  resetOptionState,
+  optionSelection,
+}) => {
   const [open, setOpen] = React.useState(true);
 
   const [scroll, setScroll] = React.useState<DialogProps["scroll"]>("paper");
@@ -68,7 +73,7 @@ const CustomizedDialogs: React.FC<Props> = ({ resetOptionState }) => {
     // console.log(value.current!.value);
     console.log(selectedPost!.id);
     selectedPost!.contents = value.current!.value;
-    dispatch(editPost(selectedPost!.id,  value.current!.value));
+    dispatch(editPost(selectedPost!.id, value.current!.value));
     handleClose();
   };
 
@@ -132,45 +137,81 @@ const CustomizedDialogs: React.FC<Props> = ({ resetOptionState }) => {
   //   setValue(event.target.value);
   // };
 
+  const [deleteOpen, setDeleteOpen] = React.useState(true);
+
+  const handleDeleteOpen = () => {
+    setDeleteOpen(true);
+  };
+
+  const handleDeleteClose = () => {
+    resetOptionState();
+    setDeleteOpen(false);
+  };
+
+  const handleDeleteConfirm = () => {
+    dispatch(deletePost(selectedPost!.id));
+    handleDeleteClose();
+  };
+
   return (
     <div>
-      {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Open dialog
-      </Button> */}
-      {/* <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-            Editing Pos
-        </DialogTitle> */}
-      <Dialog
-        onClose={handleClose}
-        aria-labelledby="customized-dialog-title"
-        scroll={scroll}
-        open={open}
-        className={classes.root}
-      >
-        {/* <Post post={selectedPost!} showPostMenu={false}></Post> */}
-        <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-          {selectedPost?.title}
-        </DialogTitle>
-        <DialogContent dividers>
-          <TextField
-            id="outlined-multiline-flexible"
-            multiline
-            rows={16}
-            inputRef={value}
-            defaultValue={selectedPost?.contents}
-            // value={value}
-            // onChange={(e) => setValue(e.target.value)}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleSave} color="primary">
-            Save changes
-          </Button>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
-        </DialogActions>
-      </Dialog>
+      {optionSelection === "Edit" ? (
+        <Dialog
+          disableBackdropClick
+          onClose={handleClose}
+          aria-labelledby="customized-dialog-title"
+          scroll={scroll}
+          open={open}
+          className={classes.root}
+        >
+          {/* <Post post={selectedPost!} showPostMenu={false}></Post> */}
+          <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+            {selectedPost?.title}
+          </DialogTitle>
+          <DialogContent dividers>
+            <TextField
+              id="outlined-multiline-flexible"
+              multiline
+              rows={16}
+              inputRef={value}
+              defaultValue={selectedPost?.contents}
+              // value={value}
+              // onChange={(e) => setValue(e.target.value)}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleSave} color="primary">
+              Save changes
+            </Button>
+            <Button onClick={handleClose} color="primary">
+              Cancel
+            </Button>
+          </DialogActions>
+        </Dialog>
+      ) : (
+        <Dialog
+          open={deleteOpen}
+          onClose={handleDeleteClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          disableBackdropClick
+        >
+          <DialogTitle id="customized-dialog-title" onClose={handleDeleteClose}>
+            {"Are you sure you want to delete this post?"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description"></DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleDeleteClose} color="primary" autoFocus>
+              No
+            </Button>
+            <Button onClick={handleDeleteConfirm} color="primary">
+              Yes
+            </Button>
+          </DialogActions>
+        </Dialog>
+      )}
     </div>
   );
 };

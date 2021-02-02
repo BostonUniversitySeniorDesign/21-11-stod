@@ -98,7 +98,6 @@ const PostMenu: React.FC<{ post: IPost }> = ({ post }) => {
       >
         {options.map((option, index) => (
           <MenuItem
-            key={option}
             // disabled={index === 0}
             // selected={index === selectedIndex}
             onClick={(event) => handleMenuItemClick(event, option)}
@@ -108,8 +107,8 @@ const PostMenu: React.FC<{ post: IPost }> = ({ post }) => {
         ))}
       </Menu>
       {optionSelection === "Edit" ? (
-        <div key="Yayayaya">
-        <EditPost key={post.id} resetOptionState={resetOptionState}></EditPost>
+        <div>
+        <EditPost resetOptionState={resetOptionState}></EditPost>
         </div>
       ) : null}
     </>

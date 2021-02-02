@@ -62,8 +62,12 @@ const CustomizedDialogs: React.FC<Props> = ({ resetOptionState }) => {
   let currentState = useSelector((state: IRootState) => state.posts);
   const dispatch = useDispatch();
 
+  const { selectedPost } = usePostContext();
+
   const handleSave = () => {
     // console.log(value.current!.value);
+    console.log(selectedPost!.id);
+    selectedPost!.contents = value.current!.value;
     dispatch(editPost(selectedPost!.id,  value.current!.value));
     handleClose();
   };
@@ -119,7 +123,6 @@ const CustomizedDialogs: React.FC<Props> = ({ resetOptionState }) => {
       },
     })
   );
-  const { selectedPost } = usePostContext();
 
   const classes = useStyles();
   // const [value, setValue] = React.useState(selectedPost?.contents);

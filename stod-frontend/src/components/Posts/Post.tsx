@@ -28,7 +28,7 @@ const Post: React.FC<{ post: IPost; showPostMenu: boolean}> = ({
           {post.contents}
         </Typography>
       </CardContent>
-      {showPostMenu ? <PostMenu key={post.id} post={post} /> : null}
+      {showPostMenu ? <PostMenu post={post} /> : null}
       <CardContent>
         <Typography variant="body2" color="textSecondary"></Typography>
         {/* <Typography variant="body2" color="textSecondary" style={{textAlign: "right"}}>

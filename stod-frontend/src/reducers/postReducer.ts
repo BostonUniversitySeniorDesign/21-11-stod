@@ -30,8 +30,9 @@ function postReducer(state = initialState, action: PostAction): PostState {
         isError: true,
       };
     case EDIT_POST:
-      const index = state.posts.findIndex(post => post.id !== action.payload); //finding index of the item
+      const index = state.posts.findIndex(post => post.id === action.payload); //finding index of the item
       const newArray = [...state.posts];
+      console.log(index);
       newArray[index].contents = action.payload.contents;
       return {
         ...state,

@@ -15,7 +15,20 @@ const Posts: React.FC = () => {
   }, []);
   if (!currentState.isLoading) {
     return (
+     
       <PostContextProvider>
+        <form>
+          <label>
+            Title:
+            <input type="text" name="title">
+            </input>
+          </label>
+          <label>
+            Body:
+            <input type="text" name="title">
+            </input>
+          </label>
+        </form>
         {currentState.posts.map((post: IPost) => {
           return (
             <div>

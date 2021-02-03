@@ -22,13 +22,14 @@ const Post: React.FC<{ post: IPost; showPostMenu: boolean}> = ({
 }) => {
   return (
     <Card style={{ maxWidth: 600, margin: "30px" }}>
+      {showPostMenu ? <PostMenu post={post} /> : null}
       <CardHeader title={post.title} />
       <CardContent>
         <Typography variant="body2" color="textPrimary">
           {post.contents}
         </Typography>
       </CardContent>
-      {showPostMenu ? <PostMenu post={post} /> : null}
+      
       <CardContent>
         <Typography variant="body2" color="textSecondary"></Typography>
         {/* <Typography variant="body2" color="textSecondary" style={{textAlign: "right"}}>

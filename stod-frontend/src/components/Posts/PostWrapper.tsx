@@ -17,7 +17,7 @@ const Posts: React.FC = () => {
     return (
      
       <PostContextProvider>
-        <form>
+        {/* <form>
           <label>
             Title:
             <input type="text" name="title">
@@ -28,7 +28,7 @@ const Posts: React.FC = () => {
             <input type="text" name="title">
             </input>
           </label>
-        </form>
+        </form> */}
         {currentState.posts.map((post: IPost) => {
           return (
             <div>

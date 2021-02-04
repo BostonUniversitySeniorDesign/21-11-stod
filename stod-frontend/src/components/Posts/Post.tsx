@@ -29,7 +29,9 @@ const Post: React.FC<{ post: IPost; showPostMenu: boolean}> = ({
           {post.contents}
         </Typography>
       </CardContent>
-      
+      <Typography style={{margin: 25}}variant="body2" color="textPrimary">
+        Poster: {post.poster}
+      </Typography>
       <CardContent>
         <Typography variant="body2" color="textSecondary"></Typography>
         {/* <Typography variant="body2" color="textSecondary" style={{textAlign: "right"}}>

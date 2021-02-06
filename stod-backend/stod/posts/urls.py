@@ -7,4 +7,5 @@ from django.conf.urls import url
 router = routers.DefaultRouter()
 router.register(r"posts", PostViewset, "posts")
 router.register("comments", CommentViewset, "comments")
+# router.register('posts', postGroup.as_view(), 'filtered')
 urlpatterns = router.urls

@@ -14,23 +14,23 @@ from rest_framework.decorators import api_view
 class PostViewset(viewsets.ModelViewSet):
     serializer_class = PostSerializer
     queryset = Post.objects.all()
-    # permission_classes=None
-    # permission_classes = AllowAny
-    # def partial_update(self, request, pk, amount):
-    #     # if no model exists by this PK, raise a 404 error
-    #     model = get_object_or_404(Post, pk=pk)
-    #     # this is the only field we want to update
-    #     data = {"contents": Post.contents}
-    #     serializer = PostSerializer(model, data=data, partial=True)
-
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return response(serializer.data)
-    #     # return a meaningful error response
-    #     return response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class CommentViewset(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
     queryset = Comment.objects.all()
 
 
+# class postGroup(generics.GenericAPIView):
+#     serializer_class = PostSerializzer
+
+#     # Response structure sent on POST request
+#     def get(self, request):
+#         serializer = self.get_serializer(data=request.data)
+#         serializer.is_valid(raise_exception=True)
+#         curr_group=self.request.group
+#         return Response(
+#             {
+#                 "posts": Post.objects.filter(group=curr_group)
+#             },
+#             status.HTTP_200_OK,
+#         )

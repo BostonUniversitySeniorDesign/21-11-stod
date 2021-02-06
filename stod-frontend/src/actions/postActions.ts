@@ -18,12 +18,16 @@ export const loadAllPosts = () => (dispatch: Dispatch) => {
     headers: {
       "Content-Type": "application/json",
     },
+    params:{
+      group: ""
+    }
   };
   // Make GET request to server.
   return axios
     .get(`http://${DOMAIN}/posts/posts/`, config)
     .then((res) => {
       // If no error, server responds with user object.
+      console.log(res);
       dispatch({ type: LOAD_POSTS, payload: res.data as Array<IPost> });
     })
     .catch((err) => {

@@ -17,16 +17,17 @@ from django.http import JsonResponse
 class PostViewset(viewsets.ModelViewSet):
     serializer_class = PostSerializer
     queryset = Post.objects.all()
-
     # filter based on group passed in as parameter
     def get_queryset(self):
         queryset = self.queryset
         req_group = self.request.query_params["group"]
+        print(self.request.query_params)
+        print(req_group)
         if(req_group == ""):
             queryset = Post.objects.all()
             return queryset
         else:
-            query_set = queryset.filter(user=req_group)
+            query_set = queryset.filter(group=req_group)
         return query_set
 
 

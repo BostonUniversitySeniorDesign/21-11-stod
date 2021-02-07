@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   createStyles,
   makeStyles,
@@ -47,7 +47,7 @@ interface Props {
   optionSelection: string;
 }
 
-const CustomizedDialogs: React.FC<Props> = ({
+const EditPost: React.FC<Props> = ({
   resetOptionState,
   optionSelection,
 }) => {
@@ -55,10 +55,7 @@ const CustomizedDialogs: React.FC<Props> = ({
 
   const [scroll, setScroll] = React.useState<DialogProps["scroll"]>("paper");
 
-  const handleClickOpen = (scrollType: DialogProps["scroll"]) => () => {
-    setScroll(scrollType);
-    setOpen(true);
-  };
+  //handles closing, which will reset the context of the selectedPost
   const handleClose = () => {
     resetOptionState();
     setOpen(false);
@@ -67,10 +64,11 @@ const CustomizedDialogs: React.FC<Props> = ({
   let currentState = useSelector((state: IRootState) => state.posts);
   const dispatch = useDispatch();
 
+  //grabs current post to be edited
   const { selectedPost } = usePostContext();
 
+  //saves post edits
   const handleSave = () => {
-    // console.log(value.current!.value);
     console.log(selectedPost!.id);
     selectedPost!.contents = value.current!.value;
     dispatch(editPost(selectedPost!.id, value.current!.value));
@@ -94,6 +92,7 @@ const CustomizedDialogs: React.FC<Props> = ({
       </MuiDialogTitle>
     );
   });
+
 
   const descriptionElementRef = React.useRef<HTMLElement>(null);
   React.useEffect(() => {
@@ -132,24 +131,20 @@ const CustomizedDialogs: React.FC<Props> = ({
   );
 
   const classes = useStyles();
-  // const [value, setValue] = React.useState(selectedPost?.contents);
+
+
   const value = React.useRef<HTMLInputElement>(null);
 
-  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setValue(event.target.value);
-  // };
-
+  //handles delete option opening and closing
   const [deleteOpen, setDeleteOpen] = React.useState(true);
 
-  const handleDeleteOpen = () => {
-    setDeleteOpen(true);
-  };
-
+  //resets option state
   const handleDeleteClose = () => {
     resetOptionState();
     setDeleteOpen(false);
   };
 
+  //upon confirmation of deletion will send dispatch to remove from backend
   const handleDeleteConfirm = () => {
     dispatch(deletePost(selectedPost!.id));
     handleDeleteClose();
@@ -166,7 +161,6 @@ const CustomizedDialogs: React.FC<Props> = ({
           open={open}
           className={classes.root}
         >
-          {/* <Post post={selectedPost!} showPostMenu={false}></Post> */}
           <DialogTitle id="customized-dialog-title" onClose={handleClose}>
             {selectedPost?.title}
           </DialogTitle>
@@ -217,4 +211,4 @@ const CustomizedDialogs: React.FC<Props> = ({
     </div>
   );
 };
-export default CustomizedDialogs;
+export default EditPost;

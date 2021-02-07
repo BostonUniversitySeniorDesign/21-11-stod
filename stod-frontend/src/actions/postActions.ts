@@ -13,13 +13,15 @@ import {
   DELETE_POST,
 } from "./types";
 
+const CURR_GROUP = ""
+
 export const loadAllPosts = () => (dispatch: Dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
     },
     params:{
-      group: ""
+      group: CURR_GROUP
     }
   };
   // Make GET request to server.
@@ -46,6 +48,9 @@ export const editPost = (id: number, contents: string) => (
     headers: {
       "Content-Type": "application/json",
     },
+    params:{
+      group: CURR_GROUP
+    }
   };
 
   const body = JSON.stringify({ contents });
@@ -65,6 +70,9 @@ export const deletePost = (id: number) => (dispatch: Dispatch) => {
     headers: {
       "Content-Type": "application/json",
     },
+    params:{
+      group: CURR_GROUP
+    }
   };
 
   const url = `http://${DOMAIN}/posts/posts/` + id + "/";

@@ -50,7 +50,8 @@ const App = () => {
               />
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
-              <Route exact path="/groups" component={Groups} />
+              <Route exact path="/groups" component={() => <Groups subscribedOnly={false} />} />
+              <Route exact path="/groups/subscribed" component={() => <Groups subscribedOnly={true} />} />
               <Route exact path="/posts" component={Posts} />
               <AuthenticatedRoute path="/home" component={Home} />
               <Route exact path="/404" component={Error} />

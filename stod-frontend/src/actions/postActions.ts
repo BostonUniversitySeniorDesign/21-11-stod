@@ -16,7 +16,7 @@ import {
   ) => {
     // Make GET request to server.
     return axios
-      .get(`http://${DOMAIN}/posts/?format=json`)
+      .get(`http://${DOMAIN}/posts/posts/?format=json`)
       .then((res) => {
         // If no error, server responds with user object.
         dispatch({ type: LOAD_POSTS, payload: res.data as Array<IPost>});

@@ -21,7 +21,6 @@ import { registerUser, registerError } from "../../actions/authActions";
 import { Redirect } from "react-router-dom";
 import { fieldError, validateEmail } from "../";
 import { makeStyles } from "@material-ui/core/styles";
-
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "100vh",
@@ -30,9 +29,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundImage: "url(/stod-login-bg.jpeg)",
     backgroundRepeat: "no-repeat",
     backgroundColor:
-      theme.palette.type === "light"
-        ? theme.palette.grey[50]
-        : theme.palette.grey[900],
+      theme.palette.type === "light" ? theme.palette.grey[50] : theme.palette.grey[900],
     backgroundSize: "cover",
     backgroundPosition: "center",
   },
@@ -53,7 +50,6 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
-
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -66,7 +62,6 @@ function Copyright() {
     </Typography>
   );
 }
-
 const Register = () => {
   const classes = useStyles();
   // Refs for Register component
@@ -75,22 +70,17 @@ const Register = () => {
   const password = useRef<HTMLInputElement>();
   const confirm_password = useRef<HTMLInputElement>();
   // Redux store attributes
-  const isAuthenticated = useSelector(
-    (state: IRootState) => state.auth.isAuthenticated
-  );
+  const isAuthenticated = useSelector((state: IRootState) => state.auth.isAuthenticated);
   const errors = useSelector((state: IRootState) => state.auth.errors);
   // Redux dispatch hook
   const dispatch = useDispatch();
-
   /**
    * handleLogin is fired when a user clicks the register button. It is
    * given as a onSubmit parameter to the form. Once the inputs are
    * checked and sanitized, it dispatches the registerUser action with a
    * JSON of a new user object.
    */
-  const handleRegister = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const handleRegister = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // If any attributs are null we handle that error with UI
     if (
@@ -99,12 +89,9 @@ const Register = () => {
       confirm_password.current?.value === "" ||
       email.current?.value === ""
     ) {
-      dispatch(
-        registerError(400, { non_field_errors: ["No field can be empty"] })
-      );
+      dispatch(registerError(400, { non_field_errors: ["No field can be empty"] }));
       return;
     }
-
     if (!validateEmail(email.current?.value)) {
       dispatch(registerError(400, { email: ["Must be a valid email"] }));
       return;
@@ -127,11 +114,9 @@ const Register = () => {
       dispatch(registerUser(newUser));
     }
   };
-
   if (isAuthenticated) {
     return <Redirect to="/home" />;
   }
-
   return (
     <Grid className={classes.root} container component="main">
       <CssBaseline />
@@ -145,11 +130,10 @@ const Register = () => {
             height="131"
             width="128"
           />
-
           <Typography component="h1" variant="h5">
             Sign Up
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} noValidate onSubmit={handleRegister}>
             <TextField
               error={fieldError("username", errors).error}
               helperText={fieldError("username", errors).helperText}
@@ -205,13 +189,10 @@ const Register = () => {
               autoComplete="current-password"
             />
             {errors.errors["non_field_errors"] ? (
-              <Alert severity="error">
-                {errors.errors["non_field_errors"][0]}
-              </Alert>
+              <Alert severity="error">{errors.errors["non_field_errors"][0]}</Alert>
             ) : (
               ""
             )}
-
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"

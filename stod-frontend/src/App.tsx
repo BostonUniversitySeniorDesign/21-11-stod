@@ -15,7 +15,7 @@ import {
   AuthenticatedRoute,
   Home,
   Groups,
-  Posts,
+  PostWrapper,
 } from "./components";
 
 const App = () => {
@@ -52,7 +52,7 @@ const App = () => {
               <Route exact path="/register" component={Register} />
               <Route exact path="/groups" component={() => <Groups subscribedOnly={false} />} />
               <Route exact path="/groups/subscribed" component={() => <Groups subscribedOnly={true} />} />
-              <Route exact path="/posts" component={Posts} />
+              <Route exact path="/posts" component={PostWrapper} />
               <AuthenticatedRoute path="/home" component={Home} />
               <Route exact path="/404" component={Error} />
               <Redirect from="*" to="/404" />

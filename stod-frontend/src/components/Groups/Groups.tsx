@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from "react";
-import useStyles from "../../styles";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchGroups, createGroup } from "../../actions/groupsActions";
 import { IRootState, SingleGroup, IGroupsProps } from "../../actions/types";
@@ -7,61 +6,72 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Group from "./Group";
 
+import { makeStyles, Theme } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme: Theme) => ({
+  form: {
+    width: "100%", // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+}));
+
+
 const Groups: React.FC<IGroupsProps> = (props: IGroupsProps) => {
-    const classes = useStyles();
-    const dispatch = useDispatch();
+  const classes = useStyles();
+  const dispatch = useDispatch();
 
-    const name = useRef<HTMLInputElement>();
-    const description = useRef<HTMLInputElement>();
+  const name = useRef<HTMLInputElement>();
+  const description = useRef<HTMLInputElement>();
 
-    const isAuthenticated = useSelector(
-        (state: IRootState) => state.auth.isAuthenticated
-    );
+  const isAuthenticated = useSelector(
+    (state: IRootState) => state.auth.isAuthenticated
+  );
 
-    const username = useSelector(
-        (state: IRootState) => state.auth.user?.username
-    );
+  const username = useSelector(
+      (state: IRootState) => state.auth.user?.username
+  );
 
-    const groupCreateState = useSelector(
-        (state: IRootState) => state.groupCreate
-    );
+  const groupCreateState = useSelector(
+      (state: IRootState) => state.groupCreate
+  );
 
-    let currentState = useSelector(
-        (state: IRootState) => state.groups
-    );
+  let currentState = useSelector((state: IRootState) => state.groups);
 
-    const handleCreate = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        if (name.current === null || description.current === null) {
-            return;
-        } else if (name.current!.value === "" || description.current!.value === "") {
-            alert("Name and description must be entered");
-            return;
-        }
-        dispatch(createGroup(name.current!.value, description.current!.value));
+  const handleCreate = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (name.current === null || description.current === null) {
+      return;
+    } else if (
+      name.current!.value === "" ||
+      description.current!.value === ""
+    ) {
+      alert("Name and description must be entered");
+      return;
     }
+    dispatch(createGroup(name.current!.value, description.current!.value));
+  };
 
-    if (groupCreateState.isSuccess) {
-        window.location.reload();
-    }
+  if (groupCreateState.isSuccess) {
+    window.location.reload();
+  }
 
-    let renderBody: () => JSX.Element = () => {
-        if (currentState.isLoading) {
-            return <h1>Loading...</h1>
-        } else if (currentState.isError) {
-            return <h1>Error!</h1> 
-        } else {
+  let renderBody: () => JSX.Element = () => {
+    if (currentState.isLoading) {
+      return <h1>Loading...</h1>;
+    } else if (currentState.isError) {
+      return <h1>Error!</h1>;
+    } else {
+      return (
+        <ul style={{ listStyleType: "none" }}>
+          {currentState.groups.map((group: SingleGroup) => {
             return (
-            <ul style={{listStyleType: "none"}}> 
-                {
-                    currentState.groups.map((group: SingleGroup) => {
-                        return <Group name={group.name} description={group.description} displayJoinButton={!props.subscribedOnly}></Group>
-                    })
-                }
-            </ul>
-            )
-        }
+              <Group name={group.name} description={group.description} displayJoinButton={!props.subscribedOnly}></Group>
+            );
+          })}
+        </ul>
+      );
     }
+  };
 
     useEffect(() => {
         if (username !== undefined) {

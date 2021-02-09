@@ -6,7 +6,7 @@ import { IPost, IRootState } from "../../actions/types";
 import Post from "./Post";
 import PostContextProvider from "./PostContext";
 
-const Posts: React.FC = () => {
+const PostWrapper: React.FC = () => {
   const dispatch = useDispatch();
 
   let currentState = useSelector((state: IRootState) => state.posts);
@@ -43,4 +43,4 @@ const Posts: React.FC = () => {
   }
 };
 
-export default Posts;
+export default PostWrapper;

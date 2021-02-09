@@ -31,5 +31,4 @@ export {
   fieldError,
   PostWrapper,
   validateEmail,
-  Comments,
 };

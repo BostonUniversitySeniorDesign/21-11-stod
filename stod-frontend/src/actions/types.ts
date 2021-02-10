@@ -141,6 +141,7 @@ export interface IPost {
   group: string;
   contents: string;
   poster: string;
+  date: string;
 }
 
 export interface PostState {
@@ -152,4 +153,8 @@ export interface PostState {
 export interface PostAction {
   type: typeof LOAD_POSTS | typeof POST_ERROR | typeof EDIT_POST | typeof DELETE_POST;
   payload?: any;
+}
+
+export interface UserGroup {
+  currentGroup: string
 }

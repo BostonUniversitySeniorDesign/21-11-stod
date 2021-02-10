@@ -19,6 +19,7 @@ class Post(models.Model):
     # if user is deleted, post is deleted
     # who posted the post
     poster = models.ForeignKey(User, on_delete=models.CASCADE, to_field="username")
+    date = models.DateField(auto_now=True)
     # poster2 = models.CharField(User.username,max_length=25)
 
     def __str__(self):

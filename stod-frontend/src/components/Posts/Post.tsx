@@ -31,6 +31,8 @@ const Post: React.FC<{ post: IPost; showPostMenu: boolean}> = ({
       </CardContent>
       <Typography style={{margin: 25}}variant="body2" color="textPrimary">
         Poster: {post.poster}
+        <br></br>
+        Created: {post.date}
       </Typography>
       <CardContent>
         <Typography variant="body2" color="textSecondary"></Typography>

@@ -1,3 +1,4 @@
+from django.db.models import query
 from django.db.models.query import QuerySet
 from django.http import response
 from rest_framework import viewsets
@@ -21,14 +22,12 @@ class PostViewset(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = self.queryset
         req_group = self.request.query_params["group"]
-        print(self.request.query_params)
-        print(req_group)
         if(req_group == ""):
             queryset = Post.objects.all()
-            return queryset
+            return queryset.order_by('-id')
         else:
             query_set = queryset.filter(group=req_group)
-        return query_set
+        return query_set.reverse()
 
 
 class CommentViewset(viewsets.ModelViewSet):

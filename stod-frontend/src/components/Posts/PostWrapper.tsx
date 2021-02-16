@@ -8,6 +8,9 @@ import PostContextProvider from "./PostContext";
 
 const PostWrapper: React.FC = () => {
   const dispatch = useDispatch();
+  const username = useSelector(
+    (state: IRootState) => state.auth.user?.username
+  );
 
   let currentState = useSelector((state: IRootState) => state.posts);
   useEffect(() => {
@@ -15,24 +18,15 @@ const PostWrapper: React.FC = () => {
   }, []);
   if (!currentState.isLoading) {
     return (
-     
       <PostContextProvider>
-        {/* <form>
-          <label>
-            Title:
-            <input type="text" name="title">
-            </input>
-          </label>
-          <label>
-            Body:
-            <input type="text" name="title">
-            </input>
-          </label>
-        </form> */}
         {currentState.posts.map((post: IPost) => {
           return (
             <div>
-              <Post post={post} showPostMenu={true} key={post.id}/>
+              <Post
+                post={post}
+                showPostMenu={post.poster === username}
+                key={post.id}
+              />
             </div>
           );
         })}

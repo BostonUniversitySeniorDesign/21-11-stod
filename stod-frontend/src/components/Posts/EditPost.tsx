@@ -47,10 +47,7 @@ interface Props {
   optionSelection: string;
 }
 
-const EditPost: React.FC<Props> = ({
-  resetOptionState,
-  optionSelection,
-}) => {
+const EditPost: React.FC<Props> = ({ resetOptionState, optionSelection }) => {
   const [open, setOpen] = React.useState(true);
 
   const [scroll, setScroll] = React.useState<DialogProps["scroll"]>("paper");
@@ -93,7 +90,6 @@ const EditPost: React.FC<Props> = ({
     );
   });
 
-
   const descriptionElementRef = React.useRef<HTMLElement>(null);
   React.useEffect(() => {
     if (open) {
@@ -117,8 +113,6 @@ const EditPost: React.FC<Props> = ({
     },
   }))(MuiDialogActions);
 
-
-
   const useStyles = makeStyles((theme: Theme) =>
     createStyles({
       root: {
@@ -131,7 +125,6 @@ const EditPost: React.FC<Props> = ({
   );
 
   const classes = useStyles();
-
 
   const value = React.useRef<HTMLInputElement>(null);
 

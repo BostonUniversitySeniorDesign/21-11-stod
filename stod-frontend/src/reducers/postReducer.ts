@@ -3,10 +3,9 @@ import {
   POST_ERROR,
   PostState,
   DELETE_POST,
-  IPost,
-  DOMAIN,
   PostAction,
   EDIT_POST,
+  CREATE_POST,
 } from "../actions/types";
 
 //type checking initialState with PostState
@@ -46,6 +45,15 @@ function postReducer(state = initialState, action: PostAction): PostState {
       index = state.posts.findIndex((post) => post.id === action.payload); //finding index of the item
       newArray = [...state.posts];
       newArray.splice(index, 1);
+      return {
+        ...state,
+        posts: newArray,
+        // posts[posts.findIndex(x=> x.id == 2)].id = 2,
+        isLoading: false,
+      };
+    case CREATE_POST:
+      newArray = [...state.posts];
+      newArray.concat(action.payload);
       return {
         ...state,
         posts: newArray,

@@ -58,6 +58,7 @@ export interface IRootState {
   groups: IGroupsState;
   groupCreate: IGroupsCreateState;
   posts: PostState;
+  currentGroup: currentUserGroup;
 }
 
 // Header JSON interface
@@ -133,6 +134,8 @@ export const DELETE_POST = "DELETE_POST";
 export const EDIT_POST = "EDIT_POST";
 export const EDIT_POST_SUCCESS = "EDIT_POST_SUCCESS";
 export const POSTS_LOADING = "POSTS_LOADING";
+export const CREATE_POST = "CREATE_POST";
+
 
 
 export interface IPost {
@@ -151,10 +154,10 @@ export interface PostState {
 }
 
 export interface PostAction {
-  type: typeof LOAD_POSTS | typeof POST_ERROR | typeof EDIT_POST | typeof DELETE_POST;
+  type: typeof LOAD_POSTS | typeof POST_ERROR | typeof EDIT_POST | typeof DELETE_POST | typeof CREATE_POST;
   payload?: any;
 }
 
-export interface UserGroup {
+export interface currentUserGroup {
   currentGroup: string
 }

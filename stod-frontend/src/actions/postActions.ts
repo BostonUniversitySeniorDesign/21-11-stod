@@ -11,6 +11,7 @@ import {
   DOMAIN,
   IPost,
   DELETE_POST,
+  CREATE_POST
 } from "./types";
 
 const CURR_GROUP = ""
@@ -80,6 +81,27 @@ export const deletePost = (id: number) => (dispatch: Dispatch) => {
     .delete(url, config)
     .then((res) => {
       dispatch({ type: DELETE_POST, payload: id });
+    })
+    .catch((err) => {
+      dispatch({ type: POST_ERROR, payload: {} });
+    });
+};
+
+export const createPost = (title: string, contents: string) => (dispatch: Dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    params:{
+      group: CURR_GROUP
+    }
+  };
+
+  const url = `http://${DOMAIN}/posts/posts/`;
+  axios
+    .delete(url, config)
+    .then((res) => {
+      dispatch({ type: CREATE_POST, payload: res.data});
     })
     .catch((err) => {
       dispatch({ type: POST_ERROR, payload: {} });

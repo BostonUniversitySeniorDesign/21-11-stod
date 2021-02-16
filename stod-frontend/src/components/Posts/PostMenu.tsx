@@ -1,39 +1,16 @@
-import {
-  Menu,
-  MenuItem,
-} from "@material-ui/core";
+import { Menu, MenuItem } from "@material-ui/core";
 import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IPost, IRootState } from "../../actions/types";
 import { IconButton } from "@material-ui/core";
 import MoreVertSharpIcon from "@material-ui/icons/MoreVertSharp";
 
-//!
+
 import { usePostContext } from "./PostContext";
 
 import EditPost from "./EditPost";
 
 const PostMenu: React.FC<{ post: IPost }> = ({ post }) => {
-  //   const dropdownRef = useRef(null);
-  //declares a state variable isActive and sets it to false
-  //State is created only the first time thee component renders
-  //useState() returns current state and a function to update it
-  //   const [isActive, setIsActive] = useState(false);
-  //   const onClick = () => setIsActive(!isActive);
-
-  //   const [mouseOver, setMouseOver] = useState("#fdfdfd");
-
-  //   const setHoverStyle = (background) => {
-  //       setMouseOver(background);
-  //   }
-
-  //   onMouseEnter={() => setHoverStyle("#424246")}
-
-  // const dispatch = useDispatch(); //set dispatch
-
-  // useEffect(()=>{
-  //     dispatch(loadAllPosts());
-  //   }, [])
   const user = useSelector((state: IRootState) => state.auth.user?.username);
   //lets you use the data that the context has
   const { selectedPost, setSelectedPost } = usePostContext();
@@ -65,7 +42,7 @@ const PostMenu: React.FC<{ post: IPost }> = ({ post }) => {
     null
   );
 
-  const options = ["Share", "Edit", "Delete"];
+  const options = ["Edit", "Delete"];
 
   const resetOptionState = () => {
     setOptionSelection(null);
@@ -80,7 +57,7 @@ const PostMenu: React.FC<{ post: IPost }> = ({ post }) => {
   const handleClose = () => {
     setOpen(false);
   };
-  
+
   return (
     <>
       {/* <Typography
@@ -118,12 +95,18 @@ const PostMenu: React.FC<{ post: IPost }> = ({ post }) => {
       </Menu>
       {optionSelection === "Edit" ? (
         <div>
-        <EditPost optionSelection={optionSelection} resetOptionState={resetOptionState}></EditPost>
+          <EditPost
+            optionSelection={optionSelection}
+            resetOptionState={resetOptionState}
+          ></EditPost>
         </div>
       ) : null}
       {optionSelection === "Delete" ? (
         <div>
-        <EditPost optionSelection={optionSelection} resetOptionState={resetOptionState}></EditPost>
+          <EditPost
+            optionSelection={optionSelection}
+            resetOptionState={resetOptionState}
+          ></EditPost>
         </div>
       ) : null}
     </>

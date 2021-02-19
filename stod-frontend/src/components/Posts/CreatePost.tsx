@@ -69,7 +69,7 @@ const CreatePost: React.FC = () => {
   };
 
   const handleSave = () => {
-    dispatch(createPost(title!.current!.value, contents!.current!.value));
+    dispatch(createPost(title!.current!.value, contents!.current!.value, username!));
     handleClose();
   };
 
@@ -144,7 +144,7 @@ const CreatePost: React.FC = () => {
          <TextField
              id="Title"
              inputRef={title}
-             defaultValue={"New Title"}
+             defaultValue={"New Title xyz"}
              // value={value}
              // onChange={(e) => setValue(e.target.value)}
            />
@@ -155,7 +155,7 @@ const CreatePost: React.FC = () => {
              multiline
              rows={16}
              inputRef={contents}
-             defaultValue={"New Body"}
+             defaultValue={"New Body xyz"}
              // value={value}
              // onChange={(e) => setValue(e.target.value)}
            />

@@ -87,7 +87,7 @@ export const deletePost = (id: number) => (dispatch: Dispatch) => {
     });
 };
 
-export const createPost = (title: string, contents: string) => (dispatch: Dispatch) => {
+export const createPost = (title: string, contents: string, username: string) => (dispatch: Dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -96,10 +96,18 @@ export const createPost = (title: string, contents: string) => (dispatch: Dispat
       group: CURR_GROUP
     }
   };
+  let data =  {
+    title: title,
+    contents: contents,
+    //!Change
+    group: "sbfavc",
+    poster: username
+  }
+  let body = JSON.stringify(data);
 
   const url = `http://${DOMAIN}/posts/posts/`;
   axios
-    .delete(url, config)
+    .post(url, body, config)
     .then((res) => {
       dispatch({ type: CREATE_POST, payload: res.data});
     })

@@ -66,7 +66,10 @@ const EditPost: React.FC<Props> = ({ resetOptionState, optionSelection }) => {
 
   //saves post edits
   const handleSave = () => {
-    console.log(selectedPost!.id);
+    if(value!.current!.value === null || value!.current!.value === ""){
+      alert("Post cannot be empty");
+      return;
+    }
     selectedPost!.contents = value.current!.value;
     dispatch(editPost(selectedPost!.id, value.current!.value));
     handleClose();

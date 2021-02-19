@@ -69,6 +69,10 @@ const CreatePost: React.FC = () => {
   };
 
   const handleSave = () => {
+    if(title!.current!.value === null || title!.current!.value === "" || contents!.current!.value === null || contents!.current!.value == ""){
+      alert("No field can be empty");
+      return;
+    }
     dispatch(createPost(title!.current!.value, contents!.current!.value, username!));
     handleClose();
   };

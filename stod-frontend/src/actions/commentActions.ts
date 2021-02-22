@@ -30,6 +30,23 @@ import {
       });
   };
 
+  export const loadSpecificComments = (postID: number) => (
+    dispatch: Dispatch,
+  ) => {
+    // Make GET request to server.
+    return axios
+      .get(`http://${DOMAIN}/posts/comments/${postID}`)
+      .then((res) => {
+        // If no error, server responds with user object.
+        dispatch({ type: LOAD_COMMENTS, payload: res.data as Array<IComment>});
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch({type: LOAD_COMMENT_ERROR});
+        //handle any errors here
+      });
+  };
+
   export const createComment = (name: string, comment: string, post: number) => (
     dispatch: Dispatch
   ) => {

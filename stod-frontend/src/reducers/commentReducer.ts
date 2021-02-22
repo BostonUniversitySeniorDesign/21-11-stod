@@ -3,6 +3,7 @@ import {
     LOAD_COMMENT_ERROR,
     CommentState,
     IComment,
+    COMMENT_SUCCESS,
     DOMAIN,
     CommentAction,
 } from "../actions/types";
@@ -20,12 +21,18 @@ function commentReducer(state = initialState, action: CommentAction): CommentSta
                 ...state,
                 comments: action.payload,
                 isLoading: false
-            }
+            };
+        case COMMENT_SUCCESS:
+             return {
+                    ...state,
+                    comments: [...state.comments, action.payload],
+                    isLoading: false
+            };
         case LOAD_COMMENT_ERROR:
-        return {
-            ...state,
-            isError: true
-        }
+            return {
+                ...state,
+                isError: true
+            };
         default:
             return state;
     }

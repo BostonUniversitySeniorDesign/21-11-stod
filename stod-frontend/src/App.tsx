@@ -16,7 +16,7 @@ import {
   Home,
   Groups,
   PostWrapper,
-  Comments
+  Comments,
 } from "./components";
 
 
@@ -45,7 +45,7 @@ const App = () => {
                       width="250"
                     />
                     <h1 style={{ marginLeft: "100px" }}>
-                      This is a public page and can be viewd by anyone
+                      This is a public page and can be viewed by anyone
                     </h1>
                   </div>
                 )}

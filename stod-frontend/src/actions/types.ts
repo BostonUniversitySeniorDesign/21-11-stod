@@ -135,7 +135,6 @@ export const EDIT_POST = "EDIT_POST";
 export const EDIT_POST_SUCCESS = "EDIT_POST_SUCCESS";
 export const POSTS_LOADING = "POSTS_LOADING";
 
-
 export interface IPost {
   id: number;
   title: string;
@@ -151,7 +150,11 @@ export interface PostState {
 }
 
 export interface PostAction {
-  type: typeof LOAD_POSTS | typeof POST_ERROR | typeof EDIT_POST | typeof DELETE_POST;
+  type:
+    | typeof LOAD_POSTS
+    | typeof POST_ERROR
+    | typeof EDIT_POST
+    | typeof DELETE_POST;
   payload?: any;
 }
 
@@ -169,7 +172,7 @@ export interface IComment {
   name: string;
   comment: string;
   created_on: string;
-  post: string;
+  post: number;
   parent: string;
 }
 
@@ -180,6 +183,9 @@ export interface CommentState {
 }
 
 export interface CommentAction {
-  type: typeof LOAD_COMMENTS | typeof LOAD_COMMENT_ERROR;
+  type:
+    | typeof LOAD_COMMENTS
+    | typeof LOAD_COMMENT_ERROR
+    | typeof COMMENT_SUCCESS;
   payload?: any;
 }

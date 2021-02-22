@@ -9,6 +9,14 @@ import { loadAllComments , createComment} from "../../actions/commentActions";
 import { IComment, IRootState } from "../../actions/types";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Avatar from '@material-ui/core/Avatar';
+import { ThemeProvider } from '@material-ui/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { purple } from '@material-ui/core/colors';
 
 
 
@@ -17,6 +25,25 @@ const Comments: React.FC = () => {
     const classes = useStyles();
 
     const comment = useRef<HTMLInputElement>();
+    //const comment_state = useSelector((state: any) => state.comments.comments)
+    //comment_state.comments.map((comment: any) => (<h1>{comment.comment}</h1>))
+
+    const darkTheme = (createMuiTheme as any) ({
+      palette: {
+        type: 'dark',
+      },
+      primary: {
+        light: '#ff7961',
+                    main: '#f44336',
+                    contrastText: '#000',
+        },
+      secondary: {
+            light: '#ff7961',
+            main: '#f44336',
+            dark: '#ba000d',
+            contrastText: '#000',
+          },
+    });
 
     const handleCreate = (event: React.FormEvent<HTMLFormElement>) => {
             event.preventDefault();
@@ -39,35 +66,34 @@ const Comments: React.FC = () => {
         return(
             <div>
                 <div>
-                    {
-                        currentState.comments.map((comment: IComment) => {
-                        return (
-                        <Card style={{maxWidth: 600, margin: '30px'}} >
-                            <CardHeader
-                            title= {comment.id}
-                            />
-                            <CardContent>
-                            <Typography variant="body2" color="textPrimary" >
-                            {comment.comment}
-                      </Typography>
-                            </CardContent>
-
-                            <CardContent>
-                      <Typography variant="body2" color="textSecondary" style={{textAlign: "right"}}>
-                            User: {comment.name}
-                      </Typography>
-                            </CardContent>
-
-                        </Card>
-                        )
-                        })
-                    }
+                {
+                     currentState.comments.map((comment: IComment) => {
+                         return (
+                            <ThemeProvider theme={darkTheme}>
+                            <CssBaseline/>
+                                <Paper className={classes.paper}>
+                                        <Grid container wrap="nowrap" spacing={2}>
+                                          <Grid item>
+                                            <Avatar>W</Avatar>
+                                          </Grid>
+                                          <Grid item xs zeroMinWidth>
+                                            <Typography noWrap>{comment.comment}</Typography>
+                                          </Grid>
+                                        </Grid>
+                                </Paper>
+                            </ThemeProvider>
+                         )
+                    })
+                }
                 </div>
                 <div>
-                    <form className={classes.form} onSubmit={handleCreate} noValidate>
-                        <TextField id="comment" name="comment" inputRef={comment} label="Comment"/>
-                        <Button type="submit" style={{border: "1px solid black"}}>Comment</Button>
-                    </form>
+                    <ThemeProvider theme={darkTheme}>
+                        <CssBaseline/>
+                        <form className={classes.form} onSubmit={handleCreate} noValidate>
+                            <TextField color="secondary" id="comment" name="comment" inputRef={comment} label="Comment"/>
+                            <Button color="secondary" type="submit" style={{border: "1px solid black"}}>Comment</Button>
+                        </form>
+                    </ThemeProvider>
                 </div>
             </div>
         );

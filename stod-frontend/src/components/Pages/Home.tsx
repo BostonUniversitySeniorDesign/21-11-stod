@@ -31,7 +31,7 @@ import PaymentIcon from "@material-ui/icons/Payment";
 import Groups from "../Groups/Groups";
 import { IGroupsAction, IRootState, SingleGroup } from "../../actions/types";
 import { fetchGroups } from "../../actions/groupsActions";
-
+import { useHistory } from "react-router-dom";
 
 const drawerWidth = 180;
 
@@ -123,7 +123,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Home = () => {
   const dispatch = useDispatch();
-
+  const history = useHistory();
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -211,6 +211,23 @@ const Home = () => {
             </Button>
           </ListItem>
         ))}
+        <ListItem
+            className={classes.item}
+            style={{ margin: 0, padding: 0 }}
+          >
+            <Button
+              className={selected == "Find Groups" ? classes.active : classes.button}
+              onClick={() => {
+                setSelected("Find Groups");
+                history.push('/groups');
+              }}
+              fullWidth
+            >
+              <Typography variant="subtitle1" className={classes.typo}>
+                Find Groups
+              </Typography>
+            </Button>
+          </ListItem>
       </List>
       <Divider />
       <Typography variant="h6" className={classes.typo_head}>

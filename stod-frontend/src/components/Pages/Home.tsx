@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // mui
 import AppBar from "@material-ui/core/AppBar";
 import Divider from "@material-ui/core/Divider";
@@ -14,7 +14,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { logout } from "../../actions/authActions";
 import Button from "../../mui_components/StodButton";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import { CssBaseline, Switch } from "@material-ui/core";
@@ -28,6 +28,10 @@ import Navbar from "../Common/Navbar";
 // icons
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import PaymentIcon from "@material-ui/icons/Payment";
+import Groups from "../Groups/Groups";
+import { IGroupsAction, IRootState, SingleGroup } from "../../actions/types";
+import { fetchGroups } from "../../actions/groupsActions";
+import { useHistory } from "react-router-dom";
 
 const drawerWidth = 180;
 
@@ -119,7 +123,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Home = () => {
   const dispatch = useDispatch();
-
+  const history = useHistory();
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -128,6 +132,54 @@ const Home = () => {
     <DashboardIcon className={classes.typo} />,
     <PaymentIcon className={classes.typo} />,
   ];
+
+  const username = useSelector(
+    (state: IRootState) => state.auth.user?.username
+  );
+
+  let currentGroupsState = useSelector((state: IRootState) => state.groups);
+
+  useEffect(() => {
+    if (username !== undefined) {
+      dispatch(fetchGroups(true, username));
+    }
+  }, [username, dispatch]);
+
+  const renderGroupsSidebar = () => {
+    if (currentGroupsState.isLoading) {
+      return <div>Loading...</div>;
+    } else if (currentGroupsState.isError) {
+      return <div>Error!</div>;
+    } else {
+      if (currentGroupsState.groups.length === 0) {
+        return (
+          <div>You aren't subscribed to any groups!</div>
+        )
+      } else {
+        return (
+          <List>
+            {
+              currentGroupsState.groups.map((group, i) => {
+                return (
+                  <ListItem key={i} className={classes.item} style={{margin: 0, padding: 0}}>
+                    <Button
+                      className={selected == group.name ? classes.active : classes.button}
+                      key={i}
+                      onClick={() => setSelected(group.name)}
+                    >
+                      <Typography variant="subtitle1" className={classes.typo}>
+                        {group.name}
+                      </Typography>
+                    </Button>
+                  </ListItem>
+                )
+              })
+            }
+          </List>
+        )
+      }
+    }
+  }
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -159,6 +211,23 @@ const Home = () => {
             </Button>
           </ListItem>
         ))}
+        <ListItem
+            className={classes.item}
+            style={{ margin: 0, padding: 0 }}
+          >
+            <Button
+              className={selected == "Find Groups" ? classes.active : classes.button}
+              onClick={() => {
+                setSelected("Find Groups");
+                history.push('/groups');
+              }}
+              fullWidth
+            >
+              <Typography variant="subtitle1" className={classes.typo}>
+                Find Groups
+              </Typography>
+            </Button>
+          </ListItem>
       </List>
       <Divider />
       <Typography variant="h6" className={classes.typo_head}>
@@ -183,6 +252,11 @@ const Home = () => {
           </ListItem>
         ))}
       </List>
+      <Divider />
+      <Typography variant="h6" className={classes.typo_head}>
+        Your Groups
+      </Typography>
+      {renderGroupsSidebar()}
     </div>
   );
 

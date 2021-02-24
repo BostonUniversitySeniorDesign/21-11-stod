@@ -32,9 +32,10 @@ class Comment(models.Model):
     name = models.CharField(max_length=140)
     comment = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
+    parent = models.ForeignKey("self", on_delete=models.CASCADE, blank=True, null=True, related_name="reply")
 
     class Meta:
         ordering = ["created_on"]
 
     def __str__(self):
-        return "Comment {} by {}".format(self.body, self.name)
+        return "Comment {} by {}".format(self.comment, self.name)

@@ -11,7 +11,7 @@ export const fetchGroups = (subscribedOnly: boolean, user: string) => (
     return axios
         .get(url)
         .then((res) => {
-            dispatch({type: GROUPS_SUCCESS, payload: res.data as Array<SingleGroup>});
+            dispatch({type: GROUPS_SUCCESS, payload: res.data as Array<SingleGroup>, isSubscribedGroups: subscribedOnly});
         })
         .catch((err) => {
             dispatch({type: GROUPS_ERROR});

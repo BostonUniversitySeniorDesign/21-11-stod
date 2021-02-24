@@ -2,6 +2,7 @@ import authReducer from "./authReducer";
 import { groupsReducer, groupCreateReducer } from "./groupsReducer";
 import { combineReducers } from "redux";
 import postReducer from "./postReducer";
+import commentReducer from "./commentReducer";
 
 // combines all the reducers to one
 export default combineReducers({
@@ -9,4 +10,5 @@ export default combineReducers({
   groups: groupsReducer,
   groupCreate: groupCreateReducer,
   posts: postReducer,
+  comments: commentReducer,
 });

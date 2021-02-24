@@ -59,6 +59,7 @@ export interface IRootState {
   groupCreate: IGroupsCreateState;
   posts: PostState;
   currentGroup: currentUserGroup;
+  comments: CommentState;
 }
 
 // Header JSON interface
@@ -103,7 +104,8 @@ export interface SingleGroup {
 
 export interface IGroupsState {
   isLoading: boolean;
-  groups: Array<SingleGroup>;
+  allGroups: Array<SingleGroup>;
+  subscribedGroups: Array<SingleGroup>;
   isError: boolean;
 }
 
@@ -114,6 +116,7 @@ export interface IGroupsProps {
 export interface IGroupsAction {
   type: typeof GROUPS_SUCCESS | typeof GROUPS_ERROR;
   payload?: any;
+  isSubscribedGroups: boolean;
 }
 
 export interface IGroupsCreateState {
@@ -137,7 +140,6 @@ export const POSTS_LOADING = "POSTS_LOADING";
 export const CREATE_POST = "CREATE_POST";
 
 
-
 export interface IPost {
   id: number;
   title: string;
@@ -155,6 +157,38 @@ export interface PostState {
 
 export interface PostAction {
   type: typeof LOAD_POSTS | typeof POST_ERROR | typeof EDIT_POST | typeof DELETE_POST | typeof CREATE_POST;
+  payload?: any;
+}
+
+export const LOAD_COMMENTS = "LOAD_COMMENTS";
+export const COMMENTS_LOADING = "COMMENTS_LOADING";
+export const ADD_COMMENT = "ADD_COMMENT";
+export const COMMENT_SUCCESS = "COMMENT_SUCCESS";
+export const DELETE_COMMENT = "DELETE_COMMENT";
+export const EDIT_COMMENT = "EDIT_COMMENT";
+export const LOAD_COMMENT_ERROR = "LOAD_COMMENT_ERROR";
+export const COMMENT_CREATE_ERROR = "COMMENT_CREATE_ERROR";
+
+export interface IComment {
+  id: number;
+  name: string;
+  comment: string;
+  created_on: string;
+  post: number;
+  parent: string;
+}
+
+export interface CommentState {
+  isLoading: boolean;
+  comments: IComment[];
+  isError: boolean;
+}
+
+export interface CommentAction {
+  type:
+    | typeof LOAD_COMMENTS
+    | typeof LOAD_COMMENT_ERROR
+    | typeof COMMENT_SUCCESS;
   payload?: any;
 }
 

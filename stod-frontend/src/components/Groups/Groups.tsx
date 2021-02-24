@@ -56,6 +56,7 @@ const Groups: React.FC<IGroupsProps> = (props: IGroupsProps) => {
   }
 
   let renderBody: () => JSX.Element = () => {
+    let targetGroups = props.subscribedOnly ? currentState.subscribedGroups : currentState.allGroups;
     if (currentState.isLoading) {
       return <h1>Loading...</h1>;
     } else if (currentState.isError) {
@@ -63,7 +64,7 @@ const Groups: React.FC<IGroupsProps> = (props: IGroupsProps) => {
     } else {
       return (
         <ul style={{ listStyleType: "none" }}>
-          {currentState.groups.map((group: SingleGroup) => {
+          {targetGroups.map((group: SingleGroup) => {
             return (
               <Group name={group.name} description={group.description} displayJoinButton={!props.subscribedOnly}></Group>
             );

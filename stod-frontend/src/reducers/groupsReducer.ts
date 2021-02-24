@@ -11,24 +11,33 @@ import {
 
 const initialState: IGroupsState = {
     isLoading: true,
-    groups: [],
+    allGroups: [],
+    subscribedGroups: [],
     isError: false,
 }
 
 export function groupsReducer(state = initialState, action: IGroupsAction): IGroupsState {
     switch (action.type) {
         case GROUPS_SUCCESS:
-            return {
-                ...state,
-                isLoading: false,
-                groups: action.payload,
-                isError: false
+            if (action.isSubscribedGroups) {
+                return {
+                    ...state,
+                    isLoading: false,
+                    subscribedGroups: action.payload,
+                    isError: false
+                }
+            } else {
+                return {
+                    ...state,
+                    isLoading: false,
+                    allGroups: action.payload,
+                    isError: false
+                }
             }
         case GROUPS_ERROR:
             return {
                 ...state, 
                 isLoading: false,
-                groups: [],
                 isError: true
             }
         default:

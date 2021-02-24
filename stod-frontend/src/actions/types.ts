@@ -103,7 +103,8 @@ export interface SingleGroup {
 
 export interface IGroupsState {
   isLoading: boolean;
-  groups: Array<SingleGroup>;
+  allGroups: Array<SingleGroup>;
+  subscribedGroups: Array<SingleGroup>;
   isError: boolean;
 }
 
@@ -114,6 +115,7 @@ export interface IGroupsProps {
 export interface IGroupsAction {
   type: typeof GROUPS_SUCCESS | typeof GROUPS_ERROR;
   payload?: any;
+  isSubscribedGroups: boolean;
 }
 
 export interface IGroupsCreateState {

@@ -19,6 +19,30 @@ import {
   Comments,
 } from "./components";
 
+const test = () => {
+  return (
+    <div>Welcome to Stod</div>
+  )
+}
+
+const AuthenticatedRoutes = () => {
+  return (
+    <React.Fragment>
+      <Home/>
+      <div style={{marginTop: '64px', marginLeft: '180px'}}>
+        <Switch>
+          <Route exact path="/groups" component={() => <Groups subscribedOnly={false} />} />
+          <Route exact path="/groups/subscribed" component={() => <Groups subscribedOnly={true} />} />
+          <Route exact path="/posts" component={PostWrapper} />
+          <Route exact path="/comments" component={Comments} />
+          <AuthenticatedRoute path="/home" component={test} />
+          <Route exact path="/404" component={Error} />
+          <Redirect from="*" to="/404" />
+        </Switch>
+      </div>
+    </React.Fragment>
+  )
+}
 
 const App = () => {
   // We attempt to load a user as soon as they visit the site
@@ -31,7 +55,6 @@ const App = () => {
       <Router>
         <React.Fragment>
           <div className="container">
-            {/* Site routes */}
             <Switch>
               <Route
                 exact
@@ -52,15 +75,9 @@ const App = () => {
               />
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
-              <Route exact path="/groups" component={() => <Groups subscribedOnly={false} />} />
-              <Route exact path="/groups/subscribed" component={() => <Groups subscribedOnly={true} />} />
-              <Route exact path="/posts" component={PostWrapper} />
-              <Route exact path="/comments" component={Comments} />
-              <AuthenticatedRoute path="/home" component={Home} />
-              <Route exact path="/404" component={Error} />
-              <Redirect from="*" to="/404" />
+              <Route component={AuthenticatedRoutes}/>
             </Switch>
-          </div>
+            </div>
         </React.Fragment>
       </Router>
     </Provider>

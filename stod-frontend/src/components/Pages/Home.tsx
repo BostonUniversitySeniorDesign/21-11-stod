@@ -17,7 +17,7 @@ import Button from "../../mui_components/StodButton";
 import { useSelector, useDispatch } from "react-redux";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
-import { CssBaseline, Switch } from "@material-ui/core";
+import { CssBaseline } from "@material-ui/core";
 import {
   makeStyles,
   useTheme,
@@ -31,7 +31,7 @@ import PaymentIcon from "@material-ui/icons/Payment";
 import Groups from "../Groups/Groups";
 import { IGroupsAction, IRootState, SingleGroup } from "../../actions/types";
 import { fetchGroups } from "../../actions/groupsActions";
-import { useHistory } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, useHistory } from "react-router-dom";
 
 const drawerWidth = 180;
 
@@ -151,7 +151,7 @@ const Home = () => {
     } else if (currentGroupsState.isError) {
       return <div>Error!</div>;
     } else {
-      if (currentGroupsState.groups.length === 0) {
+      if (currentGroupsState.subscribedGroups.length === 0) {
         return (
           <div>You aren't subscribed to any groups!</div>
         )
@@ -159,7 +159,7 @@ const Home = () => {
         return (
           <List>
             {
-              currentGroupsState.groups.map((group, i) => {
+              currentGroupsState.subscribedGroups.map((group, i) => {
                 return (
                   <ListItem key={i} className={classes.item} style={{margin: 0, padding: 0}}>
                     <Button
@@ -298,38 +298,6 @@ const Home = () => {
           </Drawer>
         </Hidden>
       </nav>
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        <Typography paragraph variant="h6">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
-          dolor purus non enim praesent elementum facilisis leo vel. Risus at
-          ultrices mi tempus imperdiet. Semper risus in hendrerit gravida rutrum
-          quisque non tellus. Convallis convallis tellus id interdum velit
-          laoreet id donec ultrices. Odio morbi quis commodo odio aenean sed
-          adipiscing. Amet nisl suscipit adipiscing bibendum est ultricies
-          integer quis. Cursus euismod quis viverra nibh cras. Metus vulputate
-          eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo
-          quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat
-          vivamus at augue. At augue eget arcu dictum varius duis at consectetur
-          lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa sapien
-          faucibus et molestie ac.
-        </Typography>
-        <Typography paragraph variant="h6">
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-          ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-          elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-          sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-          mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-          risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-          purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-          tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-          morbi tristique senectus et. Adipiscing elit duis tristique
-          sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-          eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-          posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
-      </main>
     </div>
   );
 };

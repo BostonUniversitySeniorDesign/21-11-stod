@@ -22,7 +22,7 @@ class PostViewset(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = self.queryset
         req_group = self.request.query_params["group"]
-        if(req_group == "home" | req_group == ""):
+        if(req_group == "home" or req_group == ""):
             queryset = Post.objects.all()
             return queryset.order_by('-id')
         else:

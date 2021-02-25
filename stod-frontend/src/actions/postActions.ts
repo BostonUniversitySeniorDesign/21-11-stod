@@ -13,23 +13,24 @@ import {
   IPost,
   DELETE_POST,
   CREATE_POST,
-  IRootState
+  IRootState,
 } from "./types";
 
+export const loadAllPosts = () => (
+  dispatch: Dispatch,
+  getState: () => IRootState
+) => {
+  const CURR_GROUP = getState().userGroup.currentGroup;
 
-
-export const loadAllPosts = () => (dispatch: Dispatch, getState: () => IRootState) => {
-  const CURR_GROUP = getState().currentGroup;
-  
   const config = {
     headers: {
       "Content-Type": "application/json",
     },
-    params:{
-      group: CURR_GROUP
-    }
+    params: {
+      group: CURR_GROUP,
+    },
   };
- 
+
   // Make GET request to server.
   return axios
     .get(`http://${DOMAIN}/posts/posts/`, config)
@@ -51,15 +52,15 @@ export const editPost = (id: number, contents: string) => (
   dispatch: Dispatch,
   getState: () => IRootState
 ) => {
-  const CURR_GROUP = getState().currentGroup;
+  const CURR_GROUP = getState().userGroup.currentGroup;
 
   const config = {
     headers: {
       "Content-Type": "application/json",
     },
-    params:{
-      group: CURR_GROUP
-    }
+    params: {
+      group: CURR_GROUP,
+    },
   };
 
   const body = JSON.stringify({ contents });
@@ -74,16 +75,19 @@ export const editPost = (id: number, contents: string) => (
     });
 };
 
-export const deletePost = (id: number) => (dispatch: Dispatch, getState: () => IRootState) => {
-  const CURR_GROUP = getState().currentGroup;
-  
+export const deletePost = (id: number) => (
+  dispatch: Dispatch,
+  getState: () => IRootState
+) => {
+  const CURR_GROUP = getState().userGroup.currentGroup;
+
   const config = {
     headers: {
       "Content-Type": "application/json",
     },
-    params:{
-      group: CURR_GROUP
-    }
+    params: {
+      group: CURR_GROUP,
+    },
   };
 
   const url = `http://${DOMAIN}/posts/posts/` + id + "/";
@@ -97,30 +101,34 @@ export const deletePost = (id: number) => (dispatch: Dispatch, getState: () => I
     });
 };
 
-export const createPost = (title: string, contents: string, username: string) => (dispatch: Dispatch, getState: () => IRootState) => {
-  const CURR_GROUP = getState().currentGroup;
-  
+export const createPost = (
+  title: string,
+  contents: string,
+  username: string
+) => (dispatch: Dispatch, getState: () => IRootState) => {
+  const CURR_GROUP = getState().userGroup.currentGroup;
+
   const config = {
     headers: {
       "Content-Type": "application/json",
     },
-    params:{
-      group: "home"
-    }
+    params: {
+      group: "home",
+    },
   };
-  let data =  {
+  let data = {
     title: title,
     contents: contents,
     group: CURR_GROUP,
-    poster: username
-  }
+    poster: username,
+  };
   let body = JSON.stringify(data);
 
   const url = `http://${DOMAIN}/posts/posts/`;
   axios
     .post(url, body, config)
     .then((res) => {
-      dispatch({ type: CREATE_POST, payload: res.data});
+      dispatch({ type: CREATE_POST, payload: res.data });
     })
     .catch((err) => {
       dispatch({ type: POST_ERROR, payload: {} });

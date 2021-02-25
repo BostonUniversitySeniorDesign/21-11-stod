@@ -59,7 +59,7 @@ export interface IRootState {
   groupCreate: IGroupsCreateState;
   posts: PostState;
   comments: CommentState;
-  currentGroup: IGroupsState;
+  userGroup: IUserGroup;
 }
 
 // Header JSON interface
@@ -139,7 +139,6 @@ export const EDIT_POST_SUCCESS = "EDIT_POST_SUCCESS";
 export const POSTS_LOADING = "POSTS_LOADING";
 export const CREATE_POST = "CREATE_POST";
 
-
 export interface IPost {
   id: number;
   title: string;
@@ -156,7 +155,12 @@ export interface PostState {
 }
 
 export interface PostAction {
-  type: typeof LOAD_POSTS | typeof POST_ERROR | typeof EDIT_POST | typeof DELETE_POST | typeof CREATE_POST;
+  type:
+    | typeof LOAD_POSTS
+    | typeof POST_ERROR
+    | typeof EDIT_POST
+    | typeof DELETE_POST
+    | typeof CREATE_POST;
   payload?: any;
 }
 
@@ -192,6 +196,12 @@ export interface CommentAction {
   payload?: any;
 }
 
+export const SWITCH_GROUP = "SWITCH_GROUP";
 export interface IUserGroup {
-  currentGroup: string
+  currentGroup: string;
+}
+
+export interface UserGroupAction {
+  type: typeof SWITCH_GROUP;
+  payload?: any;
 }

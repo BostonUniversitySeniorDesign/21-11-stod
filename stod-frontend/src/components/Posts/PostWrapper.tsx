@@ -23,6 +23,7 @@ const PostWrapper: React.FC = () => {
   const username = useSelector(
     (state: IRootState) => state.auth.user?.username
   );
+  const cuurrr = useSelector((state: IRootState) => state);
   const classes = useStyles();
   const comment = useRef<HTMLInputElement>();
   const [currComment, setCurrComment] = useState<string | null>(null);
@@ -44,15 +45,17 @@ const PostWrapper: React.FC = () => {
 
   let currentState = useSelector((state: IRootState) => state.posts);
   useEffect(() => {
+    // @ts-ignore
+    console.log(cuurrr.userGroup);
     dispatch(loadAllPosts());
-  }, []);
+  }, [cuurrr.userGroup]);
 
   useEffect(() => {
     dispatch(loadAllComments());
   }, []);
 
   let currentCommentState = useSelector((state: IRootState) => state.comments);
-  console.log(currentCommentState.comments);
+  // console.log(currentCommentState.comments);
 
   if (!currentState.isLoading) {
     return (

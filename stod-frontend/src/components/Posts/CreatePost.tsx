@@ -8,7 +8,7 @@ import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import CloseIcon from "@material-ui/icons/Close";
 import MuiDialogContent from "@material-ui/core/DialogContent";
 import MuiDialogActions from "@material-ui/core/DialogActions";
-import {createPost} from "../../actions/postActions"
+import { createPost } from "../../actions/postActions";
 
 import {
   createStyles,
@@ -40,20 +40,20 @@ const styles = (theme: Theme) =>
     },
   });
 
-  export interface DialogTitleProps extends WithStyles<typeof styles> {
-    id: string;
-    children: React.ReactNode;
-    onClose: () => void;
-  }
+export interface DialogTitleProps extends WithStyles<typeof styles> {
+  id: string;
+  children: React.ReactNode;
+  onClose: () => void;
+}
 
 const CreatePost: React.FC = () => {
   const dispatch = useDispatch();
-  
+
   const username = useSelector(
     (state: IRootState) => state.auth.user?.username
   );
   const currentGroup = useSelector(
-    (state: IRootState) => state.currentGroup
+    (state: IRootState) => state.userGroup.currentGroup
   );
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -69,17 +69,22 @@ const CreatePost: React.FC = () => {
   };
 
   const handleSave = () => {
-    if(title!.current!.value === null || title!.current!.value === "" || contents!.current!.value === null || contents!.current!.value == ""){
+    if (
+      title!.current!.value === null ||
+      title!.current!.value === "" ||
+      contents!.current!.value === null ||
+      contents!.current!.value == ""
+    ) {
       alert("No field can be empty");
       return;
     }
-    dispatch(createPost(title!.current!.value, contents!.current!.value, username!));
+    dispatch(
+      createPost(title!.current!.value, contents!.current!.value, username!)
+    );
     handleClose();
   };
 
-
   //grabs current post to be edited
-
 
   const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
     const { children, classes, onClose, ...other } = props;
@@ -125,54 +130,49 @@ const CreatePost: React.FC = () => {
   const title = React.useRef<HTMLInputElement>(null);
   const contents = React.useRef<HTMLInputElement>(null);
 
-
   return (
     <div>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={handleOpen}
-      >
+      <Button variant="contained" color="primary" onClick={handleOpen}>
         Create Post
       </Button>
       <div>
         {open ? (
-         <Dialog
-         disableBackdropClick
-         onClose={handleClose}
-         aria-labelledby="customized-dialog-title"
-         open={open}
-         className={classes.root}
-       >
-         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-         <TextField
-             id="Title"
-             inputRef={title}
-             defaultValue={"New Title xyz"}
-             // value={value}
-             // onChange={(e) => setValue(e.target.value)}
-           />
-         </DialogTitle>
-         <DialogContent dividers>
-           <TextField
-             id="content"
-             multiline
-             rows={16}
-             inputRef={contents}
-             defaultValue={"New Body xyz"}
-             // value={value}
-             // onChange={(e) => setValue(e.target.value)}
-           />
-         </DialogContent>
-         <DialogActions>
-           <Button onClick={handleSave} color="primary">
-             Submit
-           </Button>
-           <Button onClick={handleClose} color="primary">
-             Cancel
-           </Button>
-         </DialogActions>
-       </Dialog>
+          <Dialog
+            disableBackdropClick
+            onClose={handleClose}
+            aria-labelledby="customized-dialog-title"
+            open={open}
+            className={classes.root}
+          >
+            <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+              <TextField
+                id="Title"
+                inputRef={title}
+                defaultValue={"New Title xyz"}
+                // value={value}
+                // onChange={(e) => setValue(e.target.value)}
+              />
+            </DialogTitle>
+            <DialogContent dividers>
+              <TextField
+                id="content"
+                multiline
+                rows={16}
+                inputRef={contents}
+                defaultValue={"New Body xyz"}
+                // value={value}
+                // onChange={(e) => setValue(e.target.value)}
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleSave} color="primary">
+                Submit
+              </Button>
+              <Button onClick={handleClose} color="primary">
+                Cancel
+              </Button>
+            </DialogActions>
+          </Dialog>
         ) : null}
       </div>
     </div>

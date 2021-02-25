@@ -20,6 +20,7 @@ function postReducer(state = initialState, action: PostAction): PostState {
   let newArray;
   switch (action.type) {
     case LOAD_POSTS:
+      console.log(action.payload);
       return {
         ...state,
         posts: action.payload,

@@ -18,6 +18,7 @@ import { useSelector, useDispatch } from "react-redux";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import { CssBaseline } from "@material-ui/core";
+import { SWITCH_GROUP } from "../../actions/types";
 import {
   makeStyles,
   useTheme,
@@ -25,15 +26,26 @@ import {
   createStyles,
 } from "@material-ui/core/styles";
 import Navbar from "../Common/Navbar";
+import Groups from "../Groups/Groups";
 // icons
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import PaymentIcon from "@material-ui/icons/Payment";
-import PostWrapper from "../Posts/PostWrapper";
 import CreatePost from "../Posts/CreatePost";
-import Groups from "../Groups/Groups";
-import { IGroupsAction, IRootState, SingleGroup, IUserGroup} from "../../actions/types";
+import PostWrapper from "../Posts/PostWrapper";
+import {
+  IGroupsAction,
+  IRootState,
+  SingleGroup,
+  IUserGroup,
+} from "../../actions/types";
 import { fetchGroups } from "../../actions/groupsActions";
-import { BrowserRouter as Router, Route, Switch, useHistory } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  useHistory,
+} from "react-router-dom";
+import { createPost } from "../../actions/postActions";
 
 const drawerWidth = 180;
 
@@ -123,13 +135,29 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+function getSelectedComponent(sel: string) {
+  if (sel === "Find Groups") return <Groups subscribedOnly={false} />;
+  if (sel === "home")
+    return (
+      <>
+        <PostWrapper />
+      </>
+    );
+  return (
+    <>
+      <CreatePost />
+      <PostWrapper />
+    </>
+  );
+}
+
 const Home = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [selected, setSelected] = useState("Dashboard");
+  const [selected, setSelected] = useState("home");
   const icons = [
     <DashboardIcon className={classes.typo} />,
     <PaymentIcon className={classes.typo} />,
@@ -154,34 +182,39 @@ const Home = () => {
       return <div>Error!</div>;
     } else {
       if (currentGroupsState.subscribedGroups.length === 0) {
-        return (
-          <div>You aren't subscribed to any groups!</div>
-        )
+        return <div>You aren't subscribed to any groups!</div>;
       } else {
         return (
           <List>
-            {
-              currentGroupsState.subscribedGroups.map((group, i) => {
-                return (
-                  <ListItem key={i} className={classes.item} style={{margin: 0, padding: 0}}>
-                    <Button
-                      className={selected == group.name ? classes.active : classes.button}
-                      key={i}
-                      onClick={() => setSelected(group.name)}
-                    >
-                      <Typography variant="subtitle1" className={classes.typo}>
-                        {group.name}
-                      </Typography>
-                    </Button>
-                  </ListItem>
-                )
-              })
-            }
+            {currentGroupsState.subscribedGroups.map((group, i) => {
+              return (
+                <ListItem
+                  key={i}
+                  className={classes.item}
+                  style={{ margin: 0, padding: 0 }}
+                >
+                  <Button
+                    className={
+                      selected == group.name ? classes.active : classes.button
+                    }
+                    key={i}
+                    onClick={() => {
+                      setSelected(group.name);
+                      dispatch({ type: SWITCH_GROUP, payload: group.name });
+                    }}
+                  >
+                    <Typography variant="subtitle1" className={classes.typo}>
+                      {group.name}
+                    </Typography>
+                  </Button>
+                </ListItem>
+              );
+            })}
           </List>
-        )
+        );
       }
     }
-  }
+  };
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -195,7 +228,7 @@ const Home = () => {
         Main
       </Typography>
       <List>
-        {["Dashboard", "Billing"].map((text, index) => (
+        {["home"].map((text, index) => (
           <ListItem
             key={text}
             className={classes.item}
@@ -204,7 +237,10 @@ const Home = () => {
             <Button
               className={selected == text ? classes.active : classes.button}
               key={text}
-              onClick={() => setSelected(text)}
+              onClick={() => {
+                setSelected(text);
+                dispatch({ type: SWITCH_GROUP, payload: text });
+              }}
               fullWidth
             >
               <Typography variant="subtitle1" className={classes.typo}>
@@ -213,23 +249,22 @@ const Home = () => {
             </Button>
           </ListItem>
         ))}
-        <ListItem
-            className={classes.item}
-            style={{ margin: 0, padding: 0 }}
+        <ListItem className={classes.item} style={{ margin: 0, padding: 0 }}>
+          <Button
+            className={
+              selected == "Find Groups" ? classes.active : classes.button
+            }
+            onClick={() => {
+              setSelected("Find Groups");
+              dispatch({ type: SWITCH_GROUP, payload: "Find Groups" });
+            }}
+            fullWidth
           >
-            <Button
-              className={selected == "Find Groups" ? classes.active : classes.button}
-              onClick={() => {
-                setSelected("Find Groups");
-                history.push('/groups');
-              }}
-              fullWidth
-            >
-              <Typography variant="subtitle1" className={classes.typo}>
-                Find Groups
-              </Typography>
-            </Button>
-          </ListItem>
+            <Typography variant="subtitle1" className={classes.typo}>
+              Find Groups
+            </Typography>
+          </Button>
+        </ListItem>
       </List>
       <Divider />
       {/* <Typography variant="h6" className={classes.typo_head}>
@@ -305,12 +340,13 @@ const Home = () => {
         {/* <Typography paragraph variant="h6">
           Hello
         </Typography> */}
-        {currGroup === home ? 
+        {/* {currGroup === home ? 
         <CreatePost></CreatePost>
         <PostWrapper></PostWrapper>
         : 
         <Groups subscribedOnly={false} />}
-        }
+        } */}
+        {getSelectedComponent(selected)}
       </main>
     </div>
   );

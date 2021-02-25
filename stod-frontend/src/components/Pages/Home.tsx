@@ -305,8 +305,12 @@ const Home = () => {
         {/* <Typography paragraph variant="h6">
           Hello
         </Typography> */}
+        {currGroup === home ? 
         <CreatePost></CreatePost>
         <PostWrapper></PostWrapper>
+        : 
+        <Groups subscribedOnly={false} />}
+        }
       </main>
     </div>
   );

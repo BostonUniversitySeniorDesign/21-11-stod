@@ -20,11 +20,9 @@ import Typography from "@material-ui/core/Typography";
 
 const PostWrapper: React.FC = () => {
   const dispatch = useDispatch();
-<<<<<<< HEAD
   const username = useSelector(
     (state: IRootState) => state.auth.user?.username
   );
-=======
   const classes = useStyles();
   const comment = useRef<HTMLInputElement>();
   const [currComment, setCurrComment] = useState<string | null>(null);
@@ -43,7 +41,6 @@ const PostWrapper: React.FC = () => {
     }
     dispatch(createComment(comment.current!.name, currComment, pid));
   };
->>>>>>> dd505f16c017fc5b06b8be748d62248166f7c81a
 
   let currentState = useSelector((state: IRootState) => state.posts);
   useEffect(() => {
@@ -63,13 +60,6 @@ const PostWrapper: React.FC = () => {
         {currentState.posts.map((post: IPost) => {
           return (
             <div>
-<<<<<<< HEAD
-              <Post
-                post={post}
-                showPostMenu={post.poster === username}
-                key={post.id}
-              />
-=======
               <Post post={post} showPostMenu={true} key={post.id} />
               <form
                 className={classes.form}
@@ -103,7 +93,6 @@ const PostWrapper: React.FC = () => {
                   ""
                 );
               })}
->>>>>>> dd505f16c017fc5b06b8be748d62248166f7c81a
             </div>
           );
         })}

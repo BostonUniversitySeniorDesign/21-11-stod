@@ -1,6 +1,7 @@
 // axios for server requests
 import { getConfig } from "@testing-library/react";
 import axios from "axios";
+import { useSelector } from "react-redux";
 import { Dispatch } from "redux";
 //import { ConfigTypes, CredentialTypes } from "./types";
 
@@ -11,12 +12,15 @@ import {
   DOMAIN,
   IPost,
   DELETE_POST,
-  CREATE_POST
+  CREATE_POST,
+  IRootState
 } from "./types";
 
-const CURR_GROUP = ""
 
-export const loadAllPosts = () => (dispatch: Dispatch) => {
+
+export const loadAllPosts = () => (dispatch: Dispatch, getState: () => IRootState) => {
+  const CURR_GROUP = getState().currentGroup;
+  
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -25,6 +29,7 @@ export const loadAllPosts = () => (dispatch: Dispatch) => {
       group: CURR_GROUP
     }
   };
+ 
   // Make GET request to server.
   return axios
     .get(`http://${DOMAIN}/posts/posts/`, config)
@@ -43,8 +48,11 @@ export const loadAllPosts = () => (dispatch: Dispatch) => {
 //make a PUT request to edit a post
 //takes in id of post and edited contents
 export const editPost = (id: number, contents: string) => (
-  dispatch: Dispatch
+  dispatch: Dispatch,
+  getState: () => IRootState
 ) => {
+  const CURR_GROUP = getState().currentGroup;
+
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -66,7 +74,9 @@ export const editPost = (id: number, contents: string) => (
     });
 };
 
-export const deletePost = (id: number) => (dispatch: Dispatch) => {
+export const deletePost = (id: number) => (dispatch: Dispatch, getState: () => IRootState) => {
+  const CURR_GROUP = getState().currentGroup;
+  
   const config = {
     headers: {
       "Content-Type": "application/json",
@@ -87,20 +97,21 @@ export const deletePost = (id: number) => (dispatch: Dispatch) => {
     });
 };
 
-export const createPost = (title: string, contents: string, username: string) => (dispatch: Dispatch) => {
+export const createPost = (title: string, contents: string, username: string) => (dispatch: Dispatch, getState: () => IRootState) => {
+  const CURR_GROUP = getState().currentGroup;
+  
   const config = {
     headers: {
       "Content-Type": "application/json",
     },
     params:{
-      group: CURR_GROUP
+      group: "home"
     }
   };
   let data =  {
     title: title,
     contents: contents,
-    //!Change
-    group: "sbfavc",
+    group: CURR_GROUP,
     poster: username
   }
   let body = JSON.stringify(data);

@@ -58,8 +58,8 @@ export interface IRootState {
   groups: IGroupsState;
   groupCreate: IGroupsCreateState;
   posts: PostState;
-  currentGroup: currentUserGroup;
   comments: CommentState;
+  currentGroup: IGroupsState;
 }
 
 // Header JSON interface
@@ -192,6 +192,6 @@ export interface CommentAction {
   payload?: any;
 }
 
-export interface currentUserGroup {
+export interface IUserGroup {
   currentGroup: string
 }

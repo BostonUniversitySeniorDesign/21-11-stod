@@ -28,15 +28,12 @@ import Navbar from "../Common/Navbar";
 // icons
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import PaymentIcon from "@material-ui/icons/Payment";
-<<<<<<< HEAD
 import PostWrapper from "../Posts/PostWrapper";
 import CreatePost from "../Posts/CreatePost";
-=======
 import Groups from "../Groups/Groups";
-import { IGroupsAction, IRootState, SingleGroup } from "../../actions/types";
+import { IGroupsAction, IRootState, SingleGroup, IUserGroup} from "../../actions/types";
 import { fetchGroups } from "../../actions/groupsActions";
 import { BrowserRouter as Router, Route, Switch, useHistory } from "react-router-dom";
->>>>>>> dd505f16c017fc5b06b8be748d62248166f7c81a
 
 const drawerWidth = 180;
 
@@ -235,7 +232,7 @@ const Home = () => {
           </ListItem>
       </List>
       <Divider />
-      <Typography variant="h6" className={classes.typo_head}>
+      {/* <Typography variant="h6" className={classes.typo_head}>
         Account
       </Typography>
       <List style={{ margin: 0, padding: 0 }}>
@@ -256,7 +253,7 @@ const Home = () => {
             </Button>
           </ListItem>
         ))}
-      </List>
+      </List> */}
       <Divider />
       <Typography variant="h6" className={classes.typo_head}>
         Your Groups
@@ -303,7 +300,6 @@ const Home = () => {
           </Drawer>
         </Hidden>
       </nav>
-<<<<<<< HEAD
       <main className={classes.content}>
         <div className={classes.toolbar} />
         {/* <Typography paragraph variant="h6">
@@ -312,8 +308,6 @@ const Home = () => {
         <CreatePost></CreatePost>
         <PostWrapper></PostWrapper>
       </main>
-=======
->>>>>>> dd505f16c017fc5b06b8be748d62248166f7c81a
     </div>
   );
 };

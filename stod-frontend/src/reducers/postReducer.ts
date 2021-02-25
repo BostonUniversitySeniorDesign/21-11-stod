@@ -52,8 +52,6 @@ function postReducer(state = initialState, action: PostAction): PostState {
         isLoading: false,
       };
     case CREATE_POST:
-      console.log("gobbledygook")
-      console.log(action.payload)
       newArray = [...state.posts];
       newArray.unshift(action.payload);
       return {

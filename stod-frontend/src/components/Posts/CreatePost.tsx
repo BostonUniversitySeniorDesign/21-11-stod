@@ -55,6 +55,16 @@ const CreatePost: React.FC = () => {
   const currentGroup = useSelector(
     (state: IRootState) => state.userGroup.currentGroup
   );
+  const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+      root: {
+        "& .MuiTextField-root": {
+          margin: theme.spacing(1),
+          width: 500,
+        },
+      },
+    })
+  );
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -148,7 +158,7 @@ const CreatePost: React.FC = () => {
               <TextField
                 id="Title"
                 inputRef={title}
-                defaultValue={"New Title xyz"}
+                defaultValue={"New Title"}
                 // value={value}
                 // onChange={(e) => setValue(e.target.value)}
               />
@@ -159,7 +169,7 @@ const CreatePost: React.FC = () => {
                 multiline
                 rows={16}
                 inputRef={contents}
-                defaultValue={"New Body xyz"}
+                defaultValue={"New Body"}
                 // value={value}
                 // onChange={(e) => setValue(e.target.value)}
               />

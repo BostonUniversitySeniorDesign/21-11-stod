@@ -53,7 +53,7 @@ const Comments: React.FC = () => {
                 alert("Please enter a comment");
                 return;
             }
-            dispatch(createComment("TEST NAME", comment.current!.value, 1));
+            dispatch(createComment("TEST NAME", comment.current!.value, 1, null, null));
         }
 
     let currentState = useSelector(

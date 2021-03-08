@@ -32,7 +32,8 @@ class Comment(models.Model):
     name = models.CharField(max_length=140)
     comment = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
-    parent = models.ForeignKey("self", on_delete=models.CASCADE, blank=True, null=True, related_name="reply")
+    parent = models.ForeignKey("self", on_delete=models.CASCADE, blank=True, null=True, related_name="replyId")
+    reply = models.TextField(blank=True, null=True)
 
     class Meta:
         ordering = ["created_on"]

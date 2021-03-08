@@ -179,7 +179,8 @@ export interface IComment {
   comment: string;
   created_on: string;
   post: number;
-  parent: string;
+  parent: number;
+  reply: string;
 }
 
 export interface CommentState {

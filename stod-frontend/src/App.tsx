@@ -16,7 +16,6 @@ import {
   Home,
   Groups,
   PostWrapper,
-  Comments,
 } from "./components";
 
 const App = () => {

@@ -17,7 +17,6 @@ import Loader from "./Common/Loader";
 import Home from "./Pages/Home";
 import Groups from "./Groups/Groups";
 import PostWrapper from "./Posts/PostWrapper";
-import Comments from "./Comments/Comments";
 import { fieldError, validateEmail } from "./Common/helper_funcs";
 
 export {
@@ -31,5 +30,4 @@ export {
   fieldError,
   PostWrapper,
   validateEmail,
-  Comments,
 };

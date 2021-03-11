@@ -16,6 +16,8 @@ import {
   Home,
   Groups,
   PostWrapper,
+  Flagged,
+  IsSuperuserRoute,
 } from "./components";
 
 const App = () => {
@@ -60,6 +62,7 @@ const App = () => {
                 component={() => <Groups subscribedOnly={true} />}
               />
               <Route exact path="/posts" component={PostWrapper} />
+              <IsSuperuserRoute path="/flagged" component={Flagged} />
               <AuthenticatedRoute path="/home" component={Home} />
               <Route exact path="/404" component={Error} />
               <Redirect from="*" to="/404" />

@@ -213,6 +213,8 @@ const PostWrapper: React.FC = () => {
                 </Button>
               </form>
             </div>
+          ) : (
+            ""
           );
         })}
       </PostContextProvider>

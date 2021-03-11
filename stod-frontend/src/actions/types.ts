@@ -19,6 +19,10 @@ export const REGISTER_FAIL = "REGISTER_FAIL";
 export const PASSWORD_EMAIL_SENT = "PASSWORD_EMAIL_SENT";
 export const PASSWORD_RESET_COMPLETE = "PASSWORD_RESET_COMPLETE";
 export const RESET_PASSWORD_LOADING = "RESET_PASSWORD_LOADING";
+export const FLAGGED_CHANGE_SUCCESS = "FLAGGED_CHANGE_SUCCESS";
+export const FLAGGED_CHANGE_FAIL = "FLAGGED_CHANGE_FAIL";
+export const FLAGGED_DELETE_SUCCESS = "FLAGGED_DELETE_SUCCESS";
+export const FLAGGED_DELETE_FAIL = "FLAGGED_DELETE_FAIL";
 // Error types
 export const NO_ERROR = "NO_ERROR";
 
@@ -52,7 +56,11 @@ export interface IAuthAction {
     | typeof PASSWORD_EMAIL_SENT
     | typeof PASSWORD_RESET_COMPLETE
     | typeof RESET_PASSWORD_LOADING
-    | typeof REGISTER_FAIL;
+    | typeof REGISTER_FAIL
+    | typeof FLAGGED_CHANGE_SUCCESS
+    | typeof FLAGGED_CHANGE_FAIL
+    | typeof FLAGGED_DELETE_SUCCESS
+    | typeof FLAGGED_DELETE_FAIL;
   payload?: any;
 }
 
@@ -171,7 +179,11 @@ export interface IPost {
   contents: string;
   poster: string;
   date: string;
+<<<<<<< HEAD
   tags: string[];
+=======
+  flagged: boolean;
+>>>>>>> Added a flagging system for posts
 }
 
 export interface PostState {

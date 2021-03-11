@@ -79,6 +79,7 @@ const CreatePost: React.FC = () => {
 
   const handleClose = () => {
     setOpen(false);
+    setSelectedTags([]);
   };
 
   const handleSave = () => {
@@ -92,7 +93,7 @@ const CreatePost: React.FC = () => {
       return;
     }
     dispatch(
-      createPost(title!.current!.value, contents!.current!.value, username!)
+      createPost(title!.current!.value, contents!.current!.value, username!, selectedTags!)
     );
     handleClose();
   };

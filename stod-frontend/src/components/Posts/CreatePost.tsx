@@ -72,15 +72,13 @@ const CreatePost: React.FC = () => {
     if (
       title!.current!.value === null ||
       title!.current!.value === "" ||
-      contents!.current!.value === null ||
-      contents!.current!.value == ""
+      contents === null ||
+      contents === ""
     ) {
       alert("No field can be empty");
       return;
     }
-    dispatch(
-      createPost(title!.current!.value, contents!.current!.value, username!)
-    );
+    dispatch(createPost(title!.current!.value, contents, username!));
     handleClose();
   };
 
@@ -128,7 +126,8 @@ const CreatePost: React.FC = () => {
   }))(MuiDialogActions);
 
   const title = React.useRef<HTMLInputElement>(null);
-  const contents = React.useRef<HTMLInputElement>(null);
+  // const contents = React.useRef<HTMLInputElement>(null);
+  const [contents, setContents] = React.useState("");
 
   return (
     <div>
@@ -158,10 +157,9 @@ const CreatePost: React.FC = () => {
                 id="content"
                 multiline
                 rows={16}
-                inputRef={contents}
                 defaultValue={"New Body xyz"}
-                // value={value}
-                // onChange={(e) => setValue(e.target.value)}
+                value={contents}
+                onChange={(e) => setContents(e.target.value)}
               />
             </DialogContent>
             <DialogActions>

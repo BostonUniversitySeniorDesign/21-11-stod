@@ -22,12 +22,17 @@ export const RESET_PASSWORD_LOADING = "RESET_PASSWORD_LOADING";
 // Error types
 export const NO_ERROR = "NO_ERROR";
 
+export interface IUser {
+  id: number;
+  username: string;
+  email: string;
+}
 // Auth interfaces
 export interface IAuthState {
   token: string | null;
   isAuthenticated: boolean | null;
   isLoading: boolean;
-  user: { id: number; username: string; email: string } | null;
+  user: IUser | null;
   password_email_sent: boolean;
   new_password_set: boolean;
   isResetLoading: boolean;

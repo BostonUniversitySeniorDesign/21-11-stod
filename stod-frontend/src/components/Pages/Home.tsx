@@ -18,7 +18,10 @@ import { useSelector, useDispatch } from "react-redux";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import { CssBaseline } from "@material-ui/core";
-import { SWITCH_GROUP } from "../../actions/types";
+import { SWITCH_GROUP, DOMAIN, IUser } from "../../actions/types";
+import { tokenConfig } from "../../actions/authActions";
+import UserView from "../Users/UserView";
+import { SocketProvider } from "../../contexts/SocketContext";
 import {
   makeStyles,
   useTheme,
@@ -27,6 +30,7 @@ import {
 } from "@material-ui/core/styles";
 import Navbar from "../Common/Navbar";
 import Groups from "../Groups/Groups";
+import axios from "axios";
 // icons
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import PaymentIcon from "@material-ui/icons/Payment";
@@ -135,20 +139,43 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-function getSelectedComponent(sel: string) {
-  if (sel === "Find Groups") return <Groups subscribedOnly={false} />;
-  if (sel === "home")
+function getSelectedComponent(
+  {
+    name,
+    section,
+  }: {
+    name: string;
+    section: string;
+  },
+  username: string
+) {
+  if (name === "Find Groups") return <Groups subscribedOnly={false} />;
+  if (name === "home")
     return (
       <>
         <PostWrapper />
       </>
     );
+  if (section === "Friends")
+    return (
+      <SocketProvider id={username}>
+        <UserView name={name} />
+      </SocketProvider>
+    );
   return (
     <>
-      <CreatePost />
+      <CreatePost key={1} />
       <PostWrapper />
     </>
   );
+}
+
+async function renderAllUsers(getState: () => IRootState) {
+  const res = await axios.get(
+    `http://${DOMAIN}/accounts/all_users/`,
+    tokenConfig(getState)
+  );
+  return res.data as IUser[];
 }
 
 const Home = () => {
@@ -157,7 +184,8 @@ const Home = () => {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [selected, setSelected] = useState("home");
+  const [selected, setSelected] = useState({ section: "Main", name: "home" });
+  const [allUsers, setAllUsers] = useState<null | IUser[]>(null);
   const icons = [
     <DashboardIcon className={classes.typo} />,
     <PaymentIcon className={classes.typo} />,
@@ -165,15 +193,23 @@ const Home = () => {
 
   const username = useSelector(
     (state: IRootState) => state.auth.user?.username
-  );
+  ) as string;
 
   let currentGroupsState = useSelector((state: IRootState) => state.groups);
+  let currentState = useSelector((state: IRootState) => state);
 
   useEffect(() => {
     if (username !== undefined) {
       dispatch(fetchGroups(true, username));
     }
   }, [username, dispatch]);
+
+  useEffect(() => {
+    renderAllUsers(() => currentState).then((r) => {
+      setAllUsers(r);
+      console.log(r.length);
+    });
+  }, []);
 
   const renderGroupsSidebar = () => {
     if (currentGroupsState.isLoading) {
@@ -195,11 +231,13 @@ const Home = () => {
                 >
                   <Button
                     className={
-                      selected == group.name ? classes.active : classes.button
+                      selected.name == group.name
+                        ? classes.active
+                        : classes.button
                     }
                     key={i}
                     onClick={() => {
-                      setSelected(group.name);
+                      setSelected({ name: group.name, section: "Groups" });
                       dispatch({ type: SWITCH_GROUP, payload: group.name });
                     }}
                   >
@@ -235,10 +273,12 @@ const Home = () => {
             style={{ margin: 0, padding: 0 }}
           >
             <Button
-              className={selected == text ? classes.active : classes.button}
+              className={
+                selected.name == text ? classes.active : classes.button
+              }
               key={text}
               onClick={() => {
-                setSelected(text);
+                setSelected({ name: text, section: "Main" });
                 dispatch({ type: SWITCH_GROUP, payload: text });
               }}
               fullWidth
@@ -252,10 +292,10 @@ const Home = () => {
         <ListItem className={classes.item} style={{ margin: 0, padding: 0 }}>
           <Button
             className={
-              selected == "Find Groups" ? classes.active : classes.button
+              selected.name == "Find Groups" ? classes.active : classes.button
             }
             onClick={() => {
-              setSelected("Find Groups");
+              setSelected({ name: "Find Groups", section: "Main" });
               dispatch({ type: SWITCH_GROUP, payload: "Find Groups" });
             }}
             fullWidth
@@ -294,6 +334,39 @@ const Home = () => {
         Your Groups
       </Typography>
       {renderGroupsSidebar()}
+      <Divider />
+      <Typography variant="h6" className={classes.typo_head}>
+        Friends
+      </Typography>
+      <List style={{ margin: 0, padding: 0 }}>
+        {allUsers
+          ? allUsers
+              .filter((u) => u.username !== username)
+              .map((user) => (
+                <ListItem
+                  key={user.id}
+                  className={classes.item}
+                  style={{ margin: 0, padding: 0 }}
+                >
+                  <Button
+                    className={
+                      selected.name == user.username
+                        ? classes.active
+                        : classes.button
+                    }
+                    key={user.id}
+                    onClick={() =>
+                      setSelected({ name: user.username, section: "Friends" })
+                    }
+                  >
+                    <Typography variant="subtitle1" className={classes.typo}>
+                      {user.username}
+                    </Typography>
+                  </Button>
+                </ListItem>
+              ))
+          : ""}
+      </List>
     </div>
   );
 
@@ -346,7 +419,7 @@ const Home = () => {
         : 
         <Groups subscribedOnly={false} />}
         } */}
-        {getSelectedComponent(selected)}
+        {getSelectedComponent(selected, username)}
       </main>
     </div>
   );

@@ -65,6 +65,7 @@ export interface IRootState {
   posts: PostState;
   comments: CommentState;
   userGroup: IUserGroup;
+  tags: ITagsState;
 }
 
 // Header JSON interface
@@ -135,6 +136,25 @@ export interface IGroupsCreateAction {
   payload?: any;
 }
 
+export const TAGS_SUCCESS = "TAGS_SUCCESS";
+export const TAGS_ERROR = "TAGS_ERROR";
+
+export interface Tag {
+  name: string;
+  tagType: string;
+}
+
+export interface ITagsState {
+  isLoading: boolean;
+  allTags: Array<Tag>;
+  isError: boolean;
+}
+
+export interface ITagsAction {
+  type: typeof TAGS_SUCCESS | typeof TAGS_ERROR;
+  payload?: any;
+}
+
 export const LOAD_POSTS = "LOAD_POSTS";
 export const POST_ERROR = "POST_ERROR";
 export const ADD_POST = "ADD_POST";
@@ -151,6 +171,7 @@ export interface IPost {
   contents: string;
   poster: string;
   date: string;
+  tags: string[];
 }
 
 export interface PostState {

@@ -8,7 +8,16 @@ import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import CloseIcon from "@material-ui/icons/Close";
 import MuiDialogContent from "@material-ui/core/DialogContent";
 import MuiDialogActions from "@material-ui/core/DialogActions";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+import Checkbox from "@material-ui/core/Checkbox";
+import ListItemText from "@material-ui/core/ListItemText";
+import MenuItem from "@material-ui/core/MenuItem";
+import Input from "@material-ui/core/Input";
+import Chip from "@material-ui/core/Chip";
 import { createPost } from "../../actions/postActions";
+import { fetchAllTags } from "../../actions/tagsActions";
 
 import {
   createStyles,
@@ -55,8 +64,10 @@ const CreatePost: React.FC = () => {
   const currentGroup = useSelector(
     (state: IRootState) => state.userGroup.currentGroup
   );
+  const tagsState = useSelector((state: IRootState) => state.tags);
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [selectedTags, setSelectedTags] = React.useState<string[]>([]);
 
   let currentState = useSelector((state: IRootState) => state.posts);
 
@@ -66,20 +77,31 @@ const CreatePost: React.FC = () => {
 
   const handleClose = () => {
     setOpen(false);
+    setSelectedTags([]);
   };
 
   const handleSave = () => {
     if (
       title!.current!.value === null ||
       title!.current!.value === "" ||
-      contents === null ||
-      contents === ""
+      contents!.current!.value === ""
     ) {
       alert("No field can be empty");
       return;
     }
-    dispatch(createPost(title!.current!.value, contents, username!));
+    dispatch(
+      createPost(
+        title!.current!.value,
+        contents!.current!.value,
+        username!,
+        selectedTags!
+      )
+    );
     handleClose();
+  };
+
+  const handleTagSelect = (event: any) => {
+    setSelectedTags(event.target.value as string[]);
   };
 
   //grabs current post to be edited
@@ -110,6 +132,8 @@ const CreatePost: React.FC = () => {
         descriptionElement.focus();
       }
     }
+
+    dispatch(fetchAllTags());
   }, [open]);
 
   const DialogContent = withStyles((theme: Theme) => ({
@@ -126,8 +150,49 @@ const CreatePost: React.FC = () => {
   }))(MuiDialogActions);
 
   const title = React.useRef<HTMLInputElement>(null);
-  // const contents = React.useRef<HTMLInputElement>(null);
-  const [contents, setContents] = React.useState("");
+  const contents = React.useRef<HTMLInputElement>(null);
+  // const [contents, setContents] = React.useState("");
+
+  const renderTags = () => {
+    if (tagsState.isLoading) {
+      return <div>Loading...</div>;
+    } else if (tagsState.isError) {
+      return <div>Error loading tags!</div>;
+    } else {
+      return (
+        <FormControl style={{ width: "100%" }}>
+          <InputLabel id="demo-mutiple-chip-label">Tags</InputLabel>
+          <Select
+            labelId="demo-mutiple-chip-label"
+            id="demo-mutiple-chip"
+            multiple
+            value={selectedTags}
+            onChange={handleTagSelect}
+            input={<Input id="select-multiple-chip" />}
+            renderValue={(selected) => (
+              <div style={{ display: "flex", flexWrap: "wrap" }}>
+                {(selected as string[]).map((value) => (
+                  <Chip key={value} label={value} style={{ margin: "2" }} />
+                ))}
+              </div>
+            )}
+          >
+            {tagsState.allTags.map((tag) => {
+              return (
+                <MenuItem key={tag.name} value={tag.name}>
+                  <Checkbox
+                    color="primary"
+                    checked={selectedTags.includes(tag.name)}
+                  />
+                  <ListItemText primary={tag.name} />
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </FormControl>
+      );
+    }
+  };
 
   return (
     <div>
@@ -158,10 +223,11 @@ const CreatePost: React.FC = () => {
                 multiline
                 rows={16}
                 defaultValue={"New Body xyz"}
-                value={contents}
-                onChange={(e) => setContents(e.target.value)}
+                // value={contents}
+                inputRef={contents}
               />
             </DialogContent>
+            <DialogContent dividers>{renderTags()}</DialogContent>
             <DialogActions>
               <Button onClick={handleSave} color="primary">
                 Submit

@@ -104,7 +104,8 @@ export const deletePost = (id: number) => (
 export const createPost = (
   title: string,
   contents: string,
-  username: string
+  username: string,
+  tags: string[]
 ) => (dispatch: Dispatch, getState: () => IRootState) => {
   const CURR_GROUP = getState().userGroup.currentGroup;
 
@@ -121,8 +122,11 @@ export const createPost = (
     contents: contents,
     group: CURR_GROUP,
     poster: username,
+    tags: tags,
   };
+
   let body = JSON.stringify(data);
+  console.log(body);
 
   const url = `http://${DOMAIN}/posts/posts/`;
   axios

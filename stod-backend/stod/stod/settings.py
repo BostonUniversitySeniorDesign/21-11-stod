@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "accounts_api",
     "posts",
     "corsheaders",
+    "tags",
 ]
 
 REST_FRAMEWORK = {

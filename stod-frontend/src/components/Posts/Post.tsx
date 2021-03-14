@@ -7,6 +7,18 @@ import Typography from "@material-ui/core/Typography";
 import React from "react";
 import { IPost, IRootState } from "../../actions/types";
 import PostMenu from "./PostMenu";
+import Chip from '@material-ui/core/Chip';
+
+
+const renderTags = (tags: string[]) => {
+  return (
+    <div style={{display: 'flex', flexWrap: 'wrap'}}>
+      {tags.map((tag) => 
+        <Chip key={tag} label={tag} style={{margin: '2px'}}/>
+      )}
+    </div>
+  )
+}
 
 const Post: React.FC<{ post: IPost; showPostMenu: boolean }> = ({
   post,
@@ -25,6 +37,8 @@ const Post: React.FC<{ post: IPost; showPostMenu: boolean }> = ({
         Poster: {post.poster}
         <br></br>
         Created: {post.date}
+        <br/>
+        Tags: {renderTags(post.tags)}
       </Typography>
       <CardContent>
         <Typography variant="body2" color="textSecondary"></Typography>

@@ -6,6 +6,10 @@ services:
     volumes:
       - ./database.db:/db/db.db
   web:
+    environment:
+      - DATABASE_NAME=‘django_db'
+      - DATABASE_USER=‘admin’
+      - DATABASE_PASSWORD=‘Gobbbledygook!1’
     build: .
     volumes:
       - .:/code

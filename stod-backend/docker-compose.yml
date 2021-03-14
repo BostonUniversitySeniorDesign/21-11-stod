@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  db:
+    image: spartakode/sqlite3:latest
+    volumes:
+      - ./database.db:/db/db.db
+  web:
+    build: .
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db

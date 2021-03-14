@@ -1,9 +1,10 @@
 from django.urls import path, include
-from .views import RegisterAPI, LoginAPI, UserAPI, RequestPasswordResetEmail, PasswordTokenCheckAPI, SetNewPasswordAPIView
+from .views import RegisterAPI, LoginAPI, UserAPI, RequestPasswordResetEmail, PasswordTokenCheckAPI, SetNewPasswordAPIView,AllUsersAPI
 from knox import views as knox_views
 
 urlpatterns = [
     path('register/', RegisterAPI.as_view()),
+    path('all_users/', AllUsersAPI.as_view({'get': 'list'})),
     path('login/', LoginAPI.as_view()),
     path('user/', UserAPI.as_view()),
     path('logout/', knox_views.LogoutView.as_view(), name="knox-logout"),

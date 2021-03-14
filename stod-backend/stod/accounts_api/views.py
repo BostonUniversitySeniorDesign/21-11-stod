@@ -1,4 +1,4 @@
-from rest_framework import generics, permissions, status
+from rest_framework import generics, permissions, status, viewsets
 from rest_framework.response import Response
 from knox.models import AuthToken
 from django.contrib.auth.models import User
@@ -26,6 +26,10 @@ from django.contrib.sites.shortcuts import get_current_site
 from .utils import send_email
 
 # Register API
+
+class AllUsersAPI(viewsets.ModelViewSet):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
 
 
 class RegisterAPI(generics.GenericAPIView):

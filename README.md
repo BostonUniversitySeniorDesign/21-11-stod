@@ -29,6 +29,7 @@ After installing a python package
 To start
 
 #### Delete all migrations and pycache folder in each backend app if running for the first time
+(For good measure, run restart.db.sh afterwards as well)
 
 cd into chat-server/ and run:
 

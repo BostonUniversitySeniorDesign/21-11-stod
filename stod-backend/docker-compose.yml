@@ -1,4 +1,4 @@
-version: "3.7"
+version: "3.3"
 
 services:
   web:
@@ -15,9 +15,5 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     ports:
       - "5433:5432"
-    environment:
-      - POSTGRES_USER=hello_django
-      - POSTGRES_PASSWORD=hello_django
-      - POSTGRES_DB=hello_django_dev
 volumes:
   postgres_data:

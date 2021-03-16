@@ -15,6 +15,10 @@ RUN apk update \
 RUN pip install --upgrade pip
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
+RUN find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
+RUN find . -path "*/migrations/*.pyc"  -delete
+# RUN python /usr/src/app/stod/manage.py makemigrations
+# RUN python /usr/src/app/stod/manage.py migrate
 
 # copy project
 COPY . .

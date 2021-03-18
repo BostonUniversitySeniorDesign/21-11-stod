@@ -20,7 +20,10 @@ services:
     build: ./nginx
     ports:
       - 1337:80
+      - 1338:443
     depends_on: 
       - web
+    volumes:
+      - ./nginx/certs:/etc/nginx/certs
 volumes:
   postgres_data:

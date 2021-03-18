@@ -8,7 +8,6 @@ db.sqlite3
 media
 migrations.py
 migrations/
-.env.prod
 
 # Backup files # 
 *.bak 

@@ -27,7 +27,7 @@ SECRET_KEY = "_v7m3@#an4xtii=1-uwcyvjde&$pw0ady^9r68hzs8ukcy*1&f"
 DEBUG = True
 
 ALLOWED_HOSTS = ['app', '0.0.0.0', 'localhost', '127.0.0.1', '159.89.88.112']
-
+SECURE_SSL_REDIRECT = True
 
 # Application definition
 
@@ -53,7 +53,6 @@ REST_FRAMEWORK = {
 }
 
 MIDDLEWARE = [
-    "sslify.middleware.SSLifyMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",

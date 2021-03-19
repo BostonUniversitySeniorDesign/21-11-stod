@@ -16,7 +16,7 @@ import {
 export const loadAllComments = () => (dispatch: Dispatch) => {
   // Make GET request to server.
   return axios
-    .get(`http://${DOMAIN}/posts/comments/?format=json`)
+    .get(`https://${DOMAIN}/posts/comments/?format=json`)
     .then((res) => {
       // If no error, server responds with user object.
       dispatch({ type: LOAD_COMMENTS, payload: res.data as Array<IComment> });
@@ -33,7 +33,7 @@ export const loadSpecificComments = (postID: number) => (
 ) => {
   // Make GET request to server.
   return axios
-    .get(`http://${DOMAIN}/posts/comments/${postID}`)
+    .get(`https://${DOMAIN}/posts/comments/${postID}`)
     .then((res) => {
       // If no error, server responds with user object.
       dispatch({ type: LOAD_COMMENTS, payload: res.data as Array<IComment> });
@@ -64,7 +64,7 @@ export const createComment = (
 
   //Make POST request to server with login info.
   axios
-    .post(`http://${DOMAIN}/posts/comments/?format=json`, body, config)
+    .post(`https://${DOMAIN}/posts/comments/?format=json`, body, config)
     .then((res) => {
       dispatch({ type: COMMENT_SUCCESS, payload: res.data });
     })

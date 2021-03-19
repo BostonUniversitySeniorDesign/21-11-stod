@@ -14,8 +14,8 @@ export const fetchGroups = (subscribedOnly: boolean, user: string) => (
   dispatch: Dispatch
 ) => {
   const url = subscribedOnly
-    ? `http://${DOMAIN}/groups/subscribed/?format=json&user=${user}`
-    : `http://${DOMAIN}/groups/?format=json`;
+    ? `https://${DOMAIN}/groups/subscribed/?format=json&user=${user}`
+    : `https://${DOMAIN}/groups/?format=json`;
   return axios
     .get(url)
     .then((res) => {
@@ -42,7 +42,7 @@ export const createGroup = (name: string, description: string) => (
   const body = JSON.stringify({ name, description });
 
   axios
-    .post(`http://${DOMAIN}/groups/`, body, config)
+    .post(`https://${DOMAIN}/groups/`, body, config)
     .then((res) => {
       dispatch({ type: GROUP_CREATE_SUCCESS, payload: res.data });
     })
@@ -63,6 +63,6 @@ export const subscribeToGroup = (user: string, group: string) => (
   const body = JSON.stringify({ user, group });
 
   axios
-    .post(`http://${DOMAIN}/groups/subscribed/`, body, config)
+    .post(`https://${DOMAIN}/groups/subscribed/`, body, config)
     .then(() => fetchGroups(true, user)(dispatch));
 };

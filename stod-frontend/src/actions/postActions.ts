@@ -33,7 +33,7 @@ export const loadAllPosts = () => (
 
   // Make GET request to server.
   return axios
-    .get(`http://${DOMAIN}/posts/posts/`, config)
+    .get(`https://${DOMAIN}/posts/posts/`, config)
     .then((res) => {
       // If no error, server responds with user object.
       console.log(res);
@@ -64,7 +64,7 @@ export const editPost = (id: number, contents: string) => (
   };
 
   const body = JSON.stringify({ contents });
-  const url = `http://${DOMAIN}/posts/posts/` + id + "/";
+  const url = `https://${DOMAIN}/posts/posts/` + id + "/";
   axios
     .patch(url, body, config)
     .then((res) => {
@@ -90,7 +90,7 @@ export const deletePost = (id: number) => (
     },
   };
 
-  const url = `http://${DOMAIN}/posts/posts/` + id + "/";
+  const url = `https://${DOMAIN}/posts/posts/` + id + "/";
   axios
     .delete(url, config)
     .then((res) => {
@@ -128,7 +128,7 @@ export const createPost = (
   let body = JSON.stringify(data);
   console.log(body);
 
-  const url = `http://${DOMAIN}/posts/posts/`;
+  const url = `https://${DOMAIN}/posts/posts/`;
   axios
     .post(url, body, config)
     .then((res) => {

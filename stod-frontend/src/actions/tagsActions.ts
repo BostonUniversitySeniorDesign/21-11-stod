@@ -9,7 +9,7 @@ import {
 import { Dispatch } from "redux";
 
 export const fetchAllTags = () => (dispatch: Dispatch) => {
-    const url: string = `http://${DOMAIN}/tags/?format=json`;
+    const url: string = `https://${DOMAIN}/tags/?format=json`;
     return axios
         .get(url)
         .then((res) => {

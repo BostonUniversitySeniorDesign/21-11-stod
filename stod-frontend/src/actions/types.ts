@@ -2,7 +2,7 @@ import { StringLiteral } from "typescript";
 
 // Server domain
 //export const DOMAIN = "127.0.0.1:8000";
-export const DOMAIN = "https://stodbackend.app:1337";
+export const DOMAIN = "stodbackend.app:1337";
 /**
  * These are all possible actions that could happen in our application.
  * A Redux action would dispatch these and the reducer will update the global state

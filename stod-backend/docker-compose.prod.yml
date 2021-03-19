@@ -19,11 +19,13 @@ services:
   nginx:
     build: ./nginx
     ports:
-      - 1337:80
-      - 1338:443
+      - 443:443
+      - 80:80
     depends_on: 
       - web
     volumes:
-      - ./nginx/certs:/etc/nginx/certs
+      - /etc/letsencrypt/live/stodbackend.app/fullchain.pem:/etc/letsencrypt/live/stodbackend.app/fullchain.pem
+      - /etc/letsencrypt/live/stodbackend.app/privkey.pem:/etc/letsencrypt/live/stodbackend.app/privkey.pem
+      - /etc/letsencrypt/options-ssl-nginx.conf:/etc/letsencrypt/options-ssl-nginx.conf
 volumes:
   postgres_data:

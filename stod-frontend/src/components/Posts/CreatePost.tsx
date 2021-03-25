@@ -68,6 +68,8 @@ const CreatePost: React.FC = () => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [selectedTags, setSelectedTags] = React.useState<string[]>([]);
+  const [body, setBody] = React.useState("");
+  const [titleState, setTitleState] = React.useState("");
 
   let currentState = useSelector((state: IRootState) => state.posts);
 
@@ -101,6 +103,8 @@ const CreatePost: React.FC = () => {
   };
 
   const handleTagSelect = (event: any) => {
+    setBody(contents!.current!.value);
+    setTitleState(title!.current!.value);
     setSelectedTags(event.target.value as string[]);
   };
 
@@ -212,7 +216,7 @@ const CreatePost: React.FC = () => {
               <TextField
                 id="Title"
                 inputRef={title}
-                defaultValue={"New Title xyz"}
+                defaultValue={titleState}
                 // value={value}
                 // onChange={(e) => setValue(e.target.value)}
               />
@@ -222,7 +226,7 @@ const CreatePost: React.FC = () => {
                 id="content"
                 multiline
                 rows={16}
-                defaultValue={"New Body xyz"}
+                defaultValue={body}
                 // value={contents}
                 inputRef={contents}
               />

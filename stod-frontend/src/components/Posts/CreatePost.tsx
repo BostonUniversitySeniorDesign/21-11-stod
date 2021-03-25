@@ -137,7 +137,6 @@ const CreatePost: React.FC = () => {
       }
     }
 
-    dispatch(fetchAllTags());
   }, [open]);
 
   const DialogContent = withStyles((theme: Theme) => ({
@@ -217,6 +216,7 @@ const CreatePost: React.FC = () => {
                 id="Title"
                 inputRef={title}
                 defaultValue={titleState}
+                placeholder={"Enter a Title"}
                 // value={value}
                 // onChange={(e) => setValue(e.target.value)}
               />
@@ -227,6 +227,7 @@ const CreatePost: React.FC = () => {
                 multiline
                 rows={16}
                 defaultValue={body}
+                placeholder={"Enter a Body"}
                 // value={contents}
                 inputRef={contents}
               />

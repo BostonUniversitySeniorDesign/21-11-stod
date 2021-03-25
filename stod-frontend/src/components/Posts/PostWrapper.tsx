@@ -19,6 +19,14 @@ import Grid from "@material-ui/core/Grid";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
+import Checkbox from "@material-ui/core/Checkbox";
+import ListItemText from "@material-ui/core/ListItemText";
+import MenuItem from "@material-ui/core/MenuItem";
+import Input from "@material-ui/core/Input";
+import Chip from "@material-ui/core/Chip";
 
 const PostWrapper: React.FC = () => {
   const dispatch = useDispatch();
@@ -30,6 +38,24 @@ const PostWrapper: React.FC = () => {
   const comment = useRef<HTMLInputElement>();
   const [currComment, setCurrComment] = useState<string | null>(null);
   const [currReply, setCurrReply] = useState<string | null>(null);
+
+  const tagsState = useSelector((state: IRootState) => state.tags);
+  const [selectedTags, setSelectedTags] = React.useState<string[]>([]);
+
+  const filterPosts = (post: any) => {
+    if (selectedTags.length == 0) {
+      return true;
+    } else {
+      return selectedTags.some(e => post.tags.includes(e))
+    }
+  }
+
+  const handleTagSelect = (event: any) => {
+    setSelectedTags(event.target.value as string[]);
+    console.log(selectedTags);
+    console.log(currentState.posts)
+    console.log(currentState.posts.filter(filterPosts))
+  };
 
   const handleCreate = (
     event: React.FormEvent<HTMLFormElement>,
@@ -56,6 +82,47 @@ const PostWrapper: React.FC = () => {
     }
   };
 
+  const renderTags = () => {
+    if (tagsState.isLoading) {
+      return <div>Loading...</div>;
+    } else if (tagsState.isError) {
+      return <div>Error loading tags!</div>;
+    } else {
+      return (
+        <FormControl style={{ width: "100%" }}>
+          <InputLabel id="demo-mutiple-chip-label">Tags</InputLabel>
+          <Select
+            labelId="demo-mutiple-chip-label"
+            id="demo-mutiple-chip"
+            multiple
+            value={selectedTags}
+            onChange={handleTagSelect}
+            input={<Input id="select-multiple-chip" />}
+            renderValue={(selected) => (
+              <div style={{ display: "flex", flexWrap: "wrap" }}>
+                {(selected as string[]).map((value) => (
+                  <Chip key={value} label={value} style={{ margin: "2" }} />
+                ))}
+              </div>
+            )}
+          >
+            {tagsState.allTags.map((tag) => {
+              return (
+                <MenuItem key={tag.name} value={tag.name}>
+                  <Checkbox
+                    color="primary"
+                    checked={selectedTags.includes(tag.name)}
+                  />
+                  <ListItemText primary={tag.name} />
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </FormControl>
+      );
+    }
+  };
+
   let currentState = useSelector((state: IRootState) => state.posts);
   useEffect(() => {
     // @ts-ignore
@@ -73,7 +140,9 @@ const PostWrapper: React.FC = () => {
   if (!currentState.isLoading) {
     return (
       <PostContextProvider>
-        {currentState.posts.map((post: IPost) => {
+        <h1>HELLO WORLD?</h1>
+        {renderTags()}
+        {currentState.posts.filter(filterPosts).map((post: IPost) => {
           return (
             <div>
               <Divider style={{ backgroundColor: "#000000" }} />

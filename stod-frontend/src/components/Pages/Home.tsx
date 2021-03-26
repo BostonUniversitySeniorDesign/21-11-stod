@@ -172,7 +172,7 @@ function getSelectedComponent(
 
 async function renderAllUsers(getState: () => IRootState) {
   const res = await axios.get(
-    `http://${DOMAIN}/accounts/all_users/`,
+    `https://${DOMAIN}/accounts/all_users/`,
     tokenConfig(getState)
   );
   return res.data as IUser[];

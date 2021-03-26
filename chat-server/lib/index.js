@@ -53,7 +53,7 @@ app.use(body_parser_1.default.json());
 // Create new Socket IO
 var io = new socket_io_1.Server(server, {
     cors: {
-        origin: "http://localhost:3000",
+        origin: "https://www.stod.app",
         methods: ["GET", "POST"],
     },
 });

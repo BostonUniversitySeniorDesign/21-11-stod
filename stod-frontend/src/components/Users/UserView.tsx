@@ -57,7 +57,7 @@ interface SockMsg {
 }
 
 async function fetchMessages(username: string) {
-  const res = await axios.post("http://localhost:5500/chats/", {
+  const res = await axios.post("https://stodbackend.app/chats/", {
     username,
   });
   return res;

@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 // Create new Socket IO
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "https://www.stod.app",
     methods: ["GET", "POST"],
   },
 });

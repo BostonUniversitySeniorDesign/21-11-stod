@@ -89,7 +89,7 @@ Postgress/Django environment variables are stored in .env.prod and added to the 
 Docker compose files are stored as docker-compose.prod.yml. 
 SSL certificates are stored in a local path and added to docker volumes.
 
-To allow for local development, all backend-production code is stored in branch "nginx."
+To allow for local development, all backend-production code is stored in branch "backend-prod".
 
 Build docker containers on server:
 

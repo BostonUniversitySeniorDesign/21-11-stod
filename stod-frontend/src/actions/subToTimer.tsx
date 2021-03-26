@@ -1,5 +1,5 @@
 import { io } from "socket.io-client";
-const socket = io("http://localhost:5500");
+const socket = io("https://stodbackend.app:5500");
 
 function subscribeToTimer(cb: (err: any, timestamp: number) => any) {
   socket.on("timer", (timestamp: number) => cb(null, timestamp));

@@ -20,7 +20,7 @@ export const SocketProvider: React.FC<Props> = ({ id, children }) => {
 
   //@ts-ignore
   useEffect(() => {
-    const new_socket = io("http://localhost:5500", { query: { id } });
+    const new_socket = io("https://stodbackend.app:5500", { query: { id } });
     setSocket(new_socket);
     return () => new_socket.close();
   }, [id]);

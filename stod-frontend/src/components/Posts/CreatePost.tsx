@@ -91,14 +91,64 @@ const CreatePost: React.FC = () => {
       alert("No field can be empty");
       return;
     }
-    dispatch(
-      createPost(
-        title!.current!.value,
-        contents!.current!.value,
-        username!,
-        selectedTags!
+
+    const badWordList = [
+      "fuck",
+      "bitch",
+      "stupid",
+      "dumb",
+      "cancer",
+      "jump",
+      "window",
+      "gun",
+      "knife",
+      "dumb",
+      "gay",
+      "hoe",
+      "ass",
+      "slut",
+      "cringe",
+      "suicide",
+      "kill",
+      "asshole",
+      "dick",
+      "cunt",
+      "fag",
+      "homo",
+      "pussy",
+      "nigg",
+      "suck",
+      "swallow",
+      "wet",
+    ];
+    if (
+      badWordList.some((word) =>
+        contents!.current!.value.toLowerCase().includes(word)
       )
-    );
+    ) {
+      alert(
+        "Your post contained a flagged word! It is currently pending approval from an Admin."
+      );
+      dispatch(
+        createPost(
+          title!.current!.value,
+          contents!.current!.value,
+          username!,
+          selectedTags!,
+          true
+        )
+      );
+    } else {
+      dispatch(
+        createPost(
+          title!.current!.value,
+          contents!.current!.value,
+          username!,
+          selectedTags!,
+          false
+        )
+      );
+    }
     handleClose();
   };
 
@@ -136,7 +186,6 @@ const CreatePost: React.FC = () => {
         descriptionElement.focus();
       }
     }
-
   }, [open]);
 
   const DialogContent = withStyles((theme: Theme) => ({

@@ -24,6 +24,7 @@ class Post(models.Model):
         User, on_delete=models.CASCADE, to_field="username")
     date = models.DateField(auto_now=True)
     # poster2 = models.CharField(User.username,max_length=25)
+    flagged = models.BooleanField(default=False)
 
     tags = models.ManyToManyField('tags.Tag')
 

@@ -52,7 +52,7 @@ const Flagged: React.FC = () => {
     // @ts-ignore
     console.log(cuurrr.userGroup);
     dispatch(loadAllPosts());
-  }, [cuurrr.userGroup]);
+  }, [cuurrr.userGroup, currentState]);
 
   useEffect(() => {
     dispatch(loadAllComments());

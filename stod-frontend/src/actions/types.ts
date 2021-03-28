@@ -19,10 +19,6 @@ export const REGISTER_FAIL = "REGISTER_FAIL";
 export const PASSWORD_EMAIL_SENT = "PASSWORD_EMAIL_SENT";
 export const PASSWORD_RESET_COMPLETE = "PASSWORD_RESET_COMPLETE";
 export const RESET_PASSWORD_LOADING = "RESET_PASSWORD_LOADING";
-export const FLAGGED_CHANGE_SUCCESS = "FLAGGED_CHANGE_SUCCESS";
-export const FLAGGED_CHANGE_FAIL = "FLAGGED_CHANGE_FAIL";
-export const FLAGGED_DELETE_SUCCESS = "FLAGGED_DELETE_SUCCESS";
-export const FLAGGED_DELETE_FAIL = "FLAGGED_DELETE_FAIL";
 // Error types
 export const NO_ERROR = "NO_ERROR";
 
@@ -30,6 +26,7 @@ export interface IUser {
   id: number;
   username: string;
   email: string;
+  is_superuser: boolean;
 }
 // Auth interfaces
 export interface IAuthState {
@@ -57,10 +54,6 @@ export interface IAuthAction {
     | typeof PASSWORD_RESET_COMPLETE
     | typeof RESET_PASSWORD_LOADING
     | typeof REGISTER_FAIL
-    | typeof FLAGGED_CHANGE_SUCCESS
-    | typeof FLAGGED_CHANGE_FAIL
-    | typeof FLAGGED_DELETE_SUCCESS
-    | typeof FLAGGED_DELETE_FAIL;
   payload?: any;
 }
 
@@ -179,11 +172,8 @@ export interface IPost {
   contents: string;
   poster: string;
   date: string;
-<<<<<<< HEAD
   tags: string[];
-=======
   flagged: boolean;
->>>>>>> Added a flagging system for posts
 }
 
 export interface PostState {
@@ -243,4 +233,24 @@ export interface IUserGroup {
 export interface UserGroupAction {
   type: typeof SWITCH_GROUP;
   payload?: any;
+}
+
+export const FLAGGED_CHANGE_SUCCESS = "FLAGGED_CHANGE_SUCCESS";
+export const FLAGGED_CHANGE_FAIL = "FLAGGED_CHANGE_FAIL";
+export const FLAGGED_DELETE_SUCCESS = "FLAGGED_DELETE_SUCCESS";
+export const FLAGGED_DELETE_FAIL = "FLAGGED_DELETE_FAIL";
+
+export interface IFlaggedAction {
+  type:
+  | typeof FLAGGED_CHANGE_SUCCESS
+  | typeof FLAGGED_CHANGE_FAIL
+  | typeof FLAGGED_DELETE_SUCCESS
+  | typeof FLAGGED_DELETE_FAIL;
+  payload?: any;
+}
+
+export interface IFlaggedState {
+  isLoading: boolean;
+  posts: IPost[];
+  isError: boolean;
 }

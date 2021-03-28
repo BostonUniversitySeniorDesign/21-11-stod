@@ -143,7 +143,7 @@ const PostWrapper: React.FC = () => {
         <h1>HELLO WORLD?</h1>
         {renderTags()}
         {currentState.posts.filter(filterPosts).map((post: IPost) => {
-          return (
+          return post.flagged === false ? (
             <div>
               <Divider style={{ backgroundColor: "#000000" }} />
               <Post post={post} showPostMenu={true} key={post.id} />

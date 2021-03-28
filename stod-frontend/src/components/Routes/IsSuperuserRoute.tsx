@@ -22,14 +22,17 @@ const IsSuperuserRoute: React.FC<IAuthenticatedRoute> = ({
   );
   const isLoading = useSelector((state: IRootState) => state.auth.isLoading);
 
+  console.log(isSuperuser, isLoading);
+
   return (
     <Route
       {...rest}
       render={(props) => {
-        if (isLoading) {
+        if (isLoading || !isSuperuser) {
           return <Loader />;
-        } else if (!isAuthenticated || isAuthenticated === null) {
-          return <Redirect to="/flagged" />;
+        } 
+        else if (!isAuthenticated || isAuthenticated === null) {
+          return <Redirect to="/login" />;
         } else if (!isSuperuser || isSuperuser === null) {
           return <Redirect to="/home" />;
         } else {

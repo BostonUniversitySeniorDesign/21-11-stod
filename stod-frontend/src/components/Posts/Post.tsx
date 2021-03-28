@@ -38,6 +38,8 @@ const Post: React.FC<{ post: IPost; showPostMenu: boolean }> = ({
         <br></br>
         Created: {post.date}
         <br/>
+        Posted in: {post.group}
+        <br/>
         Tags: {renderTags(post.tags)}
       </Typography>
       <CardContent>

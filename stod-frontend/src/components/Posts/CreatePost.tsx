@@ -68,6 +68,8 @@ const CreatePost: React.FC = () => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [selectedTags, setSelectedTags] = React.useState<string[]>([]);
+  const [body, setBody] = React.useState("");
+  const [titleState, setTitleState] = React.useState("");
 
   let currentState = useSelector((state: IRootState) => state.posts);
 
@@ -89,18 +91,72 @@ const CreatePost: React.FC = () => {
       alert("No field can be empty");
       return;
     }
-    dispatch(
-      createPost(
-        title!.current!.value,
-        contents!.current!.value,
-        username!,
-        selectedTags!
+
+    const badWordList = [
+      "fuck",
+      "bitch",
+      "stupid",
+      "dumb",
+      "cancer",
+      "jump",
+      "window",
+      "gun",
+      "knife",
+      "dumb",
+      "gay",
+      "hoe",
+      "ass",
+      "slut",
+      "cringe",
+      "suicide",
+      "kill",
+      "asshole",
+      "dick",
+      "cunt",
+      "fag",
+      "homo",
+      "pussy",
+      "nigg",
+      "suck",
+      "swallow",
+      "wet",
+    ];
+    if (
+      badWordList.some(
+        (word) =>
+          contents!.current!.value.toLowerCase().includes(word) ||
+          title!.current!.value.toLowerCase().includes(word)
       )
-    );
+    ) {
+      alert(
+        "Your post contained a flagged word! It is currently pending approval from an Admin."
+      );
+      dispatch(
+        createPost(
+          title!.current!.value,
+          contents!.current!.value,
+          username!,
+          selectedTags!,
+          true
+        )
+      );
+    } else {
+      dispatch(
+        createPost(
+          title!.current!.value,
+          contents!.current!.value,
+          username!,
+          selectedTags!,
+          false
+        )
+      );
+    }
     handleClose();
   };
 
   const handleTagSelect = (event: any) => {
+    setBody(contents!.current!.value);
+    setTitleState(title!.current!.value);
     setSelectedTags(event.target.value as string[]);
   };
 
@@ -132,8 +188,6 @@ const CreatePost: React.FC = () => {
         descriptionElement.focus();
       }
     }
-
-    dispatch(fetchAllTags());
   }, [open]);
 
   const DialogContent = withStyles((theme: Theme) => ({
@@ -212,7 +266,8 @@ const CreatePost: React.FC = () => {
               <TextField
                 id="Title"
                 inputRef={title}
-                defaultValue={"New Title xyz"}
+                defaultValue={titleState}
+                placeholder={"Enter a Title"}
                 // value={value}
                 // onChange={(e) => setValue(e.target.value)}
               />
@@ -222,7 +277,8 @@ const CreatePost: React.FC = () => {
                 id="content"
                 multiline
                 rows={16}
-                defaultValue={"New Body xyz"}
+                defaultValue={body}
+                placeholder={"Enter a Body"}
                 // value={contents}
                 inputRef={contents}
               />

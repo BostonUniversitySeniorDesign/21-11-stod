@@ -50,6 +50,7 @@ import {
   useHistory,
 } from "react-router-dom";
 import { createPost } from "../../actions/postActions";
+import { fetchAllTags } from "../../actions/tagsActions";
 
 const drawerWidth = 180;
 
@@ -209,6 +210,10 @@ const Home = () => {
       setAllUsers(r);
       console.log(r.length);
     });
+  }, []);
+
+  useEffect(() => {
+    dispatch(fetchAllTags());
   }, []);
 
   const renderGroupsSidebar = () => {

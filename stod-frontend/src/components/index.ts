@@ -18,6 +18,8 @@ import Home from "./Pages/Home";
 import Groups from "./Groups/Groups";
 import PostWrapper from "./Posts/PostWrapper";
 import { fieldError, validateEmail } from "./Common/helper_funcs";
+import Flagged from "./Flagged/Flagged";
+import IsSuperuserRoute from "./Routes/IsSuperuserRoute";
 
 export {
   Login,
@@ -30,4 +32,6 @@ export {
   fieldError,
   PostWrapper,
   validateEmail,
+  Flagged,
+  IsSuperuserRoute,
 };

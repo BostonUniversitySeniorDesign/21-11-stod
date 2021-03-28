@@ -80,3 +80,35 @@ Click add new server and use these credentials:
 - Port: 5433
 - Username: hello_django
 - Password: hello_django
+
+
+## Production Environment:
+The backend server is running on ip: 159.89.88.112 and on domain "stod.backend.app" (no www). 
+Backend is accessed through port 443 and the chat server sockets are accessed through port 4000, both using HTTPS.
+Postgress/Django environment variables are stored in .env.prod and added to the .gitignore. 
+Docker compose files are stored as docker-compose.prod.yml. 
+SSL certificates are stored in a local path and added to docker volumes.
+
+To allow for local development, all backend-production code is stored in branch "backend-prod".
+
+Build docker containers on server:
+
+To reset the database, run in chat-server and stod-backend:
+
+```
+docker-compose down -v
+```
+
+Chat server should always be run first. Cd into chat server and run:
+
+```
+docker-compose -f docker-compose.prod.yml up --build
+```
+
+Then cd into stod-backend and run:
+
+```
+docker-compose -f docker-compose.prod.yml up --build
+```
+
+Front end is running on Netlify server using the "prod" branch. Simply push to prod branch to build and deploy front end. Domain is running on "www.stod.app".

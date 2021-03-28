@@ -27,6 +27,7 @@ export interface IUser {
   id: number;
   username: string;
   email: string;
+  is_superuser: boolean;
 }
 // Auth interfaces
 export interface IAuthState {
@@ -53,7 +54,7 @@ export interface IAuthAction {
     | typeof PASSWORD_EMAIL_SENT
     | typeof PASSWORD_RESET_COMPLETE
     | typeof RESET_PASSWORD_LOADING
-    | typeof REGISTER_FAIL;
+    | typeof REGISTER_FAIL
   payload?: any;
 }
 
@@ -173,6 +174,7 @@ export interface IPost {
   poster: string;
   date: string;
   tags: string[];
+  flagged: boolean;
 }
 
 export interface PostState {
@@ -232,4 +234,24 @@ export interface IUserGroup {
 export interface UserGroupAction {
   type: typeof SWITCH_GROUP;
   payload?: any;
+}
+
+export const FLAGGED_CHANGE_SUCCESS = "FLAGGED_CHANGE_SUCCESS";
+export const FLAGGED_CHANGE_FAIL = "FLAGGED_CHANGE_FAIL";
+export const FLAGGED_DELETE_SUCCESS = "FLAGGED_DELETE_SUCCESS";
+export const FLAGGED_DELETE_FAIL = "FLAGGED_DELETE_FAIL";
+
+export interface IFlaggedAction {
+  type:
+  | typeof FLAGGED_CHANGE_SUCCESS
+  | typeof FLAGGED_CHANGE_FAIL
+  | typeof FLAGGED_DELETE_SUCCESS
+  | typeof FLAGGED_DELETE_FAIL;
+  payload?: any;
+}
+
+export interface IFlaggedState {
+  isLoading: boolean;
+  posts: IPost[];
+  isError: boolean;
 }

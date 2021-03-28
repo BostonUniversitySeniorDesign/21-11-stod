@@ -105,7 +105,8 @@ export const createPost = (
   title: string,
   contents: string,
   username: string,
-  tags: string[]
+  tags: string[],
+  flagged: boolean
 ) => (dispatch: Dispatch, getState: () => IRootState) => {
   const CURR_GROUP = getState().userGroup.currentGroup;
 
@@ -120,6 +121,7 @@ export const createPost = (
   let data = {
     title: title,
     contents: contents,
+    flagged: flagged,
     group: CURR_GROUP,
     poster: username,
     tags: tags,

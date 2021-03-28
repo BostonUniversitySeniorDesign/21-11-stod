@@ -122,8 +122,10 @@ const CreatePost: React.FC = () => {
       "wet",
     ];
     if (
-      badWordList.some((word) =>
-        contents!.current!.value.toLowerCase().includes(word)
+      badWordList.some(
+        (word) =>
+          contents!.current!.value.toLowerCase().includes(word) ||
+          title!.current!.value.toLowerCase().includes(word)
       )
     ) {
       alert(

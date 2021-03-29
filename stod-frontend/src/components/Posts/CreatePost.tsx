@@ -40,6 +40,7 @@ const styles = (theme: Theme) =>
     root: {
       margin: 0,
       padding: theme.spacing(2),
+      width: 500
     },
     closeButton: {
       position: "absolute",

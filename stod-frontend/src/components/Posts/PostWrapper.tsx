@@ -131,7 +131,6 @@ const PostWrapper: React.FC = () => {
   let currentState = useSelector((state: IRootState) => state.posts);
   useEffect(() => {
     // @ts-ignore
-    console.log(cuurrr.userGroup);
     dispatch(loadAllPosts());
   }, [cuurrr.userGroup]);
 

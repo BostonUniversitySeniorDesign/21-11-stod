@@ -90,7 +90,7 @@ const PostWrapper: React.FC = () => {
     } else {
       return (
         <FormControl style={{ width: "100%" }}>
-          <InputLabel id="demo-mutiple-chip-label">Tags</InputLabel>
+          <InputLabel id="demo-mutiple-chip-label">Filter by tag(s)</InputLabel>
           <Select
             labelId="demo-mutiple-chip-label"
             id="demo-mutiple-chip"

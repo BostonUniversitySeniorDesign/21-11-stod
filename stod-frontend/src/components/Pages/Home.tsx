@@ -17,7 +17,7 @@ import Button from "../../mui_components/StodButton";
 import { useSelector, useDispatch } from "react-redux";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
-import { CssBaseline } from "@material-ui/core";
+import { CssBaseline, Menu } from "@material-ui/core";
 import { SWITCH_GROUP, DOMAIN, IUser } from "../../actions/types";
 import { tokenConfig } from "../../actions/authActions";
 import UserView from "../Users/UserView";
@@ -42,7 +42,7 @@ import {
   SingleGroup,
   IUserGroup,
 } from "../../actions/types";
-import { fetchGroups } from "../../actions/groupsActions";
+import { fetchGroups, unsubscribeFromGroup } from "../../actions/groupsActions";
 import {
   BrowserRouter as Router,
   Route,
@@ -51,6 +51,7 @@ import {
 } from "react-router-dom";
 import { createPost } from "../../actions/postActions";
 import { fetchAllTags } from "../../actions/tagsActions";
+import MenuItem from '@material-ui/core/MenuItem';
 
 const drawerWidth = 180;
 
@@ -192,6 +193,12 @@ const Home = () => {
     <PaymentIcon className={classes.typo} />,
   ];
 
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  const handleRightClickClose = () => {
+    setAnchorEl(null);
+  };
+
   const username = useSelector(
     (state: IRootState) => state.auth.user?.username
   ) as string;
@@ -216,6 +223,13 @@ const Home = () => {
     dispatch(fetchAllTags());
   }, []);
 
+  const handleUnsubscribe = (group: string | undefined | null) => {
+    if (username !== undefined && group !== null && group !== undefined) {
+      dispatch(unsubscribeFromGroup(username, group));
+    }
+    handleRightClickClose();
+  }
+
   const renderGroupsSidebar = () => {
     if (currentGroupsState.isLoading) {
       return <div>Loading...</div>;
@@ -226,6 +240,12 @@ const Home = () => {
         return <div>You aren't subscribed to any groups!</div>;
       } else {
         return (
+          <React.Fragment>
+
+          <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleRightClickClose}>
+            <MenuItem onClick={() => handleUnsubscribe(anchorEl?.textContent)}>Unsubscribe</MenuItem>
+          </Menu>
+
           <List>
             {currentGroupsState.subscribedGroups.map((group, i) => {
               return (
@@ -233,6 +253,7 @@ const Home = () => {
                   key={i}
                   className={classes.item}
                   style={{ margin: 0, padding: 0 }}
+                  onContextMenu = {(e) => {setAnchorEl(e.currentTarget); e.preventDefault()}}
                 >
                   <Button
                     className={
@@ -242,9 +263,10 @@ const Home = () => {
                     }
                     key={i}
                     onClick={() => {
-                      setSelected({ name: group.name, section: "Groups" });
-                      dispatch({ type: SWITCH_GROUP, payload: group.name });
-                    }}
+                        setSelected({ name: group.name, section: "Groups" });
+                        dispatch({ type: SWITCH_GROUP, payload: group.name });
+                      }
+                    }
                   >
                     <Typography variant="subtitle1" className={classes.typo}>
                       {group.name}
@@ -254,6 +276,8 @@ const Home = () => {
               );
             })}
           </List>
+          </React.Fragment>
+
         );
       }
     }

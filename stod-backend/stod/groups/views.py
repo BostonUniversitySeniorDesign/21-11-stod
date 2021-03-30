@@ -14,6 +14,34 @@ class UserGroupsAPI(generics.GenericAPIView):
     serializer_class = UserGroupsSerializer
     queryset = UserGroups.objects.all()
 
+    def delete(self, request):
+        try:
+            user = request.query_params['user']
+            group = request.query_params['group']
+        except:
+            return Response(
+                {
+                    "success": False,
+                    "message": "Provide a user and a group"
+                }
+            )
+
+        row = self.queryset.filter(user=user).first()
+        if row is None:
+            return Response(
+                {
+                    "success": False,
+                    "message": "User does not exist"
+                }
+            )
+
+        row.groups.all().filter(name=group).delete()
+
+        return Response(
+            {"success": True},
+            status=status.HTTP_200_OK
+        )
+
     def post(self, request):
         """
         Given a user and a group name, add the user to the group.

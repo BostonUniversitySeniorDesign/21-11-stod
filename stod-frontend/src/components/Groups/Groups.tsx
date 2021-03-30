@@ -5,6 +5,7 @@ import { IRootState, SingleGroup, IGroupsProps } from "../../actions/types";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Group from "./Group";
+import Typography from "@material-ui/core/Typography";
 
 import { makeStyles, Theme } from "@material-ui/core/styles";
 
@@ -14,6 +15,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginTop: theme.spacing(1),
   },
 }));
+
+const DEV = false;
 
 
 const Groups: React.FC<IGroupsProps> = (props: IGroupsProps) => {
@@ -84,12 +87,14 @@ const Groups: React.FC<IGroupsProps> = (props: IGroupsProps) => {
         <React.Fragment>
             {renderBody()}
             {
+                DEV ? (
                 !props.subscribedOnly ? (
                 <form className={classes.form} onSubmit={handleCreate} noValidate>
                     <TextField id="name" name="name" inputRef={name} label="Name"/>
                     <TextField id="description" name="description" inputRef={description} label="Description"/>
                     <Button type="submit" style={{border: "1px solid black"}}>Submit</Button>
                 </form>
+                ) : null
                 ) : null
             }
         </React.Fragment>

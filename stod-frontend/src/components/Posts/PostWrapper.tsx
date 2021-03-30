@@ -91,7 +91,7 @@ const PostWrapper: React.FC = () => {
     } else {
       return (
         <FormControl fullWidth>
-          <InputLabel id="demo-mutiple-chip-label">Tags</InputLabel>
+          <InputLabel id="demo-mutiple-chip-label">Filter by tag(s)</InputLabel>
           <Select
             labelId="demo-mutiple-chip-label"
             id="demo-mutiple-chip"

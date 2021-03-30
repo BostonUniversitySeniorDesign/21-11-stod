@@ -70,7 +70,8 @@ export const subscribeToGroup = (user: string, group: string) => (
 export const unsubscribeFromGroup = (user: string, group: string) => (
   dispatch: Dispatch
 ) => {
-  const url = `http://${DOMAIN}/groups/subscribed/?format=json&user=${user}&group=${group}`;
+  // const url = `http://${DOMAIN}/groups/subscribed/?format=json&user=${user}&group=${group}`;
+  const url = `https://${DOMAIN}/groups/subscribed/?format=json&user=${user}&group=${group}`;
   return axios
     .delete(url)
     .then(() => fetchGroups(true, user)(dispatch));

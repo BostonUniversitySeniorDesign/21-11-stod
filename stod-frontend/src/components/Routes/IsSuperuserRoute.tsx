@@ -30,11 +30,10 @@ const IsSuperuserRoute: React.FC<IAuthenticatedRoute> = ({
       render={(props) => {
         if (isLoading || !isSuperuser) {
           return <Loader />;
-        } 
-        else if (!isAuthenticated || isAuthenticated === null) {
+        } else if (!isAuthenticated || isAuthenticated === null) {
           return <Redirect to="/login" />;
         } else if (!isSuperuser || isSuperuser === null) {
-          return <Redirect to="/home" />;
+          return <Redirect to="/" />;
         } else {
           return <Component {...props} />;
         }

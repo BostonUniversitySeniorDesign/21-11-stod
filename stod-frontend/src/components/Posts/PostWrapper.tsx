@@ -10,7 +10,8 @@ import {
   createComment,
   loadSpecificComments,
 } from "../../actions/commentActions";
-
+import ReplyIcon from "@material-ui/icons/Reply";
+import IconButton from "@material-ui/core/IconButton";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import useStyles from "../../styles";
@@ -46,15 +47,15 @@ const PostWrapper: React.FC = () => {
     if (selectedTags.length == 0) {
       return true;
     } else {
-      return selectedTags.some(e => post.tags.includes(e))
+      return selectedTags.some((e) => post.tags.includes(e));
     }
-  }
+  };
 
   const handleTagSelect = (event: any) => {
     setSelectedTags(event.target.value as string[]);
     console.log(selectedTags);
-    console.log(currentState.posts)
-    console.log(currentState.posts.filter(filterPosts))
+    console.log(currentState.posts);
+    console.log(currentState.posts.filter(filterPosts));
   };
 
   const handleCreate = (
@@ -89,8 +90,8 @@ const PostWrapper: React.FC = () => {
       return <div>Error loading tags!</div>;
     } else {
       return (
-        <FormControl style={{ width: "100%" }}>
-          <InputLabel id="demo-mutiple-chip-label">Tags</InputLabel>
+        <FormControl fullWidth>
+          <InputLabel id="demo-mutiple-chip-label">Filter by tag(s)</InputLabel>
           <Select
             labelId="demo-mutiple-chip-label"
             id="demo-mutiple-chip"
@@ -106,17 +107,21 @@ const PostWrapper: React.FC = () => {
               </div>
             )}
           >
-            {tagsState.allTags.map((tag) => {
-              return (
-                <MenuItem key={tag.name} value={tag.name}>
-                  <Checkbox
-                    color="primary"
-                    checked={selectedTags.includes(tag.name)}
-                  />
-                  <ListItemText primary={tag.name} />
-                </MenuItem>
-              );
-            })}
+            {tagsState.allTags ? (
+              tagsState.allTags.map((tag) => {
+                return (
+                  <MenuItem key={tag.name} value={tag.name}>
+                    <Checkbox
+                      color="primary"
+                      checked={selectedTags.includes(tag.name)}
+                    />
+                    <ListItemText primary={tag.name} />
+                  </MenuItem>
+                );
+              })
+            ) : (
+              <div />
+            )}
           </Select>
         </FormControl>
       );
@@ -137,81 +142,131 @@ const PostWrapper: React.FC = () => {
   let currentCommentState = useSelector((state: IRootState) => state.comments);
   // console.log(currentCommentState.comments);
 
+  const [showRep, setShowRepl] = React.useState<null | number>(null);
+
   if (!currentState.isLoading) {
     return (
       <PostContextProvider>
-        <h1>HELLO WORLD?</h1>
-        {renderTags()}
+        <Paper>
+          <Typography>Filter by tags {renderTags()}</Typography>
+        </Paper>
+
         {currentState.posts.filter(filterPosts).map((post: IPost) => {
           return post.flagged === false ? (
             <div>
               <Divider style={{ backgroundColor: "#000000" }} />
-              <Post post={post} showPostMenu={true} key={post.id} />
-              {currentCommentState.comments.map((comment: IComment) => {
-                return comment.post === post.id ? (
-                  <Paper className={classes.paper}>
-                    <Grid container wrap="nowrap" spacing={2}>
-                      <Grid item>
-                        <Avatar>{comment.name}</Avatar>
-                      </Grid>
-                      <Grid item xs zeroMinWidth>
-                        {comment.parent === null ? null : (
-                          <Typography noWrap>
-                            Replied to "{comment.reply}"
-                          </Typography>
-                        )}
-                        <Typography noWrap>{comment.comment}</Typography>
-                        <form
-                          className={classes.form}
-                          onSubmit={(e) =>
-                            handleCreate(
-                              e,
-                              post.id,
-                              currReply,
-                              comment.id,
-                              comment.comment
-                            )
-                          }
-                          noValidate
-                        >
-                          <TextField
-                            id="reply"
-                            name="reply"
-                            onChange={(e) => setCurrReply(e.target.value)}
-                            label="Reply"
-                          />
-                          <Button
-                            type="submit"
-                            style={{ border: "1px solid black" }}
-                          >
-                            Reply
-                          </Button>
-                        </form>
-                      </Grid>
-                    </Grid>
-                  </Paper>
-                ) : (
-                  ""
-                );
-              })}
-              <form
-                className={classes.form}
-                onSubmit={(e) =>
-                  handleCreate(e, post.id, currComment, null, null)
-                }
-                noValidate
+              <Paper
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                }}
               >
-                <TextField
-                  id="comment"
-                  name="comment"
-                  inputRef={comment}
-                  onChange={(e) => setCurrComment(e.target.value)}
-                  label="Comment"
-                />
-                <Button type="submit" style={{ border: "1px solid black" }}>
-                  Comment
-                </Button>
-              </form>
+                <Post post={post} showPostMenu={true} key={post.id} />
+                {currentCommentState.comments.map((comment: IComment) => {
+                  return comment.post === post.id ? (
+                    <Paper
+                      style={{
+                        margin: 10,
+                        // backgroundColor: "grey",
+                      }}
+                      elevation={0}
+                    >
+                      <Grid container wrap="nowrap" spacing={2}>
+                        <Grid item>
+                          <Avatar>{comment.name.charAt(0)}</Avatar>
+                        </Grid>
+                        <Grid item xs zeroMinWidth>
+                          {comment.parent === null ? null : (
+                            <Typography noWrap>
+                              Replied to "{comment.reply}"
+                            </Typography>
+                          )}
+                          <Typography noWrap>
+                            {comment.name}: {comment.comment}
+                          </Typography>
+                          <IconButton
+                            color="primary"
+                            aria-label="add to shopping cart"
+                            size="small"
+                            onClick={() =>
+                              setShowRepl((p) =>
+                                p === comment.id ? null : comment.id
+                              )
+                            }
+                          >
+                            <ReplyIcon />
+                          </IconButton>
+                          <form
+                            hidden={showRep !== comment.id}
+                            className={classes.form}
+                            onSubmit={(e) => {
+                              handleCreate(
+                                e,
+                                post.id,
+                                currReply,
+                                comment.id,
+                                comment.comment
+                              );
+                              setShowRepl((p) =>
+                                p === comment.id ? null : comment.id
+                              );
+                            }}
+                            noValidate
+                          >
+                            <TextField
+                              id="reply"
+                              variant="outlined"
+                              name="reply"
+                              onChange={(e) => setCurrReply(e.target.value)}
+                              label="Reply"
+                            />
+                            <Button
+                              type="submit"
+                              style={{ border: "1px solid black" }}
+                            >
+                              Reply
+                            </Button>
+                          </form>
+                        </Grid>
+                      </Grid>
+                    </Paper>
+                  ) : (
+                    ""
+                  );
+                })}
+
+                <form
+                  className={classes.form}
+                  onSubmit={(e) =>
+                    handleCreate(e, post.id, currComment, null, null)
+                  }
+                  noValidate
+                >
+                  <Grid container>
+                    <Grid item md={10}>
+                      <TextField
+                        id="comment"
+                        // @ts-ignore
+                        name={username}
+                        variant="outlined"
+                        fullWidth
+                        inputRef={comment}
+                        onChange={(e) => setCurrComment(e.target.value)}
+                        label="Comment"
+                      />
+                    </Grid>
+                    <Grid item md={2}>
+                      <Button
+                        type="submit"
+                        style={{ border: "1px solid black" }}
+                      >
+                        Comment
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </form>
+              </Paper>
             </div>
           ) : (
             ""

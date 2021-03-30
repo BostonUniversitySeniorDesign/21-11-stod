@@ -125,7 +125,7 @@ const Login: React.FC = () => {
    * for token logic check reducers/authReducer.ts.
    */
   if (isAuthenticated) {
-    return <Redirect to="/home" />;
+    return <Redirect to="/" />;
   }
 
   return (

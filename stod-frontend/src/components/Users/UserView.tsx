@@ -123,34 +123,44 @@ const UserView: React.FC<Props> = ({ name }) => {
               }}
             >
               {messages
-                .filter((m) =>
-                  m.recipient === name ? true : m.sender === name
-                )
-                .map((m) => (
-                  <React.Fragment>
-                    <ListItem
-                      ref={inputEl}
-                      style={{
-                        display: "flex",
-                        justifyContent: `flex-${
-                          m.recipient !== username ? "end" : "start"
-                        }`,
-                      }}
-                    >
-                      <Paper
-                        elevation={0}
-                        className={
-                          m.recipient !== username
-                            ? classes.messageBubbleSend
-                            : classes.messageBubbleRecive
-                        }
-                      >
-                        <Typography variant="subtitle1">{m.message}</Typography>
-                      </Paper>
-                      <Avatar>H</Avatar>
-                    </ListItem>
-                  </React.Fragment>
-                ))}
+                ? messages
+                    .filter((m) =>
+                      m.recipient === name ? true : m.sender === name
+                    )
+                    .map((m) => (
+                      <React.Fragment>
+                        <ListItem
+                          ref={inputEl}
+                          style={{
+                            display: "flex",
+                            justifyContent: `flex-${
+                              m.recipient !== username ? "end" : "start"
+                            }`,
+                          }}
+                        >
+                          {m.recipient !== username ? (
+                            ""
+                          ) : (
+                            <Avatar style={{ marginRight: 8 }}>
+                              {username.charAt(0)}
+                            </Avatar>
+                          )}
+                          <Paper
+                            elevation={0}
+                            className={
+                              m.recipient !== username
+                                ? classes.messageBubbleSend
+                                : classes.messageBubbleRecive
+                            }
+                          >
+                            <Typography variant="subtitle1">
+                              {m.message}
+                            </Typography>
+                          </Paper>
+                        </ListItem>
+                      </React.Fragment>
+                    ))
+                : ""}
             </List>
           </Paper>
         </Grid>

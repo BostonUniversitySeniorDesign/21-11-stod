@@ -24,7 +24,7 @@ export const sendRequest = (reciver: string) => (
 ) => {
   const body = JSON.stringify({ reciver });
   return axios
-    .post(`http://${DOMAIN}/friends/`, body, tokenConfig(getState))
+    .post(`https://${DOMAIN}/friends/`, body, tokenConfig(getState))
     .then((res) => {
       dispatch({
         type: REQUEST_SEND_SUCC,
@@ -41,7 +41,7 @@ export const getRequests = () => (
   getState: () => IRootState
 ) => {
   return axios
-    .get(`http://${DOMAIN}/friends/`, tokenConfig(getState))
+    .get(`https://${DOMAIN}/friends/`, tokenConfig(getState))
     .then((res) => {
       dispatch({
         type: REQUEST_GET_SUCC,
@@ -58,7 +58,7 @@ export const getFriendList = () => (
   getState: () => IRootState
 ) => {
   return axios
-    .get(`http://${DOMAIN}/friends/list/`, tokenConfig(getState))
+    .get(`https://${DOMAIN}/friends/list/`, tokenConfig(getState))
     .then((res) => {
       dispatch({
         type: GET_FRIEND_LIST_SUCC,
@@ -75,7 +75,7 @@ export const acceptRequest = (id: number) => (
   getState: () => IRootState
 ) => {
   return axios
-    .patch(`http://${DOMAIN}/friends/accept/${id}/`, {}, tokenConfig(getState))
+    .patch(`https://${DOMAIN}/friends/accept/${id}/`, {}, tokenConfig(getState))
     .then((res) => {
       dispatch({
         type: REQUEST_ACCEPT_SUCC,
@@ -92,7 +92,7 @@ export const declineRequest = (id: number) => (
   getState: () => IRootState
 ) => {
   return axios
-    .patch(`http://${DOMAIN}/friends/decline/${id}/`, {}, tokenConfig(getState))
+    .patch(`https://${DOMAIN}/friends/decline/${id}/`, {}, tokenConfig(getState))
     .then((res) => {
       dispatch({
         type: REQUEST_ACCEPT_SUCC,

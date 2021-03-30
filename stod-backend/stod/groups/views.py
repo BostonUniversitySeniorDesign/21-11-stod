@@ -36,12 +36,7 @@ class UserGroupsAPI(generics.GenericAPIView):
             )
 
         groupObj = row.groups.all().filter(name=group)
-        print(row.groups.all())
         row.groups.remove(*groupObj)
-        print(row.groups.all())
-
-        print(groupObj)
-        # row.groups.all().filter(name=group).delete()
 
         return Response(
             {"success": True},

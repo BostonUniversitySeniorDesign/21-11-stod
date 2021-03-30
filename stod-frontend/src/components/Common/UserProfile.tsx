@@ -18,21 +18,27 @@ function isActiveReq(
   curr_user: string | undefined
 ) {
   let dis, text;
-  fr_list.forEach((f) => {
-    if (f.is_active && f.reciver === other_user) {
-      dis = true;
-      text = "Waiting for friend request response";
-    } else if (f.is_active && f.reciver === curr_user) {
-      dis = true;
-      text = "Respond to friend request";
-    } else if (!f.is_active && !f.declined) {
-      dis = true;
-      text = "Friend";
-    } else {
-      dis = false;
-      text = "Send friend request";
-    }
-  });
+  if (
+    !fr_list.some((f) => f.reciver === other_user || f.sender === other_user)
+  ) {
+    dis = false;
+    text = "Send friend request";
+  } else
+    fr_list.forEach((f) => {
+      if (f.is_active && f.reciver === other_user) {
+        dis = true;
+        text = "Waiting for friend request response";
+      } else if (f.is_active && f.reciver === curr_user) {
+        dis = true;
+        text = "Respond to friend request";
+      } else if (!f.is_active && !f.declined) {
+        dis = true;
+        text = "Friend";
+      } else {
+        dis = false;
+        text = "Send friend request";
+      }
+    });
   return { dis, text };
 }
 

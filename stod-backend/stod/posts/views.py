@@ -27,7 +27,7 @@ class PostViewset(viewsets.ModelViewSet):
             return queryset.order_by('-id')
         else:
             query_set = queryset.filter(group=req_group).order_by('-id')
-        return query_set.reverse()
+        return query_set()
 
 
 class CommentViewset(viewsets.ModelViewSet):

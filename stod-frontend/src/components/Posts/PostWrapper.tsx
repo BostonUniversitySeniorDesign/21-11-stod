@@ -131,7 +131,6 @@ const PostWrapper: React.FC = () => {
   let currentState = useSelector((state: IRootState) => state.posts);
   useEffect(() => {
     // @ts-ignore
-    console.log(cuurrr.userGroup);
     dispatch(loadAllPosts());
   }, [cuurrr.userGroup]);
 
@@ -162,7 +161,7 @@ const PostWrapper: React.FC = () => {
                   justifyContent: "center",
                 }}
               >
-                <Post post={post} showPostMenu={true} key={post.id} />
+                <Post post={post} showPostMenu={post.poster === username} key={post.id} />
                 {currentCommentState.comments.map((comment: IComment) => {
                   return comment.post === post.id ? (
                     <Paper

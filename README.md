@@ -114,3 +114,12 @@ docker-compose -f docker-compose.prod.yml up --build
 Use ```-it``` to run in shell and ```-d``` to run in background
 
 Front end is running on Netlify server using the "prod" branch. Simply push to prod branch to build and deploy front end. Domain is running on "www.stod.app".
+
+To add an admin user, enter docker container by running:
+```
+docker exec -it [stodbackend_web ID] /bin/sh
+```
+Enter /stod/ and run:
+```
+python3 manage.py createsuperuser
+```

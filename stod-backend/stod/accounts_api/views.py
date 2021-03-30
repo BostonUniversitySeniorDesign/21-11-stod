@@ -24,6 +24,7 @@ from django.utils.encoding import (
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.contrib.sites.shortcuts import get_current_site
 from .utils import send_email
+# from friends.models import Friendship
 
 # Register API
 
@@ -40,6 +41,7 @@ class RegisterAPI(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
         # Response structure sent on POST request
+        # Friendship.objects.create(current_user=user)
         return Response(
             {
                 "user": UserSerializer(

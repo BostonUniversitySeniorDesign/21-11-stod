@@ -53,6 +53,7 @@ interface Props {
 
 interface SockMsg {
   recipient: string;
+  sender: string;
   message: string;
 }
 
@@ -60,6 +61,7 @@ async function fetchMessages(username: string) {
   const res = await axios.post("http://localhost:5500/chats/", {
     username,
   });
+  console.log(res);
   return res;
 }
 
@@ -99,7 +101,7 @@ const UserView: React.FC<Props> = ({ name }) => {
       setMessages(res.data.messages);
       console.log(res.data.messages);
     });
-  }, []);
+  }, [username]);
 
   useEffect(() => {
     //@ts-ignore
@@ -120,31 +122,35 @@ const UserView: React.FC<Props> = ({ name }) => {
                 overflow: "auto",
               }}
             >
-              {messages.map((m) => (
-                <React.Fragment>
-                  <ListItem
-                    ref={inputEl}
-                    style={{
-                      display: "flex",
-                      justifyContent: `flex-${
-                        m.recipient !== username ? "end" : "start"
-                      }`,
-                    }}
-                  >
-                    <Paper
-                      elevation={0}
-                      className={
-                        m.recipient !== username
-                          ? classes.messageBubbleSend
-                          : classes.messageBubbleRecive
-                      }
+              {messages
+                .filter((m) =>
+                  m.recipient === name ? true : m.sender === name
+                )
+                .map((m) => (
+                  <React.Fragment>
+                    <ListItem
+                      ref={inputEl}
+                      style={{
+                        display: "flex",
+                        justifyContent: `flex-${
+                          m.recipient !== username ? "end" : "start"
+                        }`,
+                      }}
                     >
-                      <Typography variant="subtitle1">{m.message}</Typography>
-                    </Paper>
-                    <Avatar>H</Avatar>
-                  </ListItem>
-                </React.Fragment>
-              ))}
+                      <Paper
+                        elevation={0}
+                        className={
+                          m.recipient !== username
+                            ? classes.messageBubbleSend
+                            : classes.messageBubbleRecive
+                        }
+                      >
+                        <Typography variant="subtitle1">{m.message}</Typography>
+                      </Paper>
+                      <Avatar>H</Avatar>
+                    </ListItem>
+                  </React.Fragment>
+                ))}
             </List>
           </Paper>
         </Grid>
@@ -163,7 +169,7 @@ const UserView: React.FC<Props> = ({ name }) => {
                 setMessage("");
                 setMessages((prevMessages) => [
                   ...prevMessages,
-                  { recipient: name, message },
+                  { recipient: name, message, sender: username },
                 ]);
                 //@ts-ignore
                 // mesRef.current.scrollTop = mesRef.current.scrollHeight;

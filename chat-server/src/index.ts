@@ -24,7 +24,7 @@ const io = new Server(server, {
 MongoClient.connect(
   "mongodb://mongo:27017/chat",
   { useUnifiedTopology: true },
-  (err, client) => {
+  (err: any, client: any) => {
     // if theres an error throw it
     if (err) throw err;
     console.log("Mongodb connected...");
@@ -34,15 +34,16 @@ MongoClient.connect(
 
     // Rest
 
-    app.use("/chats", (req, res) => {
+    app.use("/chats", (req: any, res: any) => {
       const { username } = req.body;
       console.log("EXPRESS", req.body);
       db.collection("chats").findOne(
         { user_id: username },
-        function (error, doc) {
+        function (error: any, doc: any) {
           if (error) {
             res.status(500).send(error);
           } else {
+            console.log(doc);
             res.status(200).send(doc);
           }
         }
@@ -69,7 +70,7 @@ MongoClient.connect(
             { user_id: recipient },
             {
               $push: {
-                messages: { recipient, message },
+                messages: { recipient, sender: id, message },
               },
             }
           );
@@ -77,7 +78,7 @@ MongoClient.connect(
             { user_id: sender },
             {
               $push: {
-                messages: { recipient, message },
+                messages: { recipient, sender: id, message },
               },
             }
           );

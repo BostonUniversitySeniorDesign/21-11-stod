@@ -74,6 +74,7 @@ mongodb_1.default.connect("mongodb://mongo:27017/chat", { useUnifiedTopology: tr
                 res.status(500).send(error);
             }
             else {
+                console.log(doc);
                 res.status(200).send(doc);
             }
         });
@@ -106,14 +107,14 @@ mongodb_1.default.connect("mongodb://mongo:27017/chat", { useUnifiedTopology: tr
                                         console.log({ recipient: recipient, message: message });
                                         return [4 /*yield*/, db.collection("chats").updateOne({ user_id: recipient }, {
                                                 $push: {
-                                                    messages: { recipient: recipient, message: message },
+                                                    messages: { recipient: recipient, sender: id, message: message },
                                                 },
                                             })];
                                     case 1:
                                         _b.sent();
                                         return [4 /*yield*/, db.collection("chats").updateOne({ user_id: sender }, {
                                                 $push: {
-                                                    messages: { recipient: recipient, message: message },
+                                                    messages: { recipient: recipient, sender: id, message: message },
                                                 },
                                             })];
                                     case 2:

@@ -162,7 +162,7 @@ const PostWrapper: React.FC = () => {
                   justifyContent: "center",
                 }}
               >
-                <Post post={post} showPostMenu={true} key={post.id} />
+                <Post post={post} showPostMenu={post.poster === username} key={post.id} />
                 {currentCommentState.comments.map((comment: IComment) => {
                   return comment.post === post.id ? (
                     <Paper

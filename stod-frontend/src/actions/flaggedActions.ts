@@ -16,7 +16,7 @@ export const changeFlaggedPost = (
   
     //request body
     //   const body = JSON.stringify({ flagged });
-      const url = `http://${DOMAIN}/posts/posts/` + pid + "/?group=";
+      const url = `https://${DOMAIN}/posts/posts/` + pid + "/?group=";
     //Make POST request to server with login info.
     axios
       .patch(url, { flagged: flag })
@@ -34,7 +34,7 @@ export const changeFlaggedPost = (
   
     //request body
     //   const body = JSON.stringify({ flagged });
-      const url = `http://${DOMAIN}/posts/posts/` + pid + "/?group=";
+      const url = `https://${DOMAIN}/posts/posts/` + pid + "/?group=";
     //Make POST request to server with login info.
     axios
       .delete(url)

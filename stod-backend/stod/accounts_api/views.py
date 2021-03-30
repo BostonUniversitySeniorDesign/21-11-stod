@@ -94,6 +94,7 @@ class RequestPasswordResetEmail(generics.GenericAPIView):
             "password-reset-confirm", kwargs={"uidb64": uidb64, "token": token}
         )
         absurl = "http://localhost:3000/change_password/" + uidb64 + "/" + token
+        # absurl = "https://stodbackend.app/change_password/" + uidb64 + "/" + token
         data = {
             "email_body": render_to_string(
                 "accounts_api/index.html", {"reset_link": absurl}

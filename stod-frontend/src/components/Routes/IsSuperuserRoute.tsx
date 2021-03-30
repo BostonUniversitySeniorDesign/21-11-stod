@@ -10,23 +10,30 @@ interface IAuthenticatedRoute {
   path: string;
 }
 
-const AuthenticatedRoute: React.FC<IAuthenticatedRoute> = ({
+const IsSuperuserRoute: React.FC<IAuthenticatedRoute> = ({
   component: Component,
   ...rest
 }) => {
   const isAuthenticated = useSelector(
     (state: IRootState) => state.auth.isAuthenticated
   );
+  const isSuperuser = useSelector(
+    (state: IRootState) => state.auth.user?.is_superuser
+  );
   const isLoading = useSelector((state: IRootState) => state.auth.isLoading);
+
+  console.log(isSuperuser, isLoading);
 
   return (
     <Route
       {...rest}
       render={(props) => {
-        if (isLoading) {
+        if (isLoading || !isSuperuser) {
           return <Loader />;
         } else if (!isAuthenticated || isAuthenticated === null) {
-          return <Redirect from="/" to="/login" />;
+          return <Redirect to="/login" />;
+        } else if (!isSuperuser || isSuperuser === null) {
+          return <Redirect to="/" />;
         } else {
           return <Component {...props} />;
         }
@@ -35,4 +42,4 @@ const AuthenticatedRoute: React.FC<IAuthenticatedRoute> = ({
   );
 };
 
-export default AuthenticatedRoute;
+export default IsSuperuserRoute;

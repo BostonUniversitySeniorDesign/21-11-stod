@@ -16,6 +16,8 @@ import {
   Home,
   Groups,
   PostWrapper,
+  Flagged,
+  IsSuperuserRoute,
 } from "./components";
 
 const App = () => {
@@ -30,7 +32,7 @@ const App = () => {
         <React.Fragment>
           <div className="container">
             <Switch>
-              <Route
+              {/* <Route
                 exact
                 path="/"
                 render={() => (
@@ -46,7 +48,7 @@ const App = () => {
                     </h1>
                   </div>
                 )}
-              />
+              /> */}
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
               {/* <Route
@@ -60,7 +62,8 @@ const App = () => {
                 component={() => <Groups subscribedOnly={true} />}
               />
               <Route exact path="/posts" component={PostWrapper} />
-              <AuthenticatedRoute path="/home" component={Home} />
+              <IsSuperuserRoute path="/flagged" component={Flagged} />
+              <AuthenticatedRoute exact path="/" component={Home} />
               <Route exact path="/404" component={Error} />
               <Redirect from="*" to="/404" />
             </Switch>

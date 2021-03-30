@@ -36,6 +36,7 @@ import DashboardIcon from "@material-ui/icons/Dashboard";
 import PaymentIcon from "@material-ui/icons/Payment";
 import CreatePost from "../Posts/CreatePost";
 import PostWrapper from "../Posts/PostWrapper";
+import Paper from "@material-ui/core/Paper";
 import {
   IGroupsAction,
   IRootState,
@@ -43,6 +44,8 @@ import {
   IUserGroup,
 } from "../../actions/types";
 import { fetchGroups, unsubscribeFromGroup } from "../../actions/groupsActions";
+import { getRequests, getFriendList } from "../../actions/friendActions";
+
 import {
   BrowserRouter as Router,
   Route,
@@ -59,6 +62,15 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: "flex",
+      // flexDirection: "column",
+      justifyContent: "center",
+    },
+    mid_paper: {
+      padding: theme.spacing(3, 2),
+      width: 800,
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
     },
     drawer: {
       [theme.breakpoints.up("sm")]: {
@@ -86,7 +98,6 @@ const useStyles = makeStyles((theme: Theme) =>
       width: drawerWidth,
     },
     content: {
-      flexGrow: 1,
       padding: theme.spacing(3),
     },
     button: {
@@ -203,6 +214,10 @@ const Home = () => {
     (state: IRootState) => state.auth.user?.username
   ) as string;
 
+  const friend_list = useSelector(
+    (state: IRootState) => state.friends.friend_obj?.friends
+  ) as string[];
+
   let currentGroupsState = useSelector((state: IRootState) => state.groups);
   let currentState = useSelector((state: IRootState) => state);
 
@@ -211,6 +226,14 @@ const Home = () => {
       dispatch(fetchGroups(true, username));
     }
   }, [username, dispatch]);
+
+  useEffect(() => {
+    dispatch(getRequests());
+  }, []);
+
+  useEffect(() => {
+    dispatch(getFriendList());
+  }, []);
 
   useEffect(() => {
     renderAllUsers(() => currentState).then((r) => {
@@ -321,7 +344,7 @@ const Home = () => {
         <ListItem className={classes.item} style={{ margin: 0, padding: 0 }}>
           <Button
             className={
-              selected.name == "Find Groups" ? classes.active : classes.button
+              selected.name === "Find Groups" ? classes.active : classes.button
             }
             onClick={() => {
               setSelected({ name: "Find Groups", section: "Main" });
@@ -368,32 +391,28 @@ const Home = () => {
         Friends
       </Typography>
       <List style={{ margin: 0, padding: 0 }}>
-        {allUsers
-          ? allUsers
-              .filter((u) => u.username !== username)
-              .map((user) => (
-                <ListItem
-                  key={user.id}
-                  className={classes.item}
-                  style={{ margin: 0, padding: 0 }}
+        {friend_list
+          ? friend_list.map((user) => (
+              <ListItem
+                key={user}
+                className={classes.item}
+                style={{ margin: 0, padding: 0 }}
+              >
+                <Button
+                  className={
+                    selected.name === user ? classes.active : classes.button
+                  }
+                  key={user}
+                  onClick={() =>
+                    setSelected({ name: user, section: "Friends" })
+                  }
                 >
-                  <Button
-                    className={
-                      selected.name == user.username
-                        ? classes.active
-                        : classes.button
-                    }
-                    key={user.id}
-                    onClick={() =>
-                      setSelected({ name: user.username, section: "Friends" })
-                    }
-                  >
-                    <Typography variant="subtitle1" className={classes.typo}>
-                      {user.username}
-                    </Typography>
-                  </Button>
-                </ListItem>
-              ))
+                  <Typography variant="subtitle1" className={classes.typo}>
+                    {user}
+                  </Typography>
+                </Button>
+              </ListItem>
+            ))
           : ""}
       </List>
     </div>
@@ -448,7 +467,9 @@ const Home = () => {
         : 
         <Groups subscribedOnly={false} />}
         } */}
-        {getSelectedComponent(selected, username)}
+        <Paper className={classes.mid_paper}>
+          {getSelectedComponent(selected, username)}
+        </Paper>
       </main>
     </div>
   );

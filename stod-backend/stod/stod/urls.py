@@ -21,5 +21,6 @@ urlpatterns = [
     path('groups/', include('groups.urls')),
     path('accounts/', include('accounts_api.urls')),
     path('posts/', include('posts.urls')),
-    path('tags/', include('tags.urls'))
+    path('tags/', include('tags.urls')),
+    path('friends/', include('friends.urls'))
 ]

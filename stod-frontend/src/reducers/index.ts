@@ -6,6 +6,8 @@ import commentReducer from "./commentReducer";
 import usergroupReducer from "./usergroupReducer";
 import { tagsReducer } from "./tagsReducer";
 import flaggedReducer from "./flaggedReducer";
+import friendReducer from "./friendReducer";
+
 // combines all the reducers to one
 export default combineReducers({
   auth: authReducer,
@@ -16,4 +18,5 @@ export default combineReducers({
   userGroup: usergroupReducer,
   tags: tagsReducer,
   flagged: flaggedReducer,
+  friends: friendReducer,
 });

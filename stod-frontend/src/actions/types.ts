@@ -54,7 +54,7 @@ export interface IAuthAction {
     | typeof PASSWORD_EMAIL_SENT
     | typeof PASSWORD_RESET_COMPLETE
     | typeof RESET_PASSWORD_LOADING
-    | typeof REGISTER_FAIL
+    | typeof REGISTER_FAIL;
   payload?: any;
 }
 
@@ -68,6 +68,7 @@ export interface IRootState {
   comments: CommentState;
   userGroup: IUserGroup;
   tags: ITagsState;
+  friends: IFriendState;
 }
 
 // Header JSON interface
@@ -243,10 +244,10 @@ export const FLAGGED_DELETE_FAIL = "FLAGGED_DELETE_FAIL";
 
 export interface IFlaggedAction {
   type:
-  | typeof FLAGGED_CHANGE_SUCCESS
-  | typeof FLAGGED_CHANGE_FAIL
-  | typeof FLAGGED_DELETE_SUCCESS
-  | typeof FLAGGED_DELETE_FAIL;
+    | typeof FLAGGED_CHANGE_SUCCESS
+    | typeof FLAGGED_CHANGE_FAIL
+    | typeof FLAGGED_DELETE_SUCCESS
+    | typeof FLAGGED_DELETE_FAIL;
   payload?: any;
 }
 
@@ -254,4 +255,50 @@ export interface IFlaggedState {
   isLoading: boolean;
   posts: IPost[];
   isError: boolean;
+}
+
+export const GET_FRIEND_LIST_SUCC = "GET_FRIEND_LIST";
+export const SEND_REQUEST = "SEND_REQUEST";
+export const REQUEST_SEND_SUCC = "REQUEST_SEND_SUCC";
+export const REQUEST_SEND_ERR = "REQUEST_SEND_ERR";
+export const REQUEST_GET_SUCC = "REQUEST_GET_SUCC";
+export const REQUEST_GET_ERR = "REQUEST_GET_ERR";
+export const FIRENDS_GET_SUCC = "FIRENDS_GET_SUCC";
+export const FIRENDS_GET_ERR = "FIRENDS_GET_ERR";
+export const REQUEST_ACCEPT_SUCC = "REQUEST_ACCEPT_SUCC";
+export const REQUEST_ACCEPT_ERR = "REQUEST_ACCEPT_ERR";
+export const REQUEST_DECLINE_SUCC = "REQUEST_DECLINE_SUCC";
+export const REQUEST_DECLINE_ERR = "REQUEST_DECLINE_ERR";
+
+export interface IFriendActioms {
+  type:
+    | typeof SEND_REQUEST
+    | typeof REQUEST_SEND_SUCC
+    | typeof REQUEST_GET_SUCC
+    | typeof REQUEST_DECLINE_SUCC
+    | typeof REQUEST_ACCEPT_SUCC
+    | typeof GET_FRIEND_LIST_SUCC;
+  payload?: any;
+}
+
+export interface IFriendList {
+  id: number;
+  user: number;
+  current_user: string;
+  friends: Array<any>;
+}
+
+export interface IFriendState {
+  friend_obj: IFriendList | null;
+  friend_req: IFriendObj[];
+  isLoading: boolean;
+}
+
+export interface IFriendObj {
+  id: number;
+  is_active: boolean;
+  declined: boolean;
+  timestamp: string;
+  sender: string;
+  reciver: string;
 }

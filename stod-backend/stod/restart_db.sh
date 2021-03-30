@@ -1,4 +1,4 @@
-# !/bin/bash
-find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
-find . -path "*/migrations/*.pyc"  -delete
+#!/bin/bash
+find . -name "migrations" -type d -exec rm -rf {} +;
+find . -name "__pycache__" -type d -exec rm -rf {} +;
 rm db.sqlite3

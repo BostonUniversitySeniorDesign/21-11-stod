@@ -26,7 +26,7 @@ class Post(models.Model):
     # poster2 = models.CharField(User.username,max_length=25)
     flagged = models.BooleanField(default=False)
 
-    tags = models.ManyToManyField('tags.Tag')
+    tags = models.ManyToManyField('tags.Tag', blank=True)
 
     def __str__(self):
         """A string representation of the model."""

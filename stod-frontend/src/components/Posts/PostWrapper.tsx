@@ -107,17 +107,21 @@ const PostWrapper: React.FC = () => {
               </div>
             )}
           >
-            {tagsState.allTags.map((tag) => {
-              return (
-                <MenuItem key={tag.name} value={tag.name}>
-                  <Checkbox
-                    color="primary"
-                    checked={selectedTags.includes(tag.name)}
-                  />
-                  <ListItemText primary={tag.name} />
-                </MenuItem>
-              );
-            })}
+            {tagsState.allTags ? (
+              tagsState.allTags.map((tag) => {
+                return (
+                  <MenuItem key={tag.name} value={tag.name}>
+                    <Checkbox
+                      color="primary"
+                      checked={selectedTags.includes(tag.name)}
+                    />
+                    <ListItemText primary={tag.name} />
+                  </MenuItem>
+                );
+              })
+            ) : (
+              <div />
+            )}
           </Select>
         </FormControl>
       );

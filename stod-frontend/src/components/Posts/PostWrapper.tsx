@@ -140,7 +140,6 @@ const PostWrapper: React.FC = () => {
   if (!currentState.isLoading) {
     return (
       <PostContextProvider>
-        <h1>HELLO WORLD?</h1>
         {renderTags()}
         {currentState.posts.filter(filterPosts).map((post: IPost) => {
           return post.flagged === false ? (

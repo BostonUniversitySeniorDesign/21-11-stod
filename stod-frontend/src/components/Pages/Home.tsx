@@ -36,6 +36,7 @@ import DashboardIcon from "@material-ui/icons/Dashboard";
 import PaymentIcon from "@material-ui/icons/Payment";
 import CreatePost from "../Posts/CreatePost";
 import PostWrapper from "../Posts/PostWrapper";
+import Paper from "@material-ui/core/Paper";
 import {
   IGroupsAction,
   IRootState,
@@ -60,6 +61,15 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: "flex",
+      // flexDirection: "column",
+      justifyContent: "center",
+    },
+    mid_paper: {
+      padding: theme.spacing(3, 2),
+      width: 800,
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
     },
     drawer: {
       [theme.breakpoints.up("sm")]: {
@@ -87,7 +97,6 @@ const useStyles = makeStyles((theme: Theme) =>
       width: drawerWidth,
     },
     content: {
-      flexGrow: 1,
       padding: theme.spacing(3),
     },
     button: {
@@ -434,7 +443,9 @@ const Home = () => {
         : 
         <Groups subscribedOnly={false} />}
         } */}
-        {getSelectedComponent(selected, username)}
+        <Paper className={classes.mid_paper}>
+          {getSelectedComponent(selected, username)}
+        </Paper>
       </main>
     </div>
   );

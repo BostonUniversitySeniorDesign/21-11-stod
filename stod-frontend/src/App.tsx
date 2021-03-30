@@ -32,7 +32,7 @@ const App = () => {
         <React.Fragment>
           <div className="container">
             <Switch>
-              <Route
+              {/* <Route
                 exact
                 path="/"
                 render={() => (
@@ -48,7 +48,7 @@ const App = () => {
                     </h1>
                   </div>
                 )}
-              />
+              /> */}
               <Route exact path="/login" component={Login} />
               <Route exact path="/register" component={Register} />
               {/* <Route
@@ -63,7 +63,7 @@ const App = () => {
               />
               <Route exact path="/posts" component={PostWrapper} />
               <IsSuperuserRoute path="/flagged" component={Flagged} />
-              <AuthenticatedRoute path="/home" component={Home} />
+              <AuthenticatedRoute exact path="/" component={Home} />
               <Route exact path="/404" component={Error} />
               <Redirect from="*" to="/404" />
             </Switch>

@@ -35,7 +35,7 @@ const Post: React.FC<{ post: IPost; showPostMenu: boolean }> = ({
   );
 
   return (
-    <Card style={{ maxWidth: 600, margin: "30px" }}>
+    <Card style={{ maxWidth: 600, margin: "30px" }} elevation={0}>
       {showPostMenu ? <PostMenu post={post} /> : null}
       <CardHeader title={post.title} />
       <CardContent>

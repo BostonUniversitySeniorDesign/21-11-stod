@@ -29,7 +29,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundImage: "url(/stod-login-bg.jpeg)",
     backgroundRepeat: "no-repeat",
     backgroundColor:
-      theme.palette.type === "light" ? theme.palette.grey[50] : theme.palette.grey[900],
+      theme.palette.type === "light"
+        ? theme.palette.grey[50]
+        : theme.palette.grey[900],
     backgroundSize: "cover",
     backgroundPosition: "center",
   },
@@ -70,7 +72,9 @@ const Register = () => {
   const password = useRef<HTMLInputElement>();
   const confirm_password = useRef<HTMLInputElement>();
   // Redux store attributes
-  const isAuthenticated = useSelector((state: IRootState) => state.auth.isAuthenticated);
+  const isAuthenticated = useSelector(
+    (state: IRootState) => state.auth.isAuthenticated
+  );
   const errors = useSelector((state: IRootState) => state.auth.errors);
   // Redux dispatch hook
   const dispatch = useDispatch();
@@ -89,7 +93,9 @@ const Register = () => {
       confirm_password.current?.value === "" ||
       email.current?.value === ""
     ) {
-      dispatch(registerError(400, { non_field_errors: ["No field can be empty"] }));
+      dispatch(
+        registerError(400, { non_field_errors: ["No field can be empty"] })
+      );
       return;
     }
     if (!validateEmail(email.current?.value)) {
@@ -115,7 +121,7 @@ const Register = () => {
     }
   };
   if (isAuthenticated) {
-    return <Redirect to="/home" />;
+    return <Redirect to="/" />;
   }
   return (
     <Grid className={classes.root} container component="main">
@@ -189,7 +195,9 @@ const Register = () => {
               autoComplete="current-password"
             />
             {errors.errors["non_field_errors"] ? (
-              <Alert severity="error">{errors.errors["non_field_errors"][0]}</Alert>
+              <Alert severity="error">
+                {errors.errors["non_field_errors"][0]}
+              </Alert>
             ) : (
               ""
             )}

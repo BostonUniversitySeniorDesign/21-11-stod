@@ -26,7 +26,7 @@ const AuthenticatedRoute: React.FC<IAuthenticatedRoute> = ({
         if (isLoading) {
           return <Loader />;
         } else if (!isAuthenticated || isAuthenticated === null) {
-          return <Redirect from="/home" to="/login" />;
+          return <Redirect from="/" to="/login" />;
         } else {
           return <Component {...props} />;
         }
